@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Drexm Academy</title>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Heebo:wght@300;400;500;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #08080F; --bg2: #0F0F1A; --bg3: #151528;
+  --cyan: #00C6FF; --orange: #C77DFF; --white: #F0F0F5; --muted: #8888A8;
+  --card: #12121F; --border: #1E1E35;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body, html {
+  background-color: var(--bg) !important;
+  color: var(--white);
+  font-family: 'Heebo', sans-serif;
+  overflow-x: hidden;
+}
+
+.app-container {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg);
+  color: var(--white);
+}
+
+h1, h2, h3, h4, h5, h6 { color: var(--white); }
+
+canvas#particles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; opacity: 0.35; }
+.wrap { position: relative; z-index: 2; max-width: 960px; margin: 0 auto; padding: 0 24px; flex: 1; width: 100%; }
+
+/* NAV */
+nav { position: sticky; top: 0; z-index: 100; background: rgba(8,8,15,0.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 14px 0; }
+.nav-inner { display: flex; align-items: center; justify-content: space-between; max-width: 960px; margin: 0 auto; padding: 0 24px; }
+.logo { font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 22px; letter-spacing: 1px; color: var(--cyan); text-transform: uppercase; cursor: pointer; }
+.logo span { color: var(--orange); }
+.nav-links { display: flex; gap: 24px; list-style: none; }
+.nav-links button { background: none; border: none; color: var(--muted); text-decoration: none; font-size: 14px; font-weight: 500; transition: color 0.2s; cursor: pointer; font-family: 'Heebo', sans-serif; }
+.nav-links button:hover { color: var(--white); }
+
+/* SOCIAL LINKS & LANG */
+.nav-actions { display: flex; align-items: center; gap: 20px; }
+.social-links { display: flex; align-items: center; gap: 16px; }
+.social-links a { color: var(--muted); display: flex; transition: all 0.2s; }
+.social-links a:hover { color: var(--cyan); transform: scale(1.1); }
+.social-links svg { width: 20px; height: 20px; fill: currentColor; }
+.lang-toggle { display: flex; gap: 0; border: 1px solid var(--border); border-radius: 6px; overflow: hidden; }
+.lang-btn { background: none; border: none; color: var(--muted); padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: 'Heebo', sans-serif; transition: all 0.2s; }
+.lang-btn.active { background: var(--cyan); color: #000; font-weight: 700; }
+
+/* USER AREA */
+.user-area { display: flex; align-items: center; gap: 12px; }
+.user-name { font-size: 14px; font-weight: 500; color: var(--cyan); }
+.btn-login { background: transparent; border: 1px solid var(--cyan); color: var(--cyan); padding: 6px 16px; border-radius: 6px; cursor: pointer; font-family: 'Heebo', sans-serif; font-size: 13px; font-weight: 600; transition: all 0.2s; }
+.btn-login:hover { background: rgba(0, 198, 255, 0.1); }
+.btn-logout { background: none; border: none; color: var(--muted); cursor: pointer; font-size: 12px; text-decoration: underline; font-family: 'Heebo', sans-serif; transition: color 0.2s; }
+.btn-logout:hover { color: var(--orange); }
+
+/* MODAL */
+.modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 1000; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(5px); opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+.modal.active { opacity: 1; pointer-events: auto; }
+.modal-content { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 40px; width: 90%; max-width: 400px; position: relative; box-shadow: 0 10px 40px rgba(0,0,0,0.5); transform: translateY(20px); transition: transform 0.3s; }
+.modal.active .modal-content { transform: translateY(0); }
+.close-btn { position: absolute; top: 16px; right: 24px; font-size: 28px; cursor: pointer; color: var(--muted); transition: color 0.2s; }
+[dir="ltr"] .close-btn { right: auto; left: 24px; }
+.close-btn:hover { color: var(--white); }
+.modal-title { font-family: 'Rajdhani', sans-serif; font-size: 28px; font-weight: 700; color: var(--white); margin-bottom: 24px; text-align: center; }
+
+.auth-tabs { display: flex; border-bottom: 1px solid var(--border); margin-bottom: 24px; }
+.auth-tab { flex: 1; background: none; border: none; color: var(--muted); padding: 12px; font-family: 'Rajdhani', sans-serif; font-size: 18px; font-weight: 600; cursor: pointer; transition: all 0.2s; border-bottom: 2px solid transparent; }
+.auth-tab:hover { color: var(--white); }
+.auth-tab.active { color: var(--cyan); border-bottom-color: var(--cyan); }
+
+.modal-form { display: flex; flex-direction: column; gap: 16px; }
+.modal-form input { width: 100%; padding: 14px 16px; background: var(--bg); border: 1px solid var(--border); color: var(--white); border-radius: 6px; font-family: 'Heebo', sans-serif; font-size: 15px; transition: border-color 0.2s; }
+.modal-form input:focus { outline: none; border-color: var(--cyan); }
+.auth-msg { color: var(--orange); font-size: 13px; text-align: center; display: none; margin-bottom: 8px; }
+
+/* HERO */
+.hero { min-height: 88vh; display: flex; align-items: center; padding: 80px 0 60px; }
+.hero-badge { display: inline-block; background: rgba(0,198,255,0.1); border: 1px solid rgba(0,198,255,0.3); color: var(--cyan); font-size: 11px; letter-spacing: 2px; text-transform: uppercase; padding: 6px 16px; border-radius: 4px; margin-bottom: 28px; font-weight: 500; }
+.hero h1 { font-family: 'Rajdhani', sans-serif; font-size: clamp(48px,7vw,84px); font-weight: 700; line-height: 1.0; letter-spacing: -1px; margin-bottom: 20px; color: var(--white); }
+.hero h1 .hl { color: var(--cyan); }
+.hero h1 .hl2 { color: var(--orange); }
+.hero-sub { font-size: 17px; color: var(--muted); max-width: 520px; line-height: 1.7; margin-bottom: 40px; font-weight: 300; }
+.hero-cta { display: flex; gap: 12px; flex-wrap: wrap; }
+.btn-primary { background: var(--cyan); color: #000; border: none; padding: 14px 32px; font-family: 'Rajdhani', sans-serif; font-size: 16px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; border-radius: 6px; cursor: pointer; transition: all 0.2s; }
+.btn-primary:hover { background: #33D1FF; transform: translateY(-1px); }
+.btn-outline { background: none; color: var(--white); border: 1px solid var(--border); padding: 14px 28px; font-family: 'Rajdhani', sans-serif; font-size: 16px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; border-radius: 6px; cursor: pointer; transition: all 0.2s; }
+.btn-outline:hover { border-color: var(--cyan); color: var(--cyan); }
+.hero-inner { display: flex; align-items: center; justify-content: space-between; gap: 40px; width: 100%; }
+
+.hero-content { flex: 1.1; position: relative; z-index: 2; }
+.hero-visual { flex: 1; display: flex; justify-content: flex-end; position: relative; z-index: 1; perspective: 1000px; }
+.hero-visual img { width: 100%; max-width: 650px; object-fit: cover; border-radius: 20px; -webkit-mask-image: radial-gradient(circle at center, black 45%, transparent 85%); mask-image: radial-gradient(circle at center, black 45%, transparent 85%); animation: float 6s ease-in-out infinite; }
+@keyframes float { 0% { transform: translateY(0px) rotate(0deg); } 50% { transform: translateY(-15px) rotate(-2deg); } 100% { transform: translateY(0px) rotate(0deg); } }
+
+/* Stats Centering Fix */
+.hero-stats { display: flex; gap: 40px; margin-top: 60px; padding-top: 40px; border-top: 1px solid var(--border); flex-wrap: wrap; }
+.hero-stats > div { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; min-width: 70px; }
+.stat-val { font-family: 'Rajdhani', sans-serif; font-size: 36px; font-weight: 700; color: var(--cyan); line-height: 1; margin-bottom: 6px; display: block; }
+.stat-lbl { font-size: 13px; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; margin-top: 0; display: block; }
+
+/* ABOUT */
+.section { padding: 80px 0; }
+.section-tag { font-size: 11px; color: var(--orange); letter-spacing: 3px; text-transform: uppercase; font-weight: 600; margin-bottom: 16px; }
+.section-title { font-family: 'Rajdhani', sans-serif; font-size: clamp(28px,4vw,44px); font-weight: 700; margin-bottom: 16px; line-height: 1.15; color: var(--white); }
+.section-sub { color: var(--muted); font-size: 16px; line-height: 1.7; max-width: 580px; font-weight: 300; }
+.divider { width: 100%; height: 1px; background: var(--border); margin: 0; }
+
+/* ABOUT GRID */
+.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 48px; }
+.about-card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 28px; transition: border-color 0.2s; }
+.about-card:hover { border-color: rgba(0,198,255,0.3); }
+.about-card-icon { font-size: 28px; margin-bottom: 16px; }
+.about-card h3 { font-family: 'Rajdhani', sans-serif; font-size: 20px; font-weight: 600; margin-bottom: 10px; color: var(--white); }
+.about-card p { color: var(--muted); font-size: 14px; line-height: 1.7; font-weight: 300; }
+
+/* TIMELINE (JOURNEY) */
+.timeline { position: relative; max-width: 800px; margin: 48px auto 0; padding-left: 20px; border-left: 2px solid var(--border); }
+[dir="rtl"] .timeline { padding-left: 0; padding-right: 20px; border-left: none; border-right: 2px solid var(--border); }
+.timeline-item { position: relative; margin-bottom: 32px; padding-left: 24px; }
+[dir="rtl"] .timeline-item { padding-left: 0; padding-right: 24px; }
+.timeline-dot { position: absolute; left: -31px; top: 4px; width: 14px; height: 14px; border-radius: 50%; background: var(--cyan); border: 3px solid var(--bg); box-shadow: 0 0 10px rgba(0,198,255,0.5); }
+[dir="rtl"] .timeline-dot { left: auto; right: -31px; }
+.timeline-date { font-family: 'Rajdhani', sans-serif; font-size: 18px; font-weight: 700; color: var(--orange); margin-bottom: 8px; letter-spacing: 1px; }
+.timeline-content { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 24px; transition: border-color 0.2s; }
+.timeline-content:hover { border-color: rgba(0,198,255,0.3); }
+.timeline-content h4 { font-size: 18px; margin-bottom: 8px; color: var(--white); font-weight: 600; }
+.timeline-content p { font-size: 14px; color: var(--muted); line-height: 1.6; }
+.mech-highlight { color: var(--cyan); font-weight: 500; }
+
+/* RLFX GRID */
+.rlfx-grid { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 40px; max-width: 860px; margin-left: auto; margin-right: auto; }
+.rlfx-tag { background: rgba(0,198,255,0.05); border: 1px solid rgba(0,198,255,0.2); padding: 10px 18px; border-radius: 6px; font-family: 'Rajdhani', sans-serif; font-size: 15px; font-weight: 600; color: var(--white); letter-spacing: 1px; transition: all 0.2s; cursor: default; }
+.rlfx-tag:hover { background: rgba(0,198,255,0.15); border-color: var(--cyan); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,198,255,0.1); }
+.rlfx-tag.special { border-color: var(--orange); color: var(--orange); background: rgba(199,125,255,0.05); }
+.rlfx-tag.special:hover { background: rgba(199,125,255,0.15); box-shadow: 0 4px 12px rgba(199,125,255,0.15); }
+
+/* CONTENT PREVIEW */
+.content-list { display: grid; grid-template-columns: 1fr; gap: 12px; margin-top: 40px; }
+.content-item { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 20px 24px; display: flex; align-items: center; gap: 16px; position: relative; overflow: hidden; transition: border-color 0.2s; cursor: pointer; }
+.content-item:hover { border-color: rgba(0,198,255,0.2); }
+.content-item::before { content: ''; position: absolute; right: 0; top: 0; bottom: 0; width: 3px; background: var(--cyan); }
+.content-item.locked::before { background: var(--border); }
+.content-badge { font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 3px 10px; border-radius: 3px; white-space: nowrap; flex-shrink: 0; }
+.badge-video { background: rgba(0,198,255,0.12); color: var(--cyan); border: 1px solid rgba(0,198,255,0.25); }
+.badge-article { background: rgba(199,125,255,0.12); color: var(--orange); border: 1px solid rgba(199,125,255,0.25); }
+.badge-guide { background: rgba(255,255,255,0.06); color: var(--muted); border: 1px solid var(--border); }
+.content-title { font-size: 15px; font-weight: 500; flex: 1; color: var(--white); }
+.lock-icon { color: var(--muted); font-size: 16px; flex-shrink: 0; }
+.content-item.locked .content-title { color: var(--muted); }
+
+/* PRICING */
+.pricing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; max-width: 860px; margin: 48px auto 0; }
+.pricing-box { background: var(--card); border-radius: 14px; padding: 40px; position: relative; overflow: hidden; transition: transform 0.2s, border-color 0.2s; border: 1px solid var(--border); }
+.pricing-box:hover { transform: translateY(-4px); }
+.pricing-box.plan-content { border-color: rgba(0,198,255,0.4); }
+.pricing-box.plan-support { border-color: rgba(199,125,255,0.4); }
+.plan-badge { position: absolute; top: 20px; font-size: 10px; letter-spacing: 2px; font-weight: 700; text-transform: uppercase; }
+[dir="rtl"] .plan-badge { right: 24px; }
+[dir="ltr"] .plan-badge { left: 24px; }
+.plan-content .plan-badge { color: var(--cyan); }
+.plan-support .plan-badge { color: var(--orange); }
+.pricing-label { font-size: 16px; color: var(--white); font-weight: 600; margin-bottom: 8px; font-family: 'Rajdhani', sans-serif; }
+.pricing-price { font-family: 'Rajdhani', sans-serif; font-size: 56px; font-weight: 700; color: var(--white); line-height: 1; margin-bottom: 4px; }
+.pricing-price sup { font-size: 24px; color: var(--muted); }
+.pricing-once { font-size: 13px; color: var(--muted); font-weight: 500; margin-bottom: 32px; }
+.pricing-features { list-style: none; margin-bottom: 36px; display: flex; flex-direction: column; gap: 12px; }
+.pricing-features li { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; color: var(--muted); line-height: 1.4; }
+.pricing-features li::before { content: '✓'; color: var(--cyan); font-weight: 700; font-size: 16px; margin-top: -2px; }
+.plan-support .pricing-features li::before { color: var(--orange); }
+.btn-buy { width: 100%; background: var(--cyan); color: #000; border: none; padding: 14px; font-family: 'Rajdhani', sans-serif; font-size: 16px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; border-radius: 8px; cursor: pointer; transition: all 0.2s; margin-bottom: 12px; }
+.btn-buy:hover { background: #33D1FF; }
+.plan-support .btn-buy { background: var(--orange); color: #fff; }
+.plan-support .btn-buy:hover { background: #D896FF; }
+.pricing-note { text-align: center; font-size: 12px; color: var(--muted); }
+
+/* DASHBOARD */
+.dashboard-header { margin-bottom: 40px; padding-top: 40px; border-bottom: 1px solid var(--border); padding-bottom: 24px; }
+.dashboard-tabs { display: flex; gap: 16px; margin-bottom: 32px; border-bottom: 1px solid var(--border); padding-bottom: 16px; overflow-x: auto; }
+.dash-tab { background: none; border: none; color: var(--muted); font-size: 16px; font-family: 'Rajdhani', sans-serif; font-weight: 600; text-transform: uppercase; cursor: pointer; padding: 8px 16px; transition: all 0.2s; white-space: nowrap; }
+.dash-tab.active { color: var(--cyan); border-bottom: 2px solid var(--cyan); }
+.dash-tab:hover:not(.active) { color: var(--white); }
+.video-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px; }
+.video-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; transition: all 0.2s; cursor: pointer; }
+.video-card:hover { border-color: var(--cyan); transform: translateY(-4px); }
+.video-thumb { height: 160px; background: #1a1a2e; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+.video-thumb::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.8) 100%); }
+.play-btn { width: 48px; height: 48px; background: rgba(0,198,255,0.2); border: 2px solid var(--cyan); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--cyan); font-size: 20px; padding-left: 4px; transition: all 0.2s; position: relative; z-index: 2; }
+.video-card:hover .play-btn { background: var(--cyan); color: #000; transform: scale(1.1); }
+.video-info { padding: 16px; }
+.video-info h4 { font-size: 16px; font-weight: 500; margin-bottom: 8px; color: var(--white); }
+.video-info p { font-size: 13px; color: var(--muted); line-height: 1.5; }
+.coaching-card { background: linear-gradient(135deg, var(--bg2) 0%, #241033 100%); border: 1px solid var(--orange); border-radius: 12px; padding: 40px; text-align: center; }
+.coaching-card h3 { font-family: 'Rajdhani', sans-serif; font-size: 28px; color: var(--orange); margin-bottom: 16px; }
+.coaching-card p { color: var(--white); font-size: 16px; max-width: 600px; margin: 0 auto 32px; line-height: 1.6; }
+.btn-discord { background: #5865F2; color: #fff; border: none; padding: 14px 32px; font-family: 'Rajdhani', sans-serif; font-size: 16px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; border-radius: 6px; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; justify-content: center; gap: 12px; margin: 0 auto; }
+.btn-discord:hover { background: #4752C4; transform: translateY(-2px); }
+
+/* FOOTER */
+footer { position: relative; z-index: 2; border-top: 1px solid var(--border); padding: 32px 0; text-align: center; margin-top: auto; }
+.footer-logo { font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 20px; color: var(--cyan); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; }
+.footer-sub { font-size: 13px; color: var(--muted); }
+
+@media(max-width:768px) {
+  .pricing-grid { grid-template-columns: 1fr; }
+  .hero-inner { flex-direction: column; text-align: center; }
+  .hero-visual { display: none; }
+  .hero-stats { justify-content: center; }
+  .hero-cta { justify-content: center; }
+  .hero-sub { margin-left: auto; margin-right: auto; }
+}
+@media(max-width:640px) {
+  .about-grid { grid-template-columns: 1fr; }
+  .hero-stats { gap: 24px; }
+  .stat-val { font-size: 26px; }
+  .pricing-box { padding: 32px 24px; }
+  .nav-links { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="app-container">
+  <canvas id="particles"></canvas>
+  
+  <nav>
+    <div class="nav-inner">
+      <div class="logo" onclick="toggleDashboard(false)">drexm<span>.</span>academy</div>
+      
+      <ul class="nav-links" id="home-nav">
+        <li><button onclick="scrollToId('about')" id="nav-about">עליי</button></li>
+        <li><button onclick="scrollToId('journey')" id="nav-journey">הסיפור שלי</button></li>
+        <li><button onclick="scrollToId('content')" id="nav-content">תכנים</button></li>
+        <li><button onclick="scrollToId('pricing')" id="nav-pricing">מחיר</button></li>
+      </ul>
+
+      <ul class="nav-links" id="dash-nav" style="display: none;">
+        <li><button onclick="toggleDashboard(false)" id="nav-back">חזור לעמוד הראשי</button></li>
+      </ul>
+
+      <div class="nav-actions">
+        <!-- אזור המשתמש וההתחברות -->
+        <div class="user-area" id="userArea">
+          <button class="btn-login" id="nav-login-btn" onclick="openAuthModal()">התחברות</button>
+        </div>
+
+        <div class="social-links">
+          <a href="https://discord.gg/kvVmkFrZnC" target="_blank" title="Discord">
+            <svg viewBox="0 0 24 24"><path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/></svg>
+          </a>
+          <a href="https://www.tiktok.com/@drexm_rl" target="_blank" title="TikTok">
+            <svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-5.2 1.74 2.89 2.89 0 012.31-4.64 2.93 2.93 0 01.88.13V9.4a6.84 6.84 0 00-1-.05A6.33 6.33 0 005 20.1a6.34 6.34 0 0010.86-4.43v-7a8.16 8.16 0 004.77 1.52v-3.4a4.85 4.85 0 01-1-.1z"/></svg>
+          </a>
+        </div>
+        <div class="lang-toggle">
+          <button class="lang-btn active" id="btn-he" onclick="setLang('he')">עב</button>
+          <button class="lang-btn" id="btn-en" onclick="setLang('en')">EN</button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HOME VIEW -->
+  <div id="view-home">
+    <main class="wrap">
+      <section class="hero" id="home">
+        <div class="hero-inner">
+          <div class="hero-content">
+            <div class="hero-badge" id="hero-badge">🚀 Rocket League Academy</div>
+            <h1>
+              <span class="hl" id="h1-0">שדרג את</span><br/>
+              <span id="h1-1">המשחק שלך</span><br/>
+              <span class="hl2" id="h1-2">לרמה הבאה</span>
+            </h1>
+            <p class="hero-sub" id="hero-sub">11 שנות ניסיון ברוקט ליג. מדריכים למכניקות, טיפים מקצועיים, וליווי אישי — הכל במקום אחד.</p>
+            <div class="hero-cta">
+              <button class="btn-primary" onclick="scrollToId('pricing')" id="hero-btn1">הצטרף עכשיו</button>
+              <button class="btn-outline" onclick="scrollToId('content')" id="hero-btn2">ראה תכנים</button>
+            </div>
+            <div class="hero-stats">
+              <div><div class="stat-val">11</div><div class="stat-lbl" id="stat-0">שנות משחק</div></div>
+              <div><div class="stat-val">SSL</div><div class="stat-lbl" id="stat-1">פיק ראנק</div></div>
+              <div><div class="stat-val">∞</div><div class="stat-lbl" id="stat-2">מכניקות</div></div>
+              <div><div class="stat-val" style="color: var(--orange)">2</div><div class="stat-lbl" id="stat-3">מסלולים</div></div>
+            </div>
+          </div>
+          <div class="hero-visual">
+            <img src="hero-bg.png" alt="Rocket League Gamer">
+          </div>
+        </div>
+      </section>
+
+      <div class="divider"></div>
+
+      <section class="section" id="about">
+        <div class="section-tag" id="about-tag">על drexm</div>
+        <h2 class="section-title" id="about-title">מי אני ולמה כדאי לך<br/>ללמוד ממני</h2>
+        <p class="section-sub" id="about-sub">שחקן ישראלי מהטופ. משחק מהיום שרוקט ליג יצא - עם המון ניסיון, הבנה וכישורים כדי להסביר כל מכניקה ולענות על כל שאלה בצורה הכי ברורה שיש.</p>
+        <div class="about-grid" id="about-cards-container">
+          <!-- Rendered via JS -->
+        </div>
+      </section>
+
+      <div class="divider"></div>
+
+      <!-- JOURNEY SECTION -->
+      <section class="section" id="journey">
+        <div class="section-tag" id="journey-tag">הסיפור שלי</div>
+        <h2 class="section-title" id="journey-title">מהבטא ועד לטופ</h2>
+        <div class="timeline" id="journey-timeline">
+          <!-- Rendered via JS -->
+        </div>
+      </section>
+
+      <div class="divider"></div>
+
+      <!-- RLFX SECTION -->
+      <section class="section" id="rlfx">
+        <div class="section-tag" id="rlfx-tag">הופעות וקליפים</div>
+        <h2 class="section-title" style="text-align: center" id="rlfx-title">Featured On <span style="color: var(--cyan)">RLFX</span></h2>
+        <p class="section-sub" style="margin: 0 auto; text-align: center;" id="rlfx-sub">הופעתי בעשרות סרטונים של ערוץ הפריסטייל הגדול בעולם.</p>
+        <div class="rlfx-grid" id="rlfx-container">
+          <!-- Rendered via JS -->
+        </div>
+      </section>
+
+      <div class="divider"></div>
+
+      <section class="section" id="content">
+        <div class="section-tag" id="content-tag">תכנים</div>
+        <h2 class="section-title"><span id="content-title">מה תלמד ב-</span><span style="color: var(--cyan)">drexm academy</span></h2>
+        <p class="section-sub" id="content-sub">וידאו מדריכים וקריאה — רק למי שמשלם. חלק מהתכנים זמינים לצפייה כדי שתוכל לקבל טעימה.</p>
+        <div class="content-list" id="home-content-list">
+          <!-- Rendered via JS -->
+        </div>
+      </section>
+
+      <div class="divider"></div>
+
+      <section class="section" id="pricing">
+        <div class="section-tag" id="pricing-tag">מחיר</div>
+        <h2 class="section-title" style="text-align: center" id="pricing-title">בחר את המסלול שלך</h2>
+        <div class="pricing-grid" id="pricing-plans-container">
+          <!-- Rendered via JS -->
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- DASHBOARD VIEW -->
+  <div id="view-dashboard" style="display: none;">
+    <main class="wrap">
+      <div class="dashboard-header">
+        <h1 style="font-family: 'Rajdhani', sans-serif; font-size: 36px; margin-bottom: 8px" id="dash-title">אזור אישי</h1>
+        <p style="color: var(--muted); font-size: 16px" id="dash-sub">ברוך הבא לאקדמיה! בחר קטגוריה כדי להתחיל ללמוד.</p>
+      </div>
+
+      <div class="dashboard-tabs">
+        <button class="dash-tab active" id="tab-videos" onclick="switchTab('videos')">סרטונים</button>
+        <button class="dash-tab" id="tab-drills" onclick="switchTab('drills')">תרגולים</button>
+        <button class="dash-tab" id="tab-coaching" onclick="switchTab('coaching')">עזרה וטיפים</button>
+      </div>
+
+      <div id="pane-videos" class="video-grid">
+        <!-- Rendered via JS -->
+      </div>
+
+      <div id="pane-drills" class="content-list" style="margin-top: 0; display: none;">
+        <!-- Rendered via JS -->
+      </div>
+
+      <div id="pane-coaching" class="coaching-card" style="display: none;">
+        <h3 id="coach-title">מענה ותמיכה (Q&A)</h3>
+        <p id="coach-desc">רכשת את מסלול התמיכה? שלח לי הודעה בדיסקורד עם שאלות, טיפים שאתה צריך או בקשת עזרה במכניקה. אני שם כדי להכווין אותך.</p>
+        <button class="btn-discord">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/></svg>
+          <span id="coach-btn">התחבר לשרת הדיסקורד</span>
+        </button>
+      </div>
+    </main>
+  </div>
+
+  <footer>
+    <div class="footer-logo">drexm<span style="color: var(--orange)">.</span>academy</div>
+    <div class="footer-sub" id="footer-sub">DREXM ROCKET LEAGUE ACADEMY 2026 כל הזכויות שמורות</div>
+  </footer>
+</div>
+
+<!-- AUTH MODAL -->
+<div class="modal" id="authModal">
+  <div class="modal-content">
+    <span class="close-btn" onclick="closeAuthModal()">&times;</span>
+    <div class="auth-tabs">
+      <button class="auth-tab active" id="tab-login" onclick="setAuthMode('login')">התחברות</button>
+      <button class="auth-tab" id="tab-register" onclick="setAuthMode('register')">הרשמה</button>
+    </div>
+    <h2 class="modal-title" id="authModalTitle">התחבר לחשבון</h2>
+    <p class="auth-msg" id="authMsg">יש להתחבר לחשבון לפני רכישת מנוי</p>
+    <form class="modal-form" onsubmit="handleLogin(event)">
+      <div id="nameInputWrapper" style="display: none;">
+        <input type="text" id="authName" placeholder="שם מלא">
+      </div>
+      <input type="email" id="authEmail" placeholder="אימייל" required>
+      <input type="password" id="authPass" placeholder="סיסמה" required>
+      <button type="submit" class="btn-buy" style="margin-top: 10px;" id="authSubmitBtn">התחבר</button>
+    </form>
+  </div>
+</div>
+
+<script>
+// --- STATE ---
+let currentLang = 'he';
+let currentUser = null; // null means not logged in
+let pendingPurchase = false; // keeps track if they tried to buy before login
+let authMode = 'login'; // 'login' or 'register'
+
+// --- DICTIONARY ---
+const strings = {
+  he: {
+    navLinks: ['עליי', 'הסיפור שלי', 'תכנים', 'מחיר'],
+    auth: { loginTop: 'כניסה', logout: 'התנתק', hello: 'שלום', tabLogin: 'התחברות', tabRegister: 'הרשמה', titleLogin: 'התחבר לחשבון', titleRegister: 'צור חשבון חדש', name: 'שם מלא', email: 'אימייל', pass: 'סיסמה', submitLogin: 'התחבר', submitRegister: 'הירשם', requireMsg: 'יש להתחבר לחשבון לפני רכישת מנוי או צפייה בתכנים.' },
+    heroBadge: '🚀 Rocket League Academy',
+    h1: ['שדרג את', 'המשחק שלך', 'לרמה הבאה'],
+    heroSub: '11 שנות ניסיון ברוקט ליג. מדריכים למכניקות, טיפים מקצועיים, וליווי אישי — הכל במקום אחד.',
+    heroCTA1: 'הצטרף עכשיו', heroCTA2: 'ראה תכנים',
+    stats: ['שנות משחק', 'פיק ראנק', 'מכניקות', 'מסלולים'],
+    aboutTag: 'על drexm', aboutTitle: 'מי אני ולמה כדאי לך<br/>ללמוד ממני',
+    aboutSub: 'שחקן ישראלי מהטופ. משחק מהיום שרוקט ליג יצא - עם המון ניסיון, הבנה וכישורים כדי להסביר כל מכניקה ולענות על כל שאלה בצורה הכי ברורה שיש.',
+    cards: [
+      ['11 שנות ניסיון', 'שחקן ותיק מיום ההשקה. עברתי את כל המטא, המכניקות, והשינויים — וידעתי להתאים ולהשתפר בכל אחד מהם.'],
+      ['שחקן בין הטובים בארץ', 'בין השחקנים התחרותיים הכי מכניים בארץ ופריסטיילר מהטופ בארץ. עם הבנה מעמיקה של המשחק ויכולת לפרק כל מצב בשניות. ניסיון שלא קונים בספרים.'],
+      ['תוכן מקצועי מרוכז', 'סרטוני הסבר, תרגולים מפורטים, ומפות אימון — הכל מסודר לפי רמה. מתחיל עד הדרגות הגבוהות ביותר.'],
+      ['מענה ותמיכה', 'אני לא אהיה שם 24/7, אבל מי שמשלם על מסלול התמיכה מקבל גישה אליי לשאלות, טיפים, ולעיתים גם הסברים בשיחה.']
+    ],
+    contentTag: 'תכנים', contentTitle: 'מה תלמד ב-',
+    contentSub: 'סרטוני הסבר ותרגולים — רק למי שמשלם. חלק מהתכנים זמינים לצפייה כדי שתוכל לקבל טעימה.',
+    items: ['Air Roll — מהיסוד למרחק', 'איך לחשוב כמו Grand Champion', 'Ceiling Shot — מדריך מלא', 'Boost Management — הסוד לניצחון', 'Double Tap — הצינה שמפילה כולם', 'Positioning & Rotation — מדריך מתקדם', 'Musty Flick, Breezi Flick ועוד', 'ותכנים נוספים בדרך...'],
+    pricingTag: 'מחיר', pricingTitle: 'בחר את המסלול שלך',
+    plans: [
+      {
+        id: 'content', badge: 'תכנים', title: 'גישה לכל התכנים', price: '70', period: 'תשלום חד פעמי',
+        features: ['כל מדריכי הוידאו', 'גישה לכל התרגולים והתרגילים', 'גישה לתכנים עתידיים', 'למידה עצמית בקצב שלך'],
+        btn: '🚀 רכוש גישה לתכנים', note: 'תשלום מאובטח · גישה לתמיד'
+      },
+      {
+        id: 'support', badge: 'תמיכה', title: 'מענה ועזרה מרחוק', price: '29', period: 'לחודש',
+        features: ['גישה לשרת הדיסקורד הפרטי', 'מענה על שאלות וטיפים ממוקדים', 'עזרה בהבנת מכניקות', 'לעיתים הסברים בשיחות קוליות'],
+        btn: '💬 הצטרף למסלול התמיכה', note: 'ללא התחייבות · ניתן לביטול בכל עת'
+      }
+    ],
+    footerSub: 'DREXM ROCKET LEAGUE ACADEMY 2026 כל הזכויות שמורות',
+    dashTitle: 'אזור אישי', dashSub: 'ברוך הבא לאקדמיה! בחר קטגוריה כדי להתחיל ללמוד.',
+    tabs: ['סרטונים', 'תרגולים', 'עזרה וטיפים'],
+    vidBtn: 'צפה עכשיו',
+    coachTitle: 'מענה ותמיכה (Q&A)', coachDesc: 'רכשת את מסלול התמיכה? שלח לי הודעה בדיסקורד עם שאלות, טיפים שאתה צריך או בקשת עזרה במכניקה. אני שם כדי להכווין אותך.', coachBtn: 'התחבר לשרת הדיסקורד',
+    backHome: 'חזור לעמוד הראשי',
+    journeyTag: 'הסיפור שלי',
+    journeyTitle: 'מהבטא ועד לטופ',
+    journey: [
+      { year: '2015-2017', title: 'ההתחלה והפצת הכישרון', text: 'התחלתי לשחק עוד ב-Closed Beta ב-2015. תמיד אהבתי לעלות לאוויר ולנסות דברים מגניבים. קיבלתי השראה מפריסטיילרים כמו JZR, Pulse MK, ו-Pulse Muirie. הראנק הראשון שלי היה Gold 3 Div 2, ובזכות ההשקעה במכניקות הגעתי ל-Champion בקלות.' },
+      { year: '2019-2020', title: 'Grand Champion ושליטה במכניקות', text: 'כבר ב-2019 הייתי GC. המכניקות שלי היו כל כך טובות שבכל פעם שהכדור היה באוויר, זה היה גול - כמעט ללא צורך ב-Game Sense. ב-2020 התחלתי לשפר גם את ה-Game Sense והגעתי ל-1600-1700 MMR. בנוסף <span class="mech-highlight">זכיתי במקום ה-1 באליפות הארץ</span> של Hype League (2v2).' },
+      { year: '2020-2023', title: 'שירות קרבי וטורניר Pulse Clan', text: 'התגייסתי ללוחמה, מה שהשאיר לי מעט מאוד זמן למשחק. למרות הקושי לשמור על הרמה, ב-2021 אני ופריסטיילר נוסף (הראל) נבחנו, <span class="mech-highlight">התקבלנו והשתתפנו בטורניר הפריסטייל 2v2 של Pulse Clan</span> ששודר לאלפי צופים ביוטיוב.' },
+      { year: 'כיום', title: 'סטודנט, יוצר תוכן, וממציא מכניקות', text: 'כיום אני סטודנט להנדסת חשמל ומדעי המחשב. בחופשת הסמסטר חזרתי חזק והגעתי ל-SSL. אני מפעיל עמוד טיקטוק מצליח, מעביר לייבים לימודיים, ואפילו המצאתי 3 מכניקות חדשות: <span class="mech-highlight">Reverse Musty, Shay pop, Front Windmill</span>.' }
+    ],
+    rlfxTag: 'הופעות וקליפים',
+    rlfxTitle: 'Featured On <span style="color: var(--cyan)">RLFX</span>',
+    rlfxSub: 'הופעתי בעשרות סרטונים של ערוץ הפריסטייל הגדול בעולם.',
+    rlfxItems: [
+      { text: 'ROCKET LEAGUE INSANITY 40' }, { text: 'ROCKET LEAGUE INSANITY 41' }, { text: 'ROCKET LEAGUE INSANITY 44' }, { text: 'ROCKET LEAGUE INSANITY 53' }, { text: 'ROCKET LEAGUE INSANITY 55' }, { text: 'ROCKET LEAGUE INSANITY 56' }, { text: 'ROCKET LEAGUE INSANITY 58' }, { text: 'ROCKET LEAGUE INSANITY 59' }, { text: 'ROCKET LEAGUE INSANITY 60' }, { text: 'ROCKET LEAGUE INSANITY 62' }, { text: 'TEAM PUZL - JUGSAW' }, { text: 'TOP 100 FREESTYLES' }, { text: 'TOP 100 REDIRECTS' }, { text: 'TOP 100 PINCHES' }, { text: 'BEST OF 2021' }, { text: 'TOP 100 PREFLIPS' }, { text: 'ROCKET LEAGUE AROUND THE WORLD 🇮🇱', special: true }
+    ]
+  },
+  en: {
+    navLinks: ['About', 'My Journey', 'Content', 'Pricing'],
+    auth: { loginTop: 'Sign In', logout: 'Logout', hello: 'Hello', tabLogin: 'Login', tabRegister: 'Register', titleLogin: 'Login to Account', titleRegister: 'Create New Account', name: 'Full Name', email: 'Email', pass: 'Password', submitLogin: 'Login', submitRegister: 'Register', requireMsg: 'You must log in to an account before purchasing a plan.' },
+    heroBadge: '🚀 Rocket League Academy',
+    h1: ['Elevate Your', 'Rocket League', 'To The Next Level'],
+    heroSub: '11 years of Rocket League experience. Mechanic guides, pro tips, and personal coaching — all in one place.',
+    heroCTA1: 'Join Now', heroCTA2: 'Browse Content',
+    stats: ['Years Playing', 'Peak Rank', 'Mechanics', 'Plans'],
+    aboutTag: 'About drexm', aboutTitle: 'Who I Am & Why You Should<br/>Learn From Me',
+    aboutSub: "Top-tier Israeli player. Playing since day one — with the vast experience, understanding, and skills to explain any mechanic and answer any question clearly.",
+    cards: [
+      ['11 Years Experience', "A veteran since launch day. I've lived through every meta, mechanic, and update — and adapted to each one."],
+      ['Among Israel\'s Best', "Among the most mechanical competitive players in the country and a top freestyler in Israel, with the ability to read any situation in seconds. Experience you can't buy in a book."],
+      ['Focused Professional Content', 'Video guides, detailed drills, and training maps — all organized by rank. From beginner to the highest ranks.'],
+      ['Support & Tips', 'Not a full-time coach, but support subscribers get access to me for questions, tips, and occasional voice explanations.']
+    ],
+    contentTag: 'Content', contentTitle: 'What You\'ll Learn at ',
+    contentSub: 'Video guides and drills — for paying members only. Some content is free so you can get a taste.',
+    items: ['Air Roll — Foundation to Advanced', 'How to Think Like a Grand Champion', 'Ceiling Shot — Full Guide', 'Boost Management — The Winning Secret', 'Double Tap — The Shot That Breaks Everyone', 'Positioning & Rotation — Advanced Guide', 'Musty Flick, Breezi Flick & More', 'More content coming soon...'],
+    pricingTag: 'Pricing', pricingTitle: 'Choose Your Plan',
+    plans: [
+      {
+        id: 'content', badge: 'CONTENT', title: 'Full Content Access', price: '70', period: 'One-time payment',
+        features: ['All video guides', 'Access to all drills and practices', 'Access to new future content', 'Self-paced learning'],
+        btn: '🚀 Buy Content Access', note: 'Secure payment · Lifetime access'
+      },
+      {
+        id: 'support', badge: 'SUPPORT', title: 'Q&A and Tips', price: '29', period: 'Per month',
+        features: ['Private Discord server access', 'Answers to questions & personal tips', 'Help understanding mechanics', 'Occasional voice explanations'],
+        btn: '💬 Join Support Plan', note: 'No commitment · Cancel anytime'
+      }
+    ],
+    footerSub: 'DREXM ROCKET LEAGUE ACADEMY 2026 All rights reserved',
+    dashTitle: 'Dashboard', dashSub: 'Welcome to the Academy! Choose a category to start learning.',
+    tabs: ['Videos', 'Drills', 'Help & Tips'],
+    vidBtn: 'Watch Now',
+    coachTitle: 'Support & Q&A', coachDesc: 'Subscribed to the support plan? Send me a message on Discord with your questions, or if you need help with a mechanic. I\'m here to guide you.', coachBtn: 'Join Discord Server',
+    backHome: 'Back to Homepage',
+    journeyTag: 'My Journey',
+    journeyTitle: 'From Beta to the Top',
+    journey: [
+      { year: '2015-2017', title: 'The Beginning & Talent', text: 'Started playing in the Closed Beta in 2015. I always loved going up in the air and trying cool things. Inspired by freestylers like JZR, Pulse MK, and Pulse Muirie. My first rank was Gold 3 Div 2, and thanks to mechanical dedication, I reached Champion easily.' },
+      { year: '2019-2020', title: 'Grand Champion & Mechanical Dominance', text: 'By 2019 I was GC. My mechanics were so good that whenever the ball was in the air, it was a goal - almost without needing Game Sense. In 2020 I improved my Game Sense reaching 1600-1700 MMR, and <span class="mech-highlight">won 1st place in the Hype League National Championship</span> (2v2).' },
+      { year: '2020-2023', title: 'Military Service & Pulse Clan Tournament', text: 'I enlisted in combat service, leaving very little time to play. Despite the difficulty of maintaining my level, in 2021 another freestyler (Harel) and I tried out, <span class="mech-highlight">got accepted and participated in the Pulse Clan 2v2 Freestyle Tournament</span> broadcasted to thousands of viewers on YouTube.' },
+      { year: 'Today', title: 'Student, Content Creator & Mechanics Inventor', text: 'Today I am a student in Electrical Engineering & Computer Science. During the semester break, I came back strong and reached SSL. I run a successful TikTok page, stream educational content, and invented 3 new mechanics: <span class="mech-highlight">Reverse Musty, Shay pop, Front Windmill</span>.' }
+    ],
+    rlfxTag: 'Features & Clips',
+    rlfxTitle: 'Featured On <span style="color: var(--cyan)">RLFX</span>',
+    rlfxSub: 'Featured in dozens of videos on the largest freestyle channel in the world.',
+    rlfxItems: [
+      { text: 'ROCKET LEAGUE INSANITY 40' }, { text: 'ROCKET LEAGUE INSANITY 41' }, { text: 'ROCKET LEAGUE INSANITY 44' }, { text: 'ROCKET LEAGUE INSANITY 53' }, { text: 'ROCKET LEAGUE INSANITY 55' }, { text: 'ROCKET LEAGUE INSANITY 56' }, { text: 'ROCKET LEAGUE INSANITY 58' }, { text: 'ROCKET LEAGUE INSANITY 59' }, { text: 'ROCKET LEAGUE INSANITY 60' }, { text: 'ROCKET LEAGUE INSANITY 62' }, { text: 'TEAM PUZL - JUGSAW' }, { text: 'TOP 100 FREESTYLES' }, { text: 'TOP 100 REDIRECTS' }, { text: 'TOP 100 PINCHES' }, { text: 'BEST OF 2021' }, { text: 'TOP 100 PREFLIPS' }, { text: 'ROCKET LEAGUE AROUND THE WORLD 🇮🇱', special: true }
+    ]
+  }
+};
+
+// --- AUTH LOGIC ---
+function updateAuthUI() {
+  const s = strings[currentLang];
+  const userArea = document.getElementById('userArea');
+  
+  if (currentUser) {
+    userArea.innerHTML = `
+      <span class="user-name">${s.auth.hello}, ${currentUser}</span>
+      <button class="btn-logout" onclick="handleLogout()">${s.auth.logout}</button>
+    `;
+  } else {
+    userArea.innerHTML = `
+      <button class="btn-login" onclick="openAuthModal()">${s.auth.loginTop}</button>
+    `;
+  }
+}
+
+function setAuthMode(mode) {
+  authMode = mode;
+  const s = strings[currentLang];
+  
+  const tabLogin = document.getElementById('tab-login');
+  const tabRegister = document.getElementById('tab-register');
+  const nameWrapper = document.getElementById('nameInputWrapper');
+  const nameInput = document.getElementById('authName');
+  const title = document.getElementById('authModalTitle');
+  const submitBtn = document.getElementById('authSubmitBtn');
+  
+  if (mode === 'login') {
+    tabLogin.classList.add('active');
+    tabRegister.classList.remove('active');
+    nameWrapper.style.display = 'none';
+    nameInput.required = false;
+    title.innerText = s.auth.titleLogin;
+    submitBtn.innerText = s.auth.submitLogin;
+  } else {
+    tabRegister.classList.add('active');
+    tabLogin.classList.remove('active');
+    nameWrapper.style.display = 'block';
+    nameInput.required = true;
+    title.innerText = s.auth.titleRegister;
+    submitBtn.innerText = s.auth.submitRegister;
+  }
+}
+
+function openAuthModal(fromPurchase = false) {
+  pendingPurchase = fromPurchase; 
+  const s = strings[currentLang];
+  document.getElementById('authMsg').style.display = fromPurchase ? 'block' : 'none';
+  document.getElementById('authMsg').innerText = s.auth.requireMsg;
+  setAuthMode('login'); 
+  document.getElementById('authModal').classList.add('active');
+}
+
+function closeAuthModal() {
+  document.getElementById('authModal').classList.remove('active');
+  pendingPurchase = false;
+}
+
+function handleLogin(e) {
+  e.preventDefault();
+  const email = document.getElementById('authEmail').value.trim();
+  let name = '';
+  
+  if (authMode === 'register') {
+    name = document.getElementById('authName').value.trim();
+  } else {
+    name = email.split('@')[0];
+  }
+  
+  if (name) {
+    currentUser = name;
+    updateAuthUI();
+    closeAuthModal();
+    
+    document.getElementById('authName').value = '';
+    document.getElementById('authEmail').value = '';
+    document.getElementById('authPass').value = '';
+    
+    if (pendingPurchase) {
+      toggleDashboard(true);
+      pendingPurchase = false;
+    }
+  }
+}
+
+function handleLogout() {
+  currentUser = null;
+  updateAuthUI();
+  if (document.getElementById('view-dashboard').style.display === 'block') {
+    toggleDashboard(false);
+  }
+}
+
+function initiatePurchase() {
+  if (!currentUser) {
+    openAuthModal(true); 
+  } else {
+    toggleDashboard(true); 
+  }
+}
+
+// --- RENDER LOGIC ---
+function setLang(lang) {
+  currentLang = lang;
+  const s = strings[lang];
+  
+  document.documentElement.dir = lang === 'he' ? 'rtl' : 'ltr';
+  document.documentElement.lang = lang;
+  
+  document.getElementById('btn-he').className = lang === 'he' ? 'lang-btn active' : 'lang-btn';
+  document.getElementById('btn-en').className = lang === 'en' ? 'lang-btn active' : 'lang-btn';
+
+  updateAuthUI(); 
+
+  document.getElementById('tab-login').innerText = s.auth.tabLogin;
+  document.getElementById('tab-register').innerText = s.auth.tabRegister;
+  document.getElementById('authName').placeholder = s.auth.name;
+  document.getElementById('authEmail').placeholder = s.auth.email;
+  document.getElementById('authPass').placeholder = s.auth.pass;
+  setAuthMode(authMode); 
+
+  document.getElementById('nav-about').innerText = s.navLinks[0];
+  document.getElementById('nav-journey').innerText = s.navLinks[1];
+  document.getElementById('nav-content').innerText = s.navLinks[2];
+  document.getElementById('nav-pricing').innerText = s.navLinks[3];
+  document.getElementById('nav-back').innerText = s.backHome;
+
+  document.getElementById('hero-badge').innerText = s.heroBadge;
+  document.getElementById('h1-0').innerText = s.h1[0];
+  document.getElementById('h1-1').innerText = s.h1[1];
+  document.getElementById('h1-2').innerText = s.h1[2];
+  document.getElementById('hero-sub').innerText = s.heroSub;
+  document.getElementById('hero-btn1').innerText = s.heroCTA1;
+  document.getElementById('hero-btn2').innerText = s.heroCTA2;
+  
+  for(let i=0; i<4; i++) {
+    document.getElementById(`stat-${i}`).innerText = s.stats[i];
+  }
+
+  document.getElementById('about-tag').innerText = s.aboutTag;
+  document.getElementById('about-title').innerHTML = s.aboutTitle;
+  document.getElementById('about-sub').innerText = s.aboutSub;
+  
+  const aboutCards = ['🎮','🏆','📚','💬'].map((icon, i) => `
+    <div class="about-card">
+      <div class="about-card-icon">${icon}</div>
+      <h3>${s.cards[i][0]}</h3>
+      <p>${s.cards[i][1]}</p>
+    </div>
+  `).join('');
+  document.getElementById('about-cards-container').innerHTML = aboutCards;
+
+  document.getElementById('journey-tag').innerText = s.journeyTag;
+  document.getElementById('journey-title').innerText = s.journeyTitle;
+  const timelineHtml = s.journey.map(j => `
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-content">
+        <div class="timeline-date">${j.year}</div>
+        <h4>${j.title}</h4>
+        <p>${j.text}</p>
+      </div>
+    </div>
+  `).join('');
+  document.getElementById('journey-timeline').innerHTML = timelineHtml;
+
+  document.getElementById('rlfx-tag').innerText = s.rlfxTag;
+  document.getElementById('rlfx-title').innerHTML = s.rlfxTitle;
+  document.getElementById('rlfx-sub').innerText = s.rlfxSub;
+  const rlfxHtml = s.rlfxItems.map(r => `
+    <div class="rlfx-tag ${r.special ? 'special' : ''}">${r.text}</div>
+  `).join('');
+  document.getElementById('rlfx-container').innerHTML = rlfxHtml;
+
+  document.getElementById('content-tag').innerText = s.contentTag;
+  document.getElementById('content-title').innerText = s.contentTitle;
+  document.getElementById('content-sub').innerText = s.contentSub;
+  
+  let contentHtml = `
+    <div class="content-item"><span class="content-badge badge-video">🎬</span><span class="content-title">${s.items[0]}</span></div>
+    <div class="content-item"><span class="content-badge badge-article">🎯</span><span class="content-title">${s.items[1]}</span></div>
+  `;
+  [2,3,4,5,6].forEach(i => {
+    const isVid = i%2 === 0;
+    contentHtml += `
+      <div class="content-item locked">
+        <span class="content-badge ${isVid ? 'badge-video' : 'badge-guide'}">${isVid ? '🎬' : '🎯'}</span>
+        <span class="content-title">${s.items[i]}</span>
+        <span class="lock-icon">🔒</span>
+      </div>
+    `;
+  });
+  contentHtml += `
+    <div class="content-item locked" style="border-style: dashed; opacity: 0.5">
+      <span class="content-badge badge-guide">+</span>
+      <span class="content-title">${s.items[7]}</span>
+    </div>
+  `;
+  document.getElementById('home-content-list').innerHTML = contentHtml;
+
+  document.getElementById('pricing-tag').innerText = s.pricingTag;
+  document.getElementById('pricing-title').innerText = s.pricingTitle;
+  
+  const plansHtml = s.plans.map(plan => `
+    <div class="pricing-box plan-${plan.id}">
+      <div class="plan-badge">${plan.badge}</div>
+      <div class="pricing-label">${plan.title}</div>
+      <div class="pricing-price"><sup>₪</sup>${plan.price}</div>
+      <div class="pricing-once">${plan.period}</div>
+      <ul class="pricing-features">
+        ${plan.features.map(f => `<li>${f}</li>`).join('')}
+      </ul>
+      <button class="btn-buy" onclick="initiatePurchase()">${plan.btn}</button>
+      <p class="pricing-note">${plan.note}</p>
+    </div>
+  `).join('');
+  document.getElementById('pricing-plans-container').innerHTML = plansHtml;
+
+  document.getElementById('dash-title').innerText = s.dashTitle;
+  document.getElementById('dash-sub').innerText = s.dashSub;
+  document.getElementById('tab-videos').innerText = s.tabs[0];
+  document.getElementById('tab-drills').innerText = s.tabs[1];
+  document.getElementById('tab-coaching').innerText = s.tabs[2];
+  
+  document.getElementById('coach-title').innerText = s.coachTitle;
+  document.getElementById('coach-desc').innerText = s.coachDesc;
+  document.getElementById('coach-btn').innerText = s.coachBtn;
+
+  const videosHtml = [0, 2, 4, 6].map(i => `
+    <div class="video-card">
+      <div class="video-thumb"><div class="play-btn">▶</div></div>
+      <div class="video-info">
+        <h4>${s.items[i]}</h4>
+        <p>${s.vidBtn}</p>
+      </div>
+    </div>
+  `).join('');
+  document.getElementById('pane-videos').innerHTML = videosHtml;
+
+  const drillsHtml = [1, 3, 5].map(i => `
+    <div class="content-item">
+      <span class="content-badge ${i%2 !== 0 ? 'badge-article' : 'badge-guide'}">🎯</span>
+      <span class="content-title">${s.items[i]}</span>
+    </div>
+  `).join('');
+  document.getElementById('pane-drills').innerHTML = drillsHtml;
+
+  document.getElementById('footer-sub').innerText = s.footerSub;
+}
+
+function scrollToId(id) {
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior: 'smooth' });
+}
+
+function toggleDashboard(show) {
+  window.scrollTo(0, 0);
+  if (show) {
+    document.getElementById('view-home').style.display = 'none';
+    document.getElementById('home-nav').style.display = 'none';
+    document.getElementById('view-dashboard').style.display = 'block';
+    document.getElementById('dash-nav').style.display = 'flex';
+  } else {
+    document.getElementById('view-dashboard').style.display = 'none';
+    document.getElementById('dash-nav').style.display = 'none';
+    document.getElementById('view-home').style.display = 'block';
+    document.getElementById('home-nav').style.display = 'flex';
+  }
+}
+
+function switchTab(tab) {
+  document.getElementById('tab-videos').className = 'dash-tab';
+  document.getElementById('tab-drills').className = 'dash-tab';
+  document.getElementById('tab-coaching').className = 'dash-tab';
+  document.getElementById('tab-' + tab).className = 'dash-tab active';
+
+  document.getElementById('pane-videos').style.display = 'none';
+  document.getElementById('pane-drills').style.display = 'none';
+  document.getElementById('pane-coaching').style.display = 'none';
+  
+  if (tab === 'videos') document.getElementById('pane-videos').style.display = 'grid';
+  if (tab === 'drills') document.getElementById('pane-drills').style.display = 'grid';
+  if (tab === 'coaching') document.getElementById('pane-coaching').style.display = 'block';
+}
+
+const canvas = document.getElementById('particles');
+const ctx = canvas.getContext('2d');
+let W, H, particles = [];
+
+function resizeCanvas() {
+  W = canvas.width = window.innerWidth;
+  H = canvas.height = window.innerHeight;
+}
+
+window.addEventListener('resize', resizeCanvas);
+resizeCanvas();
+
+for (let i = 0; i < 70; i++) {
+  particles.push({
+    x: Math.random() * 2000,
+    y: Math.random() * 1200,
+    vx: (Math.random() - 0.5) * 0.4 + 0.15,
+    vy: (Math.random() - 0.5) * 0.15,
+    r: Math.random() * 1.5 + 0.3,
+    a: Math.random() * 0.6 + 0.2,
+    c: Math.random() > 0.6 ? '#00C6FF' : '#C77DFF'
+  });
+}
+
+function drawParticles() {
+  ctx.clearRect(0, 0, W, H);
+  particles.forEach(p => {
+    ctx.beginPath();
+    ctx.arc(p.x % W, p.y % H, p.r, 0, Math.PI * 2);
+    ctx.fillStyle = p.c;
+    ctx.globalAlpha = p.a;
+    ctx.fill();
+    p.x += p.vx;
+    p.y += p.vy;
+    if (p.x > W + 10) p.x = -10;
+    if (p.y < -10) p.y = H + 10;
+    if (p.y > H + 10) p.y = -10;
+  });
+  ctx.globalAlpha = 1;
+  requestAnimationFrame(drawParticles);
+}
+drawParticles();
+
+// Initialize first render
+setLang('he');
+
+</script>
+</body>
+</html>
