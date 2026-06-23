@@ -81,7 +81,7 @@ nav { position: sticky; top: 0; z-index: 100; background: rgba(8,8,15,0.85); bac
 .modal-form { display: flex; flex-direction: column; gap: 16px; }
 .modal-form input { width: 100%; padding: 14px 16px; background: var(--bg); border: 1px solid var(--border); color: var(--white); border-radius: 6px; font-family: 'Heebo', sans-serif; font-size: 15px; transition: border-color 0.2s; }
 .modal-form input:focus { outline: none; border-color: var(--cyan); }
-.auth-msg { color: var(--orange); font-size: 13px; text-align: center; display: none; margin-bottom: 8px; }
+.auth-msg { color: var(--orange); font-size: 13px; text-align: center; display: none; margin-bottom: 8px; line-height: 1.5; }
 
 /* HERO */
 .hero { min-height: 88vh; display: flex; align-items: center; padding: 80px 0 60px; }
@@ -405,7 +405,7 @@ footer { position: relative; z-index: 2; border-top: 1px solid var(--border); pa
     </div>
     <h2 class="modal-title" id="authModalTitle">התחבר לחשבון</h2>
     <p class="auth-msg" id="authMsg">יש להתחבר לחשבון לפני רכישת מנוי</p>
-    <form class="modal-form" onsubmit="handleLogin(event)">
+    <form class="modal-form" id="authForm" onsubmit="handleLogin(event)">
       <div id="nameInputWrapper" style="display: none;">
         <input type="text" id="authName" placeholder="שם מלא">
       </div>
@@ -416,12 +416,59 @@ footer { position: relative; z-index: 2; border-top: 1px solid var(--border); pa
   </div>
 </div>
 
-<script>
-// --- STATE ---
+<!-- טעינת ספריות Firebase בגרסה מעודכנת (CDN) -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, signInWithCustomToken, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+// ==========================================
+// --- קונפיגורציית ה-FIREBASE האישית שלך ---
+// ברגע שסיימת לפתוח פרויקט ב-Firebase Console,
+// החלף את הערכים בבלוק הבא בערכים שלך!
+// ==========================================
+const yourFirebaseConfig = {
+  apiKey: "AIzaSyDMXekcsqD5azgP6NaAt2l1Y7Sjwee1HxM",
+  authDomain: "drexm-academy.firebaseapp.com",
+  projectId: "drexm-academy",
+  storageBucket: "drexm-academy.firebasestorage.app",
+  messagingSenderId: "398684076807",
+  appId: "1:398684076807:web:62f506ddaa955cd21373a2"
+};
+
+// משתנים גלובליים לניהול המצב
+let useFirebase = false;
+let auth = null;
+let db = null;
+let appId = typeof __app_id !== 'undefined' ? __app_id : 'drexm-academy';
+
 let currentLang = 'he';
-let currentUser = null; // null means not logged in
-let pendingPurchase = false; // keeps track if they tried to buy before login
-let authMode = 'login'; // 'login' or 'register'
+let currentUser = null; 
+let isPaid = false; 
+let pendingPurchase = false; 
+let authMode = 'login'; 
+
+// אתחול Firebase במידה והמשתמש הזין את הפרטים שלו או בסביבת הפיתוח המובנית
+let configToUse = null;
+if (typeof __firebase_config !== 'undefined') {
+  configToUse = JSON.parse(__firebase_config);
+} else if (yourFirebaseConfig.apiKey !== "YOUR_API_KEY") {
+  configToUse = yourFirebaseConfig;
+}
+
+if (configToUse) {
+  try {
+    const app = initializeApp(configToUse);
+    auth = getAuth(app);
+    db = getFirestore(app);
+    useFirebase = true;
+    console.log("Firebase initialized successfully!");
+  } catch (e) {
+    console.error("Firebase initialization failed. Running in Demo Mode.", e);
+  }
+} else {
+  console.log("Running in Demo Mode. To connect Firebase, update 'yourFirebaseConfig' in the script.");
+}
 
 // --- DICTIONARY ---
 const strings = {
@@ -533,6 +580,31 @@ const strings = {
   }
 };
 
+// תרגום שגיאות פיירבייס לעברית/אנגלית בצורה ידידותית
+function getFirebaseErrorMessage(code) {
+  if (currentLang === 'he') {
+    switch(code) {
+      case 'auth/invalid-email': return 'כתובת אימייל לא תקינה.';
+      case 'auth/user-disabled': return 'משתמש זה חסום על ידי מנהל המערכת.';
+      case 'auth/user-not-found': return 'לא נמצא משתמש עם כתובת אימייל זו. בחר בלשונית "הרשמה" כדי ליצור חשבון.';
+      case 'auth/wrong-password': return 'הסיסמה שהזנת אינה נכונה.';
+      case 'auth/email-already-in-use': return 'כתובת האימייל הזו כבר רשומה במערכת.';
+      case 'auth/weak-password': return 'הסיסמה חלשה מדי (חובה לפחות 6 תווים).';
+      default: return 'ארעה שגיאה בתהליך. אנא נסה שנית.';
+    }
+  } else {
+    switch(code) {
+      case 'auth/invalid-email': return 'Invalid email address.';
+      case 'auth/user-disabled': return 'This account has been disabled.';
+      case 'auth/user-not-found': return 'No account found with this email. Switch to "Register" to create one.';
+      case 'auth/wrong-password': return 'Incorrect password.';
+      case 'auth/email-already-in-use': return 'This email is already in use.';
+      case 'auth/weak-password': return 'Password is too weak (must be at least 6 characters).';
+      default: return 'An error occurred. Please try again.';
+    }
+  }
+}
+
 // --- AUTH LOGIC ---
 function updateAuthUI() {
   const s = strings[currentLang];
@@ -541,12 +613,16 @@ function updateAuthUI() {
   if (currentUser) {
     userArea.innerHTML = `
       <span class="user-name">${s.auth.hello}, ${currentUser}</span>
-      <button class="btn-logout" onclick="handleLogout()">${s.auth.logout}</button>
+      <button class="btn-logout" id="btnLogoutBtn">${s.auth.logout}</button>
     `;
+    // הוספת מאזין אירועים ידנית לכפתור ההתנתקות כדי להימנע מבעיות סקופ
+    document.getElementById('btnLogoutBtn').addEventListener('click', handleLogout);
   } else {
     userArea.innerHTML = `
-      <button class="btn-login" onclick="openAuthModal()">${s.auth.loginTop}</button>
+      <button class="btn-login" id="btnLoginBtn">${s.auth.loginTop}</button>
     `;
+    // הוספת מאזין אירועים ידנית לכפתור ההתחברות
+    document.getElementById('btnLoginBtn').addEventListener('click', () => openAuthModal(false));
   }
 }
 
@@ -581,8 +657,9 @@ function setAuthMode(mode) {
 function openAuthModal(fromPurchase = false) {
   pendingPurchase = fromPurchase; 
   const s = strings[currentLang];
-  document.getElementById('authMsg').style.display = fromPurchase ? 'block' : 'none';
-  document.getElementById('authMsg').innerText = s.auth.requireMsg;
+  const authMsg = document.getElementById('authMsg');
+  authMsg.style.display = fromPurchase ? 'block' : 'none';
+  authMsg.innerText = s.auth.requireMsg;
   setAuthMode('login'); 
   document.getElementById('authModal').classList.add('active');
 }
@@ -592,47 +669,155 @@ function closeAuthModal() {
   pendingPurchase = false;
 }
 
-function handleLogin(e) {
+// התחברות/הרשמה אמיתית ל-Firebase (או דמו במצב ללא הגדרה)
+async function handleLogin(e) {
   e.preventDefault();
+  const authMsg = document.getElementById('authMsg');
+  authMsg.style.display = 'none';
+
   const email = document.getElementById('authEmail').value.trim();
-  let name = '';
+  const password = document.getElementById('authPass').value;
+  const name = document.getElementById('authName').value.trim();
   
-  if (authMode === 'register') {
-    name = document.getElementById('authName').value.trim();
+  if (useFirebase) {
+    try {
+      if (authMode === 'register') {
+        // הרשמת משתמש חדש
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+        
+        // שמירת הפרופיל שלו ב-Firestore
+        const userDocRef = doc(db, 'artifacts', appId, 'users', user.uid, 'profile', 'userData');
+        await setDoc(userDocRef, {
+          name: name,
+          email: email,
+          isPaid: false,
+          createdAt: new Date().toISOString()
+        });
+        
+        currentUser = name;
+        isPaid = false;
+      } else {
+        // התחברות משתמש קיים
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+        
+        // משיכת פרטי המשתמש מ-Firestore
+        const userDocRef = doc(db, 'artifacts', appId, 'users', user.uid, 'profile', 'userData');
+        const docSnap = await getDoc(userDocRef);
+        
+        if (docSnap.exists()) {
+          const data = docSnap.data();
+          currentUser = data.name || email.split('@')[0];
+          isPaid = data.isPaid || false;
+        } else {
+          currentUser = email.split('@')[0];
+          isPaid = false;
+        }
+      }
+      
+      updateAuthUI();
+      closeAuthModal();
+      
+      // איפוס שדות
+      document.getElementById('authName').value = '';
+      document.getElementById('authEmail').value = '';
+      document.getElementById('authPass').value = '';
+      
+      if (pendingPurchase) {
+        await initiatePurchase();
+      } else if (isPaid) {
+        toggleDashboard(true);
+      }
+      
+    } catch (error) {
+      console.error("Auth Error:", error);
+      authMsg.style.display = 'block';
+      authMsg.innerText = getFirebaseErrorMessage(error.code);
+    }
   } else {
-    name = email.split('@')[0];
-  }
-  
-  if (name) {
-    currentUser = name;
+    // מצב דמו (ללא פיירבייס)
+    let finalName = name;
+    if (authMode === 'login') {
+      finalName = email.split('@')[0];
+    }
+    currentUser = finalName;
+    isPaid = false; // ברירת מחדל לא רכש בדמו
+    
     updateAuthUI();
     closeAuthModal();
     
-    document.getElementById('authName').value = '';
-    document.getElementById('authEmail').value = '';
-    document.getElementById('authPass').value = '';
-    
     if (pendingPurchase) {
+      // במצב דמו, רכישה פשוט תעביר לדאשבורד
+      isPaid = true;
       toggleDashboard(true);
-      pendingPurchase = false;
     }
   }
 }
 
-function handleLogout() {
-  currentUser = null;
-  updateAuthUI();
-  if (document.getElementById('view-dashboard').style.display === 'block') {
-    toggleDashboard(false);
+async function handleLogout() {
+  if (useFirebase) {
+    await signOut(auth);
   }
+  currentUser = null;
+  isPaid = false;
+  updateAuthUI();
+  toggleDashboard(false);
 }
 
-function initiatePurchase() {
+// טיפול ברכישה ובעדכון הסטטוס ב-Firebase
+async function initiatePurchase() {
   if (!currentUser) {
     openAuthModal(true); 
   } else {
-    toggleDashboard(true); 
+    if (useFirebase && auth.currentUser) {
+      try {
+        const userDocRef = doc(db, 'artifacts', appId, 'users', auth.currentUser.uid, 'profile', 'userData');
+        await setDoc(userDocRef, {
+          isPaid: true
+        }, { merge: true });
+        isPaid = true;
+        toggleDashboard(true);
+      } catch (e) {
+        console.error("Error updating purchase status:", e);
+      }
+    } else {
+      // דמו
+      isPaid = true;
+      toggleDashboard(true);
+    }
   }
+}
+
+// האזנה לשינויי מצב התחברות ב-Firebase בטעינת העמוד
+if (useFirebase) {
+  onAuthStateChanged(auth, async (user) => {
+    if (user) {
+      try {
+        const userDocRef = doc(db, 'artifacts', appId, 'users', user.uid, 'profile', 'userData');
+        const docSnap = await getDoc(userDocRef);
+        if (docSnap.exists()) {
+          const data = docSnap.data();
+          currentUser = data.name || user.email.split('@')[0];
+          isPaid = data.isPaid || false;
+        } else {
+          currentUser = user.email.split('@')[0];
+          isPaid = false;
+        }
+      } catch (e) {
+        console.error("Error loading user profile on auth change:", e);
+        currentUser = user.email ? user.email.split('@')[0] : "User";
+      }
+      updateAuthUI();
+      if (isPaid) {
+        toggleDashboard(true);
+      }
+    } else {
+      currentUser = null;
+      isPaid = false;
+      updateAuthUI();
+    }
+  });
 }
 
 // --- RENDER LOGIC ---
@@ -746,11 +931,19 @@ function setLang(lang) {
       <ul class="pricing-features">
         ${plan.features.map(f => `<li>${f}</li>`).join('')}
       </ul>
-      <button class="btn-buy" onclick="initiatePurchase()">${plan.btn}</button>
+      <button class="btn-buy" id="btnBuy-${plan.id}">${plan.btn}</button>
       <p class="pricing-note">${plan.note}</p>
     </div>
   `).join('');
   document.getElementById('pricing-plans-container').innerHTML = plansHtml;
+
+  // הוספת מאזיני אירועים ידנית לכפתורי הקנייה
+  s.plans.forEach(plan => {
+    const btn = document.getElementById(`btnBuy-${plan.id}`);
+    if (btn) {
+      btn.addEventListener('click', initiatePurchase);
+    }
+  });
 
   document.getElementById('dash-title').innerText = s.dashTitle;
   document.getElementById('dash-sub').innerText = s.dashSub;
@@ -818,6 +1011,18 @@ function switchTab(tab) {
   if (tab === 'drills') document.getElementById('pane-drills').style.display = 'grid';
   if (tab === 'coaching') document.getElementById('pane-coaching').style.display = 'block';
 }
+
+// חשיפת הפונקציות לסקופ הגלובלי (מאחר והסקריפט מוגדר כ-module)
+window.setLang = setLang;
+window.scrollToId = scrollToId;
+window.toggleDashboard = toggleDashboard;
+window.openAuthModal = openAuthModal;
+window.closeAuthModal = closeAuthModal;
+window.setAuthMode = setAuthMode;
+window.handleLogin = handleLogin;
+window.handleLogout = handleLogout;
+window.initiatePurchase = initiatePurchase;
+window.switchTab = switchTab;
 
 const canvas = document.getElementById('particles');
 const ctx = canvas.getContext('2d');
