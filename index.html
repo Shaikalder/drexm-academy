@@ -14,13 +14,13 @@
 
 /* הגדרות למצב הבהיר (Light Mode) */
 body.light-mode {
-  --bg: #D0D4DA; /* אפור עמוק ונעים יותר מהגרסה הקודמת */
+  --bg: #D0D4DA; 
   --bg2: #E2E6EA; 
   --bg3: #BFC4CB;
   --cyan: #0077B6; 
   --orange: #9D4EDD; 
-  --white: #111827; /* טקסט כהה */
-  --muted: #374151; /* טקסט אפור שהוכהה כדי לבלוט טוב יותר על הרקע */
+  --white: #111827; 
+  --muted: #374151; 
   --card: #DFE3E8; 
   --border: #A3ABB4;
 }
@@ -44,12 +44,41 @@ body, html {
   background-color: var(--bg);
   color: var(--white);
   transition: background-color 0.3s;
+  overflow: hidden; /* למנוע גלילה רוחבית מהצורות בצדדים */
 }
 
 h1, h2, h3, h4, h5, h6 { color: var(--white); }
 
+/* רקע החלקיקים הראשי */
 canvas#particles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; opacity: 0.35; transition: opacity 0.3s; }
 body.light-mode canvas#particles { opacity: 0.85; }
+
+/* צורות גיאומטריות בצדדים (Parallax Shards) */
+.shards-container {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.shard {
+  position: absolute;
+  opacity: 0.45; /* הגדלנו שקיפות כדי שהזוהר יבלוט */
+  transition: opacity 0.3s;
+  will-change: transform; /* הוספנו לשיפור ביצועי גלילה עם הרבה צורות */
+}
+
+body.light-mode .shard {
+  opacity: 0.7; /* בולט יותר במצב הבהיר */
+}
+
+.shard svg {
+  width: 100%; height: 100%;
+  fill: transparent;
+  stroke-width: 4px; /* קווים עבים יותר לקריסטלים קטנים */
+}
 
 .wrap { position: relative; z-index: 2; max-width: 960px; margin: 0 auto; padding: 0 24px; flex: 1; width: 100%; }
 
@@ -88,11 +117,11 @@ body.light-mode .lang-btn.active { color: #fff; }
 
 /* MODAL */
 .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 1000; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(5px); opacity: 0; pointer-events: none; transition: opacity 0.3s, background 0.3s; }
-body.light-mode .modal { background: rgba(130, 135, 145, 0.6); backdrop-filter: blur(6px); } /* רקע אפור מטושטש למודאל במצב בהיר */
+body.light-mode .modal { background: rgba(130, 135, 145, 0.6); backdrop-filter: blur(6px); } 
 
 .modal.active { opacity: 1; pointer-events: auto; }
 .modal-content { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 40px; width: 90%; max-width: 400px; position: relative; box-shadow: 0 10px 40px rgba(0,0,0,0.5); transform: translateY(20px); transition: transform 0.3s, background-color 0.3s; }
-body.light-mode .modal-content { background: #F4F5F7; box-shadow: 0 10px 40px rgba(0,0,0,0.15); } /* חלון פנימי בהיר ונקי */
+body.light-mode .modal-content { background: #F4F5F7; box-shadow: 0 10px 40px rgba(0,0,0,0.15); } 
 
 .close-btn { position: absolute; top: 16px; right: 24px; font-size: 28px; cursor: pointer; color: var(--muted); transition: color 0.2s; }
 [dir="ltr"] .close-btn { right: auto; left: 24px; }
@@ -247,6 +276,7 @@ footer { position: relative; z-index: 2; border-top: 1px solid var(--border); pa
   .hero-stats { justify-content: center; }
   .hero-cta { justify-content: center; }
   .hero-sub { margin-left: auto; margin-right: auto; }
+  .shard { display: none; } /* הסתרת צורות במסכים קטנים מאוד כדי לא להעמיס */
 }
 @media(max-width:640px) {
   .about-grid { grid-template-columns: 1fr; }
@@ -261,6 +291,7 @@ footer { position: relative; z-index: 2; border-top: 1px solid var(--border); pa
 
 <div class="app-container">
   <canvas id="particles"></canvas>
+  <div class="shards-container" id="shards-container"></div>
   
   <nav>
     <div class="nav-inner">
@@ -467,7 +498,6 @@ footer { position: relative; z-index: 2; border-top: 1px solid var(--border); pa
   </div>
 </div>
 
-<!-- טעינת ספריות Firebase בגרסה מעודכנת (CDN) -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
@@ -486,7 +516,6 @@ const firebaseConfig = {
   measurementId: "G-Z2C0GXDS3V"
 };
 
-// משתנים גלובליים לניהול המצב
 let useFirebase = false;
 let auth = null;
 let db = null;
@@ -499,7 +528,6 @@ let currentUserEmail = null;
 let isPaid = false; 
 let authMode = 'login'; 
 
-// אתחול Firebase 
 try {
   const app = initializeApp(firebaseConfig);
   auth = getAuth(app);
@@ -510,7 +538,6 @@ try {
   console.error("Firebase initialization failed.", e);
 }
 
-// --- DICTIONARY ---
 const strings = {
   he: {
     navLinks: ['עליי', 'הסיפור שלי', 'תכנים', 'מחיר'],
@@ -622,7 +649,6 @@ const strings = {
   }
 };
 
-// תרגום שגיאות פיירבייס לעברית/אנגלית בצורה ידידותית
 function getFirebaseErrorMessage(code) {
   if (currentLang === 'he') {
     switch(code) {
@@ -649,7 +675,6 @@ function getFirebaseErrorMessage(code) {
   }
 }
 
-// --- AUTH LOGIC ---
 function updateAuthUI() {
   const s = strings[currentLang];
   const userArea = document.getElementById('userArea');
@@ -708,7 +733,6 @@ function closeAuthModal() {
   document.getElementById('authModal').classList.remove('active');
 }
 
-// פונקציית הגדרות
 function openSettingsModal() {
   const s = strings[currentLang];
   document.getElementById('settingsTitle').innerText = s.settings.title;
@@ -741,7 +765,6 @@ function toggleTheme() {
   document.getElementById('themeToggleBtn').innerText = currentTheme === 'dark' ? s.settings.lightMode : s.settings.darkMode;
 }
 
-// התחברות/הרשמה אמיתית ל-Firebase 
 async function handleLogin(e) {
   e.preventDefault();
   const authMsg = document.getElementById('authMsg');
@@ -754,7 +777,6 @@ async function handleLogin(e) {
   if (useFirebase) {
     try {
       if (authMode === 'register') {
-        // הרשמת משתמש חדש מוגדרת כברירת מחדל לא-משלם (false)
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
         
@@ -770,7 +792,6 @@ async function handleLogin(e) {
         currentUserEmail = email;
         isPaid = false;
       } else {
-        // התחברות משתמש קיים
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
         
@@ -792,7 +813,6 @@ async function handleLogin(e) {
       updateAuthUI();
       closeAuthModal();
       
-      // איפוס שדות
       document.getElementById('authName').value = '';
       document.getElementById('authEmail').value = '';
       document.getElementById('authPass').value = '';
@@ -820,7 +840,6 @@ async function handleLogout() {
   toggleDashboard(false);
 }
 
-// כפתורי הרכישה לא רוכשים אוטומטית יותר, רק מעבירים להתחברות
 function initiatePurchase() {
   if (!currentUser) {
     const s = strings[currentLang];
@@ -829,12 +848,10 @@ function initiatePurchase() {
     authMsg.innerText = s.auth.requireMsg;
     openAuthModal(); 
   } else {
-    // כאן בעתיד תשלב מערכת סליקה. כרגע לא עושה כלום אם המשתמש כבר מחובר.
     console.log("Payment integration pending...");
   }
 }
 
-// האזנה לשינויי מצב התחברות ב-Firebase בטעינת העמוד
 if (useFirebase) {
   onAuthStateChanged(auth, async (user) => {
     if (user) {
@@ -868,7 +885,6 @@ if (useFirebase) {
   });
 }
 
-// --- RENDER LOGIC ---
 function setLang(lang) {
   currentLang = lang;
   const s = strings[lang];
@@ -985,7 +1001,6 @@ function setLang(lang) {
   `).join('');
   document.getElementById('pricing-plans-container').innerHTML = plansHtml;
 
-  // הוספת מאזיני אירועים ידנית לכפתורי הקנייה
   s.plans.forEach(plan => {
     const btn = document.getElementById(`btnBuy-${plan.id}`);
     if (btn) {
@@ -1060,7 +1075,6 @@ function switchTab(tab) {
   if (tab === 'coaching') document.getElementById('pane-coaching').style.display = 'block';
 }
 
-// חשיפת הפונקציות לסקופ הגלובלי 
 window.setLang = setLang;
 window.scrollToId = scrollToId;
 window.toggleDashboard = toggleDashboard;
@@ -1075,6 +1089,7 @@ window.openSettingsModal = openSettingsModal;
 window.closeSettingsModal = closeSettingsModal;
 window.toggleTheme = toggleTheme;
 
+// --- חלקיקים ראשיים (Particles) ---
 const canvas = document.getElementById('particles');
 const ctx = canvas.getContext('2d');
 let W, H, particles = [];
@@ -1118,7 +1133,91 @@ function drawParticles() {
 }
 drawParticles();
 
-// Initialize first render
+// --- גיאומטריה בצדדים (Parallax Crystals) ---
+const shardsContainer = document.getElementById('shards-container');
+
+// 4 סוגים שונים של נתיבי קריסטלים / שברים
+const crystalPaths = [
+  "M50 0 L75 35 L50 100 L25 35 Z", // קריסטל ארוך
+  "M40 0 L100 30 L60 100 L0 50 Z", // שבר א-סימטרי
+  "M50 0 L65 50 L50 100 L35 50 Z", // קריסטל דק וחד
+  "M30 0 L80 15 L100 70 L40 100 L0 60 Z" // גביש רחב
+];
+
+const shardsElements = [];
+const numCrystals = 35; // כמות הקריסטלים - אפשר לשחק עם המספר הזה
+const totalHeightVh = 650; // סך הגובה לפיזור (בערך 6 וחצי מסכים)
+const segmentVh = totalHeightVh / numCrystals; // חלוקת הגובה למקטעים שווים למניעת חורים וצפיפויות
+
+for (let i = 0; i < numCrystals; i++) {
+  const el = document.createElement('div');
+  el.className = 'shard';
+
+  // פיזור מבוקר (Stratified): 
+  // כל קריסטל מקבל "בלוק" גובה משלו. מוסיפים טיפה רנדומליות בתוך הבלוק שלו.
+  const topVh = (i * segmentVh) + (Math.random() * (segmentVh * 0.7)) + 5;
+  el.style.top = topVh + 'vh';
+
+  // פיזור שווה בין צד ימין לצד שמאל (אחד ימין, אחד שמאל לסירוגין)
+  const isLeft = i % 2 === 0;
+  const horizontalPos = Math.random() * 12; // מרחק מהקצה (0% עד 12%)
+  
+  if (isLeft) {
+    el.style.left = horizontalPos + '%';
+  } else {
+    el.style.right = horizontalPos + '%';
+  }
+
+  // גודל רנדומלי עדין וקטן יותר (מראה נקי ולא משתלט)
+  const size = Math.random() * 45 + 30; // גודל בין 30 ל-75 פיקסלים
+  el.style.width = size + 'px';
+  el.style.height = size + 'px';
+
+  // צבע רנדומלי (תכלת, סגול, או אפור)
+  const colorRand = Math.random();
+  const colorVar = colorRand > 0.66 ? 'var(--cyan)' : colorRand > 0.33 ? 'var(--orange)' : 'var(--muted)';
+
+  // נתיב קריסטל רנדומלי
+  const path = crystalPaths[Math.floor(Math.random() * crystalPaths.length)];
+
+  // יצירת ה-SVG עם פילטר Glow מרוכז יותר (רדיוס קטן יותר = זוהר חזק יותר לקווים קטנים)
+  el.innerHTML = `<svg viewBox="0 0 100 100" style="stroke: ${colorVar}; filter: drop-shadow(0 0 6px ${colorVar});">
+    <path d="${path}" />
+  </svg>`;
+
+  shardsContainer.appendChild(el);
+
+  // הגדרות תנועה ייחודיות לכל קריסטל
+  shardsElements.push({
+    el,
+    speed: (Math.random() - 0.5) * 1.5, // מהירות גלילה רנדומלית (חלק עולים, חלק יורדים מהר/לאט)
+    initialRot: Math.random() * 360,    // זווית התחלתית
+    rotSpeed: (Math.random() - 0.5) * 0.2 // מהירות סיבוב תוך כדי גלילה
+  });
+}
+
+// מאזין לאירוע גלילה - מזיז את הקריסטלים בצורה חלקה (Parallax)
+let lastKnownScrollPosition = 0;
+let ticking = false;
+
+window.addEventListener('scroll', () => {
+  lastKnownScrollPosition = window.scrollY;
+  
+  // שימוש ב-requestAnimationFrame כדי לא להעמיס על הדפדפן ולשמור על גלילה חלקה
+  if (!ticking) {
+    window.requestAnimationFrame(() => {
+      shardsElements.forEach(s => {
+        const yMove = lastKnownScrollPosition * s.speed;
+        const rMove = s.initialRot + (lastKnownScrollPosition * s.rotSpeed);
+        s.el.style.transform = `translateY(${yMove}px) rotate(${rMove}deg)`;
+      });
+      ticking = false;
+    });
+    ticking = true;
+  }
+});
+
+// אתחול שפה ראשוני
 setLang('he');
 
 </script>
