@@ -88,11 +88,11 @@ body.light-mode .lang-btn.active { color: #fff; }
 
 /* MODAL */
 .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 1000; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(5px); opacity: 0; pointer-events: none; transition: opacity 0.3s, background 0.3s; }
-body.light-mode .modal { background: rgba(130, 135, 145, 0.6); backdrop-filter: blur(6px); }
+body.light-mode .modal { background: rgba(130, 135, 145, 0.6); backdrop-filter: blur(6px); } 
 
 .modal.active { opacity: 1; pointer-events: auto; }
 .modal-content { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 40px; width: 90%; max-width: 400px; position: relative; box-shadow: 0 10px 40px rgba(0,0,0,0.5); transform: translateY(20px); transition: transform 0.3s, background-color 0.3s; }
-body.light-mode .modal-content { background: #F4F5F7; box-shadow: 0 10px 40px rgba(0,0,0,0.15); }
+body.light-mode .modal-content { background: #F4F5F7; box-shadow: 0 10px 40px rgba(0,0,0,0.15); } 
 
 .close-btn { position: absolute; top: 16px; right: 24px; font-size: 28px; cursor: pointer; color: var(--muted); transition: color 0.2s; }
 [dir="ltr"] .close-btn { right: auto; left: 24px; }
@@ -108,6 +108,11 @@ body.light-mode .modal-content { background: #F4F5F7; box-shadow: 0 10px 40px rg
 .modal-form input { width: 100%; padding: 14px 16px; background: var(--bg); border: 1px solid var(--border); color: var(--white); border-radius: 6px; font-family: 'Heebo', sans-serif; font-size: 15px; transition: border-color 0.2s; }
 .modal-form input:focus { outline: none; border-color: var(--cyan); }
 .auth-msg { color: var(--orange); font-size: 13px; text-align: center; display: none; margin-bottom: 8px; line-height: 1.5; }
+
+.ttt-board { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; width: 220px; margin: 20px auto; direction: ltr; }
+.ttt-cell { width: 100%; aspect-ratio: 1; background: var(--bg); border: 2px solid var(--border); border-radius: 8px; font-size: 40px; color: var(--cyan); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s; user-select: none; font-family: 'Inter', sans-serif; font-weight: bold; }
+.ttt-cell:hover { border-color: var(--cyan); }
+.ttt-cell.o { color: var(--orange); }
 
 /* HERO */
 .hero { min-height: 88vh; display: flex; align-items: center; padding: 80px 0 60px; }
@@ -130,7 +135,7 @@ body.light-mode .btn-primary { color: #fff; }
 .hero-visual img { width: 100%; max-width: 650px; object-fit: cover; border-radius: 20px; -webkit-mask-image: radial-gradient(circle at center, black 45%, transparent 85%); mask-image: radial-gradient(circle at center, black 45%, transparent 85%); animation: float 6s ease-in-out infinite; }
 @keyframes float { 0% { transform: translateY(0px) rotate(0deg); } 50% { transform: translateY(-15px) rotate(-2deg); } 100% { transform: translateY(0px) rotate(0deg); } }
 
-/* Stats Centering Fix */
+/* Stats */
 .hero-stats { display: flex; gap: 40px; margin-top: 60px; padding-top: 40px; border-top: 1px solid var(--border); flex-wrap: wrap; }
 .hero-stats > div { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; min-width: 70px; }
 .stat-val { font-family: 'Rajdhani', sans-serif; font-size: 36px; font-weight: 700; color: var(--cyan); line-height: 1; margin-bottom: 6px; display: block; }
@@ -187,29 +192,29 @@ body.light-mode .btn-primary { color: #fff; }
 .content-item.locked .content-title { color: var(--muted); }
 
 /* PRICING */
-.pricing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; max-width: 860px; margin: 48px auto 0; }
+.pricing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; max-width: 860px; margin: 24px auto 0; }
 .pricing-box { background: var(--card); border-radius: 14px; padding: 40px; position: relative; overflow: hidden; transition: transform 0.2s, border-color 0.2s; border: 1px solid var(--border); }
 .pricing-box:hover { transform: translateY(-4px); }
-.pricing-box.plan-content { border-color: rgba(0,198,255,0.4); }
-.pricing-box.plan-support { border-color: rgba(199,125,255,0.4); }
+.pricing-box.plan-analysis { border-color: rgba(0,198,255,0.4); }
+.pricing-box.plan-qa { border-color: rgba(199,125,255,0.4); }
 .plan-badge { position: absolute; top: 20px; font-size: 10px; letter-spacing: 2px; font-weight: 700; text-transform: uppercase; }
 [dir="rtl"] .plan-badge { right: 24px; }
 [dir="ltr"] .plan-badge { left: 24px; }
-.plan-content .plan-badge { color: var(--cyan); }
-.plan-support .plan-badge { color: var(--orange); }
+.plan-analysis .plan-badge { color: var(--cyan); }
+.plan-qa .plan-badge { color: var(--orange); }
 .pricing-label { font-size: 16px; color: var(--white); font-weight: 600; margin-bottom: 8px; font-family: 'Rajdhani', sans-serif; }
-.pricing-price { font-family: 'Rajdhani', sans-serif; font-size: 56px; font-weight: 700; color: var(--white); line-height: 1; margin-bottom: 4px; }
+.pricing-price { font-family: 'Rajdhani', sans-serif; font-size: 56px; font-weight: 700; color: var(--white); line-height: 1; margin-bottom: 4px; display: flex; align-items: baseline; }
 .pricing-price sup { font-size: 24px; color: var(--muted); }
 .pricing-once { font-size: 13px; color: var(--muted); font-weight: 500; margin-bottom: 32px; }
 .pricing-features { list-style: none; margin-bottom: 36px; display: flex; flex-direction: column; gap: 12px; }
 .pricing-features li { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; color: var(--muted); line-height: 1.4; }
 .pricing-features li::before { content: '✓'; color: var(--cyan); font-weight: 700; font-size: 16px; margin-top: -2px; }
-.plan-support .pricing-features li::before { color: var(--orange); }
+.plan-qa .pricing-features li::before { color: var(--orange); }
 .btn-buy { width: 100%; background: var(--cyan); color: #000; border: none; padding: 14px; font-family: 'Rajdhani', sans-serif; font-size: 16px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; border-radius: 8px; cursor: pointer; transition: all 0.2s; margin-bottom: 12px; }
 .btn-buy:hover { background: #33D1FF; }
 body.light-mode .btn-buy { color: #fff; }
-.plan-support .btn-buy { background: var(--orange); color: #fff; }
-.plan-support .btn-buy:hover { background: #D896FF; }
+.plan-qa .btn-buy { background: var(--orange); color: #fff; }
+.plan-qa .btn-buy:hover { background: #D896FF; }
 .pricing-note { text-align: center; font-size: 12px; color: var(--muted); }
 
 /* DASHBOARD */
@@ -221,6 +226,7 @@ body.light-mode .btn-buy { color: #fff; }
 
 .coaching-card { background: linear-gradient(135deg, var(--bg2) 0%, #241033 100%); border: 1px solid var(--orange); border-radius: 12px; padding: 40px; text-align: center; }
 body.light-mode .coaching-card { background: linear-gradient(135deg, var(--bg2) 0%, #F3E8FF 100%); }
+
 .coaching-card h3 { font-family: 'Rajdhani', sans-serif; font-size: 28px; color: var(--orange); margin-bottom: 16px; }
 .coaching-card p { color: var(--white); font-size: 16px; max-width: 600px; margin: 0 auto 32px; line-height: 1.6; }
 .btn-discord { background: #5865F2; color: #fff; border: none; padding: 14px 32px; font-family: 'Rajdhani', sans-serif; font-size: 16px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; border-radius: 6px; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; justify-content: center; gap: 12px; margin: 0 auto; }
@@ -261,7 +267,7 @@ footer { position: relative; z-index: 2; border-top: 1px solid var(--border); pa
         <li><button onclick="scrollToId('about')" id="nav-about">עליי</button></li>
         <li><button onclick="scrollToId('journey')" id="nav-journey">הסיפור שלי</button></li>
         <li><button onclick="scrollToId('content')" id="nav-content">איך זה עובד</button></li>
-        <li><button onclick="scrollToId('pricing')" id="nav-pricing">חבילות</button></li>
+        <li><button onclick="scrollToId('pricing')" id="nav-pricing">מסלולים</button></li>
       </ul>
 
       <ul class="nav-links" id="dash-nav" style="display: none;">
@@ -269,10 +275,12 @@ footer { position: relative; z-index: 2; border-top: 1px solid var(--border); pa
       </ul>
 
       <div class="nav-actions">
+        <!-- אזור המשתמש וההתחברות -->
         <div class="user-area" id="userArea">
           <button class="btn-login" id="nav-login-btn" onclick="openAuthModal()">התחברות</button>
         </div>
 
+        <!-- כפתור הגדרות -->
         <button class="settings-icon-btn" onclick="openSettingsModal()" title="הגדרות">
           <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
               <path d="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.06-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61 l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41 h-3.84c-0.24,0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.73,8.87 C2.62,9.08,2.66,9.34,2.86,9.48l2.03,1.58C4.84,11.36,4.8,11.69,4.8,12s0.02,0.64,0.06,0.94l-2.03,1.58 c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54 c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24,0,0.43-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96 c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.49-0.12-0.61L19.14,12.94z M12,15.6c-1.98,0-3.6-1.62-3.6-3.6 s1.62-3.6,3.6-3.6s3.6,1.62,3.6,3.6S13.98,15.6,12,15.6z"/>
@@ -320,7 +328,7 @@ footer { position: relative; z-index: 2; border-top: 1px solid var(--border); pa
             </div>
           </div>
           <div class="hero-visual">
-            <img src="hero-bg.png" alt="Rocket League Gamer" onerror="this.src='https://placehold.co/600x400/12121F/00C6FF?text=Rocket+League+Coach'">
+            <img src="hero-bg.png" alt="Rocket League Gamer">
           </div>
         </div>
       </section>
@@ -374,8 +382,18 @@ footer { position: relative; z-index: 2; border-top: 1px solid var(--border); pa
 
       <section class="section" id="pricing">
         <div class="section-tag" id="pricing-tag">מחיר</div>
-        <h2 class="section-title" style="text-align: center" id="pricing-title">בחר את המסלול שלך</h2>
-        <div class="pricing-grid" id="pricing-plans-container">
+        <h2 class="section-title" style="text-align: center; margin-bottom: 40px;" id="pricing-title">בחר את המסלול שלך</h2>
+        
+        <!-- אזור משחק איקס עיגול -->
+        <div id="ttt-banner-container" style="text-align: center; margin-bottom: 24px;">
+            <div style="background: rgba(0,198,255,0.05); border: 1px dashed var(--cyan); border-radius: 8px; padding: 20px; display: inline-block; max-width: 90%;">
+                <h3 style="color: var(--cyan); margin-bottom: 8px; font-size: 18px;" id="ttt-banner-title">🎁 שחק נגד המחשב וקבל הנחה!</h3>
+                <p style="color: var(--muted); font-size: 14px; margin-bottom: 16px;" id="ttt-banner-desc">מגיע לך ניסיון אחד בלבד. נצח את המחשב באיקס-עיגול וקבל 10 שקלים הנחה על החבילות.</p>
+                <button class="btn-primary" style="padding: 10px 24px; font-size: 15px;" id="ttt-banner-btn" onclick="openTttModal()">שחק עכשיו</button>
+            </div>
+        </div>
+
+        <div class="pricing-grid" id="pricing-plans-container" style="margin-top: 0;">
           <!-- Rendered via JS -->
         </div>
       </section>
@@ -399,7 +417,7 @@ footer { position: relative; z-index: 2; border-top: 1px solid var(--border); pa
 
       <div class="dashboard-tabs">
         <button class="dash-tab active" id="tab-analysis" onclick="switchTab('analysis')">ניתוח משחקים</button>
-        <button class="dash-tab" id="tab-qa" onclick="switchTab('qa')">שיחת ייעוץ</button>
+        <button class="dash-tab" id="tab-qa" onclick="switchTab('qa')">שיחת ייעוץ (Q&A)</button>
       </div>
 
       <div id="pane-analysis" class="coaching-card" style="display: block;">
@@ -463,7 +481,21 @@ footer { position: relative; z-index: 2; border-top: 1px solid var(--border); pa
   </div>
 </div>
 
-<!-- טעינת ספריות Firebase בגרסה מעודכנת (CDN) -->
+<!-- TIC-TAC-TOE MODAL -->
+<div class="modal" id="tttModal">
+  <div class="modal-content" style="text-align: center; padding: 32px 24px;">
+    <span class="close-btn" onclick="closeTttModal()">&times;</span>
+    <h2 class="modal-title" style="margin-bottom: 8px; font-size: 24px;" id="ttt-modal-title">שחק איקס עיגול</h2>
+    <p style="color: var(--muted); font-size: 14px; margin-bottom: 20px;" id="ttt-modal-desc">נצח את המחשב וקבל 10 ש"ח הנחה! (ניסיון אחד בלבד)</p>
+    
+    <div id="ttt-board" class="ttt-board">
+        <!-- Cells generated via JS -->
+    </div>
+    
+    <p id="ttt-msg" style="margin-top: 20px; font-size: 16px; font-weight: bold; color: var(--white); min-height: 24px;">התור שלך (X)</p>
+  </div>
+</div>
+
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
@@ -495,6 +527,10 @@ let isPaid = false;
 let currentOrderId = null; 
 let authMode = 'login'; 
 
+// חדש: משתני איקס עיגול
+let hasPlayedTicTacToe = false;
+let discountActive = false;
+
 try {
   const app = initializeApp(firebaseConfig);
   auth = getAuth(app);
@@ -505,12 +541,12 @@ try {
   console.error("Firebase initialization failed.", e);
 }
 
-// --- DICTIONARY ---
 const strings = {
   he: {
-    navLinks: ['עליי', 'הסיפור שלי', 'איך זה עובד', 'חבילות'],
+    navLinks: ['עליי', 'הסיפור שלי', 'איך זה עובד', 'מסלולים'],
     auth: { loginTop: 'כניסה', logout: 'התנתק', hello: 'שלום', tabLogin: 'התחברות', tabRegister: 'הרשמה', titleLogin: 'התחבר לחשבון', titleRegister: 'צור חשבון חדש', name: 'שם מלא', email: 'אימייל', pass: 'סיסמה', submitLogin: 'התחבר', submitRegister: 'הירשם', requireMsg: 'יש להתחבר לחשבון לפני רכישת מסלול.' },
     settings: { title: 'הגדרות חשבון', name: 'שם משתמש', email: 'כתובת אימייל', notLoggedIn: 'עדיין לא מחובר למערכת.', lightMode: '☀️ מצב בהיר', darkMode: '🌙 מצב כהה' },
+    ttt: { bannerTitle: '🎁 שחק נגד המחשב וקבל הנחה!', bannerDesc: 'מגיע לך ניסיון אחד בלבד. נצח את המחשב באיקס-עיגול וקבל 10 שקלים הנחה על החבילות.', playBtn: 'שחק עכשיו', loginBtn: 'התחבר כדי לשחק', modalTitle: 'שחק איקס עיגול', modalDesc: 'נצח את המחשב וקבל 10 ש"ח הנחה! (ניסיון אחד בלבד)', turnX: 'התור שלך (X)', turnO: 'המחשב חושב...', winMsg: 'ניצחת! קיבלת 10 ש"ח הנחה!', loseMsg: 'הפסדת! המחשב ניצח.', drawMsg: 'תיקו. לא נורא!' },
     heroBadge: '🚀 Rocket League Academy',
     h1: ['שדרג את', 'הרוקט ליג שלך', 'לרמה הבאה'],
     heroSub: 'עכשיו אני כאן כדי לקחת את המשחק שלכם אישית ולעזור לכם לעלות ראנק ולהשתפר במכניקות בעזרת ניתוח משחקים ושיחות ייעוץ ולימוד.',
@@ -530,13 +566,13 @@ const strings = {
     pricingTag: 'מחיר', pricingTitle: 'בחר את המסלול שלך',
     plans: [
       {
-        id: 'content', badge: 'PRO', title: 'ניתוח 3 משחקי ראנק', price: '150', period: 'תשלום חד פעמי',
+        id: 'analysis', badge: 'PRO', title: 'ניתוח 3 משחקי ראנק', price: '149', period: 'תשלום חד פעמי',
         features: ['מעבר משותף על 3 ריפלייז', 'זיהוי טעויות רוטציה ומיקום', 'טיפים לשיפור מכניקות', 'משוב מפורט ואישי על המשחק שלך'],
         btn: '🚀 בחר בניתוח משחקים', note: 'תשלום מאובטח · תיאום מראש בדיסקורד'
       },
       {
-        id: 'support', badge: 'Q&A', title: '20 דקות שאלות ותשובות', price: '50', period: 'תשלום חד פעמי',
-        features: ['שיחה אחד-על-אחד בדיסקורד', 'תשובות לכל השאלות שלך', 'ייעוץ על הגדרות ומנטליות', 'טיפים למכניקות ספציפיות'],
+        id: 'qa', badge: 'Q&A', title: '20 דקות שאלות (Q&A)', price: '59', period: 'תשלום חד פעמי',
+        features: ['שיחה אחד-על-אחד בדיסקורד', 'תשובות לכל השאלות שלך', 'ייעוץ על הגדרות ומנטליות', 'הכוונה וטיפים ספציפיים'],
         btn: '💬 בחר בשיחת ייעוץ', note: 'תשלום מאובטח · תיאום מראש בדיסקורד'
       }
     ],
@@ -570,9 +606,10 @@ const strings = {
     navLinks: ['About', 'My Journey', 'How it works', 'Packages'],
     auth: { loginTop: 'Sign In', logout: 'Logout', hello: 'Hello', tabLogin: 'Login', tabRegister: 'Register', titleLogin: 'Login to Account', titleRegister: 'Create New Account', name: 'Full Name', email: 'Email', pass: 'Password', submitLogin: 'Login', submitRegister: 'Register', requireMsg: 'You must log in to an account before purchasing a package.' },
     settings: { title: 'Account Settings', name: 'Username', email: 'Email Address', notLoggedIn: 'You are not logged in yet.', lightMode: '☀️ Light Mode', darkMode: '🌙 Dark Mode' },
+    ttt: { bannerTitle: '🎁 Play vs PC & Get a Discount!', bannerDesc: 'You have ONE attempt. Beat the computer in Tic-Tac-Toe for a 10₪ discount on packages.', playBtn: 'Play Now', loginBtn: 'Login to Play', modalTitle: 'Play Tic-Tac-Toe', modalDesc: 'Beat the computer for a 10₪ discount! (One attempt only)', turnX: 'Your turn (X)', turnO: 'Computer thinking...', winMsg: 'You won! 10₪ discount applied!', loseMsg: 'You lost! Computer wins.', drawMsg: 'Draw. Better luck next time!' },
     heroBadge: '🚀 Rocket League Academy',
     h1: ['Elevate Your', 'Rocket League', 'To The Next Level'],
-    heroSub: 'I am here to take your gameplay personally and help you rank up through replay analysis and 1-on-1 consultations.',
+    heroSub: 'I am here to take your gameplay personally and help you rank up and improve mechanics through replay analysis and 1-on-1 consultations.',
     heroCTA1: 'Join Now', heroCTA2: 'How it works',
     stats: ['Years Playing', 'Peak Rank', 'Mechanics', 'Packages'],
     aboutTag: 'About drexm', aboutTitle: 'Who I Am & Why You Should<br/>Learn From Me',
@@ -589,12 +626,12 @@ const strings = {
     pricingTag: 'Pricing', pricingTitle: 'Choose Your Package',
     plans: [
       {
-        id: 'content', badge: 'PRO', title: '3 Replays Analysis', price: '150', period: 'One-time payment',
+        id: 'analysis', badge: 'PRO', title: '3 Replays Analysis', price: '149', period: 'One-time payment',
         features: ['Joint review of 3 replays', 'Identify rotation and positioning mistakes', 'Tips to improve mechanics', 'Detailed personal feedback'],
         btn: '🚀 Choose Analysis', note: 'Secure payment · Pre-schedule on Discord'
       },
       {
-        id: 'support', badge: 'Q&A', title: '20 Min Q&A Session', price: '50', period: 'One-time payment',
+        id: 'qa', badge: 'Q&A', title: '20 Min Q&A Session', price: '59', period: 'One-time payment',
         features: ['1-on-1 call on Discord', 'Answers to all your questions', 'Advice on settings and mindset', 'Tips for specific mechanics'],
         btn: '💬 Choose Q&A Session', note: 'Secure payment · Pre-schedule on Discord'
       }
@@ -669,12 +706,28 @@ function updateAuthUI() {
     `;
     document.getElementById('btnLoginBtn').addEventListener('click', () => openAuthModal());
   }
+
+  // TTT Banner logic
+  const tttBanner = document.getElementById('ttt-banner-container');
+  const tttBtn = document.getElementById('ttt-banner-btn');
+  if (!currentUser) {
+      tttBanner.style.display = 'block';
+      tttBtn.innerText = s.ttt.loginBtn;
+      tttBtn.onclick = () => openAuthModal();
+  } else {
+      if (!hasPlayedTicTacToe) {
+          tttBanner.style.display = 'block';
+          tttBtn.innerText = s.ttt.playBtn;
+          tttBtn.onclick = () => openTttModal();
+      } else {
+          tttBanner.style.display = 'none';
+      }
+  }
 }
 
 function setAuthMode(mode) {
   authMode = mode;
   const s = strings[currentLang];
-  
   const tabLogin = document.getElementById('tab-login');
   const tabRegister = document.getElementById('tab-register');
   const nameWrapper = document.getElementById('nameInputWrapper');
@@ -715,14 +768,12 @@ function openSettingsModal() {
   const s = strings[currentLang];
   document.getElementById('settingsTitle').innerText = s.settings.title;
   document.getElementById('themeToggleBtn').innerText = currentTheme === 'dark' ? s.settings.lightMode : s.settings.darkMode;
-  
   const accDetails = document.getElementById('accountDetails');
   if (currentUser) {
     accDetails.innerHTML = `<strong>${s.settings.name}:</strong> ${currentUser}<br><strong style="margin-top:8px; display:inline-block;">${s.settings.email}:</strong> ${currentUserEmail}`;
   } else {
     accDetails.innerHTML = s.settings.notLoggedIn;
   }
-  
   document.getElementById('settingsModal').classList.add('active');
 }
 
@@ -733,13 +784,11 @@ function closeSettingsModal() {
 function toggleTheme() {
   const s = strings[currentLang];
   currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
-  
   if (currentTheme === 'light') {
     document.body.classList.add('light-mode');
   } else {
     document.body.classList.remove('light-mode');
   }
-  
   document.getElementById('themeToggleBtn').innerText = currentTheme === 'dark' ? s.settings.lightMode : s.settings.darkMode;
 }
 
@@ -747,7 +796,6 @@ async function handleLogin(e) {
   e.preventDefault();
   const authMsg = document.getElementById('authMsg');
   authMsg.style.display = 'none';
-
   const email = document.getElementById('authEmail').value.trim();
   const password = document.getElementById('authPass').value;
   const name = document.getElementById('authName').value.trim();
@@ -757,42 +805,47 @@ async function handleLogin(e) {
       if (authMode === 'register') {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
-        
         const userDocRef = doc(db, 'artifacts', appId, 'users', user.uid, 'profile', 'userData');
         await setDoc(userDocRef, {
           name: name,
           email: email,
           isPaid: false,
+          hasPlayedTicTacToe: false,
+          discountActive: false,
           createdAt: new Date().toISOString()
         });
-        
         currentUser = name;
         currentUserEmail = email;
         isPaid = false;
+        hasPlayedTicTacToe = false;
+        discountActive = false;
         currentOrderId = null;
       } else {
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
-        
         const userDocRef = doc(db, 'artifacts', appId, 'users', user.uid, 'profile', 'userData');
         const docSnap = await getDoc(userDocRef);
-        
         if (docSnap.exists()) {
           const data = docSnap.data();
           currentUser = data.name || email.split('@')[0];
           currentUserEmail = user.email;
           isPaid = data.isPaid || false;
+          hasPlayedTicTacToe = data.hasPlayedTicTacToe || false;
+          discountActive = data.discountActive || false;
           currentOrderId = data.orderId || null;
         } else {
           currentUser = email.split('@')[0];
           currentUserEmail = user.email;
           isPaid = false;
+          hasPlayedTicTacToe = false;
+          discountActive = false;
           currentOrderId = null;
         }
       }
       
       updateAuthUI();
       closeAuthModal();
+      renderPricing();
       
       document.getElementById('authName').value = '';
       document.getElementById('authEmail').value = '';
@@ -801,7 +854,6 @@ async function handleLogin(e) {
       if (isPaid) {
         toggleDashboard(true);
       }
-      
     } catch (error) {
       console.error("Auth Error:", error);
       authMsg.style.display = 'block';
@@ -817,12 +869,14 @@ async function handleLogout() {
   currentUser = null;
   currentUserEmail = null;
   isPaid = false;
+  hasPlayedTicTacToe = false;
+  discountActive = false;
   currentOrderId = null;
   updateAuthUI();
+  renderPricing();
   toggleDashboard(false);
 }
 
-// כפתור רכישה שיוצר קוד אימות חדש למשתמש
 async function initiatePurchase() {
   if (!currentUser) {
     const s = strings[currentLang];
@@ -834,7 +888,6 @@ async function initiatePurchase() {
     if (useFirebase && auth.currentUser) {
       try {
         const newOrderId = 'DRX-' + Math.floor(100000 + Math.random() * 900000);
-        
         const userDocRef = doc(db, 'artifacts', appId, 'users', auth.currentUser.uid, 'profile', 'userData');
         await setDoc(userDocRef, {
           isPaid: true,
@@ -862,18 +915,23 @@ if (useFirebase) {
           const data = docSnap.data();
           currentUser = data.name || user.email.split('@')[0];
           isPaid = data.isPaid || false;
+          hasPlayedTicTacToe = data.hasPlayedTicTacToe || false;
+          discountActive = data.discountActive || false;
           currentOrderId = data.orderId || null;
         } else {
           currentUser = user.email.split('@')[0];
           isPaid = false;
+          hasPlayedTicTacToe = false;
+          discountActive = false;
           currentOrderId = null;
         }
       } catch (e) {
-        console.error("Error loading user profile:", e);
+        console.error("Error loading user profile on auth change:", e);
         currentUser = user.email ? user.email.split('@')[0] : "User";
         currentUserEmail = user.email;
       }
       updateAuthUI();
+      renderPricing();
       if (isPaid) {
         toggleDashboard(true);
       }
@@ -881,9 +939,181 @@ if (useFirebase) {
       currentUser = null;
       currentUserEmail = null;
       isPaid = false;
+      hasPlayedTicTacToe = false;
+      discountActive = false;
       currentOrderId = null;
       updateAuthUI();
+      renderPricing();
     }
+  });
+}
+
+let tttBoard = Array(9).fill(null);
+let tttActive = false;
+
+function openTttModal() {
+    if (!currentUser) return;
+    const s = strings[currentLang];
+    
+    document.getElementById('ttt-modal-title').innerText = s.ttt.modalTitle;
+    document.getElementById('ttt-modal-desc').innerText = s.ttt.modalDesc;
+    
+    tttBoard = Array(9).fill(null);
+    tttActive = true;
+    renderTttBoard();
+    
+    document.getElementById('ttt-msg').innerText = s.ttt.turnX;
+    document.getElementById('ttt-msg').style.color = 'var(--white)';
+    document.getElementById('tttModal').classList.add('active');
+}
+
+function closeTttModal() {
+    document.getElementById('tttModal').classList.remove('active');
+}
+
+function renderTttBoard() {
+    const boardEl = document.getElementById('ttt-board');
+    boardEl.innerHTML = '';
+    tttBoard.forEach((cell, index) => {
+        const cellEl = document.createElement('div');
+        cellEl.className = `ttt-cell ${cell === 'O' ? 'o' : ''}`;
+        cellEl.innerText = cell || '';
+        cellEl.onclick = () => makeTttMove(index);
+        boardEl.appendChild(cellEl);
+    });
+}
+
+async function makeTttMove(index) {
+    if (!tttActive || tttBoard[index]) return;
+    const s = strings[currentLang];
+    
+    tttBoard[index] = 'X';
+    renderTttBoard();
+    
+    if (checkTttWin('X')) {
+        await handleTttEnd(true, false);
+        return;
+    }
+    if (tttBoard.every(c => c !== null)) {
+        await handleTttEnd(false, true);
+        return;
+    }
+
+    document.getElementById('ttt-msg').innerText = s.ttt.turnO;
+    tttActive = false; 
+    
+    setTimeout(async () => {
+        const bestMove = getComputerMove();
+        if(bestMove !== -1) tttBoard[bestMove] = 'O';
+        renderTttBoard();
+        
+        if (checkTttWin('O')) {
+            await handleTttEnd(false, false);
+            return;
+        }
+        if (tttBoard.every(c => c !== null)) {
+            await handleTttEnd(false, true);
+            return;
+        }
+        
+        tttActive = true;
+        document.getElementById('ttt-msg').innerText = s.ttt.turnX;
+    }, 600);
+}
+
+function checkTttWin(player) {
+    const wins = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+    return wins.some(w => w.every(i => tttBoard[i] === player));
+}
+
+function getComputerMove() {
+    let move = findWinningMove('O');
+    if (move !== -1) return move;
+    
+    move = findWinningMove('X');
+    if (move !== -1) return move;
+    
+    const empty = tttBoard.map((c, i) => c === null ? i : null).filter(c => c !== null);
+    if(empty.length === 0) return -1;
+    return empty[Math.floor(Math.random() * empty.length)];
+}
+
+function findWinningMove(player) {
+    const wins = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+    for (let w of wins) {
+        let pCount = 0;
+        let emptyIdx = -1;
+        w.forEach(i => {
+            if (tttBoard[i] === player) pCount++;
+            else if (tttBoard[i] === null) emptyIdx = i;
+        });
+        if (pCount === 2 && emptyIdx !== -1) return emptyIdx;
+    }
+    return -1;
+}
+
+async function handleTttEnd(playerWon, draw) {
+    tttActive = false;
+    hasPlayedTicTacToe = true;
+    discountActive = playerWon;
+    const s = strings[currentLang];
+    
+    const msgEl = document.getElementById('ttt-msg');
+    if (playerWon) {
+        msgEl.innerText = s.ttt.winMsg;
+        msgEl.style.color = 'var(--cyan)';
+    } else if (draw) {
+        msgEl.innerText = s.ttt.drawMsg;
+    } else {
+        msgEl.innerText = s.ttt.loseMsg;
+        msgEl.style.color = 'var(--orange)';
+    }
+
+    if (useFirebase && auth.currentUser) {
+        const userDocRef = doc(db, 'artifacts', appId, 'users', auth.currentUser.uid, 'profile', 'userData');
+        await setDoc(userDocRef, {
+            hasPlayedTicTacToe: true,
+            discountActive: playerWon
+        }, { merge: true });
+    }
+    
+    updateAuthUI();
+    renderPricing();
+    
+    setTimeout(() => {
+        closeTttModal();
+    }, 3000);
+}
+
+function renderPricing() {
+  const s = strings[currentLang];
+  const container = document.getElementById('pricing-plans-container');
+  
+  const plansHtml = s.plans.map(plan => {
+      let basePrice = parseInt(plan.price);
+      let finalPrice = discountActive ? basePrice - 10 : basePrice;
+      let strikeHtml = discountActive ? `<span style="text-decoration: line-through; color: var(--muted); font-size: 24px; margin-right: 12px; font-weight: 500;">₪${basePrice}</span>` : '';
+      
+      return `
+      <div class="pricing-box plan-${plan.id}">
+        <div class="plan-badge">${plan.badge}</div>
+        <div class="pricing-label">${plan.title}</div>
+        <div class="pricing-price"><sup>₪</sup>${finalPrice}${strikeHtml}</div>
+        <div class="pricing-once">${plan.period}</div>
+        <ul class="pricing-features">
+          ${plan.features.map(f => `<li>${f}</li>`).join('')}
+        </ul>
+        <button class="btn-buy" id="btnBuy-${plan.id}">${plan.btn}</button>
+        <p class="pricing-note">${plan.note}</p>
+      </div>
+      `;
+  }).join('');
+  
+  container.innerHTML = plansHtml;
+  
+  s.plans.forEach(plan => {
+      const btn = document.getElementById(`btnBuy-${plan.id}`);
+      if (btn) btn.addEventListener('click', initiatePurchase);
   });
 }
 
@@ -974,27 +1204,10 @@ function setLang(lang) {
   document.getElementById('pricing-tag').innerText = s.pricingTag;
   document.getElementById('pricing-title').innerText = s.pricingTitle;
   
-  const plansHtml = s.plans.map(plan => `
-    <div class="pricing-box plan-${plan.id}">
-      <div class="plan-badge">${plan.badge}</div>
-      <div class="pricing-label">${plan.title}</div>
-      <div class="pricing-price"><sup>₪</sup>${plan.price}</div>
-      <div class="pricing-once">${plan.period}</div>
-      <ul class="pricing-features">
-        ${plan.features.map(f => `<li>${f}</li>`).join('')}
-      </ul>
-      <button class="btn-buy" id="btnBuy-${plan.id}">${plan.btn}</button>
-      <p class="pricing-note">${plan.note}</p>
-    </div>
-  `).join('');
-  document.getElementById('pricing-plans-container').innerHTML = plansHtml;
-
-  s.plans.forEach(plan => {
-    const btn = document.getElementById(`btnBuy-${plan.id}`);
-    if (btn) {
-      btn.addEventListener('click', initiatePurchase);
-    }
-  });
+  document.getElementById('ttt-banner-title').innerText = s.ttt.bannerTitle;
+  document.getElementById('ttt-banner-desc').innerText = s.ttt.bannerDesc;
+  
+  renderPricing();
 
   document.getElementById('dash-title').innerText = s.dashTitle;
   document.getElementById('dash-sub').innerText = s.dashSub;
@@ -1067,6 +1280,9 @@ window.switchTab = switchTab;
 window.openSettingsModal = openSettingsModal;
 window.closeSettingsModal = closeSettingsModal;
 window.toggleTheme = toggleTheme;
+window.openTttModal = openTttModal;
+window.closeTttModal = closeTttModal;
+window.makeTttMove = makeTttMove;
 
 const canvas = document.getElementById('particles');
 const ctx = canvas.getContext('2d');
@@ -1111,7 +1327,6 @@ function drawParticles() {
 }
 drawParticles();
 
-// Initialize first render
 setLang('he');
 
 </script>
