@@ -699,12 +699,20 @@ async function handleLogin(e) {
         
         await updateProfile(user, { displayName: name });
         
-        const userDocRef = doc(db, 'artifacts', appId, 'users', user.uid, 'profile', 'userData');
-        await setDoc(userDocRef, {
-          name: name, email: email, isPaid: false, hasPlayedTicTacToe: false, discountActive: false, orderId: null, createdAt: new Date().toISOString()
-        });
-        
+        // 1. שליחת מייל האימות קודם כל (כדי שאם מסד הנתונים חסום עדיין נשלח מייל)
         await sendEmailVerification(user);
+        
+        // 2. ניסיון כתיבה למסד נתונים, מוגן ב-Try/Catch!
+        try {
+            const userDocRef = doc(db, 'artifacts', appId, 'users', user.uid, 'profile', 'userData');
+            await setDoc(userDocRef, {
+              name: name, email: email, isPaid: false, hasPlayedTicTacToe: false, discountActive: false, orderId: null, createdAt: new Date().toISOString()
+            });
+        } catch (dbError) {
+            console.warn("Database rules blocked saving, but user was created.", dbError);
+            // לא עוצרים את התהליך, המשתמש נוצר!
+        }
+        
         await signOut(auth); // מנתק אותו כדי שיאמת את המייל
 
         authMsg.style.display = 'block';
@@ -740,20 +748,31 @@ async function handleLogin(e) {
             return;
         }
         
-        const userDocRef = doc(db, 'artifacts', appId, 'users', user.uid, 'profile', 'userData');
-        const docSnap = await getDoc(userDocRef);
-        
-        if (docSnap.exists()) {
-          const data = docSnap.data();
-          currentUser = data.name || user.displayName || email.split('@')[0];
-          currentUserEmail = user.email;
-          isPaid = data.isPaid || false;
-          hasPlayedTicTacToe = data.hasPlayedTicTacToe || false;
-          discountActive = data.discountActive || false;
-          orderId = data.orderId || null;
-        } else {
-          currentUser = user.displayName || email.split('@')[0];
-          currentUserEmail = user.email; isPaid = false; hasPlayedTicTacToe = false; discountActive = false;
+        try {
+            const userDocRef = doc(db, 'artifacts', appId, 'users', user.uid, 'profile', 'userData');
+            const docSnap = await getDoc(userDocRef);
+            
+            if (docSnap.exists()) {
+              const data = docSnap.data();
+              currentUser = data.name || user.displayName || email.split('@')[0];
+              currentUserEmail = user.email;
+              isPaid = data.isPaid || false;
+              hasPlayedTicTacToe = data.hasPlayedTicTacToe || false;
+              discountActive = data.discountActive || false;
+              orderId = data.orderId || null;
+            } else {
+              // יוצר את הנתונים אם המשתמש התחבר בהצלחה אבל ה-DB נכשל פעם קודמת
+              await setDoc(userDocRef, {
+                  name: user.displayName || email.split('@')[0],
+                  email: email, isPaid: false, hasPlayedTicTacToe: false, discountActive: false, orderId: null, createdAt: new Date().toISOString()
+              });
+              currentUser = user.displayName || email.split('@')[0];
+              currentUserEmail = user.email; isPaid = false; hasPlayedTicTacToe = false; discountActive = false; orderId = null;
+            }
+        } catch(dbError) {
+            console.error("Database read error:", dbError);
+            currentUser = user.displayName || email.split('@')[0];
+            currentUserEmail = user.email; isPaid = false; hasPlayedTicTacToe = false; discountActive = false; orderId = null;
         }
       }
       
