@@ -113,6 +113,7 @@ body.light-mode .modal-content { background: #F4F5F7; box-shadow: 0 10px 40px rg
 .btn-primary { background: var(--cyan); color: #000; border: none; padding: 14px 32px; font-family: 'Rajdhani', sans-serif; font-size: 16px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; border-radius: 6px; cursor: pointer; transition: all 0.2s; }
 .btn-primary:hover { background: #33D1FF; transform: translateY(-1px); }
 body.light-mode .btn-primary { color: #fff; }
+.btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
 
 .btn-outline { background: none; color: var(--white); border: 1px solid var(--border); padding: 14px 28px; font-family: 'Rajdhani', sans-serif; font-size: 16px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; border-radius: 6px; cursor: pointer; transition: all 0.2s; }
 .btn-outline:hover { border-color: var(--cyan); color: var(--cyan); }
@@ -355,8 +356,8 @@ footer { position: relative; z-index: 2; border-top: 1px solid var(--border); pa
         <!-- Tic-Tac-Toe Banner -->
         <div class="ttt-banner" id="tttBannerWrapper">
            <h3 id="tttBannerTitle" style="color: var(--white); margin-bottom: 12px; font-family: 'Rajdhani', sans-serif; font-size: 32px;">🎮 אתגר האיקס-עיגול!</h3>
-           <p id="tttBannerDesc" style="color: var(--white); font-size: 16px; margin-bottom: 24px;">נצח אותי במשחק וקבל <span class="highlight-discount">10 שקלים הנחה</span> על כל החבילות. יש לך ניסיון אחד בלבד!</p>
-           <button class="btn-primary" style="padding: 12px 32px; font-size: 16px; box-shadow: 0 0 15px rgba(0,198,255,0.4);" onclick="openTTTModal()" id="tttBannerBtn">שחק עכשיו</button>
+           <p id="tttBannerDesc" style="color: var(--white); font-size: 16px; margin-bottom: 24px;">נצח אותי במשחק וקבל <span class="highlight-discount">10 שקלים הנחה</span> על כל החבילות.</p>
+           <button class="btn-primary" style="padding: 12px 32px; font-size: 16px; box-shadow: 0 0 15px rgba(0,198,255,0.4);" id="tttBannerBtn">שחק עכשיו</button>
         </div>
 
         <div class="section-tag" id="pricing-tag">מחיר</div>
@@ -476,8 +477,8 @@ let currentUserEmail = null;
 let isPaid = false; 
 let authMode = 'login'; 
 
-let hasPlayedTicTacToe = false;
 let discountActive = false;
+let lastPlayedTTT = null;
 let orderId = null;
 
 try {
@@ -493,6 +494,7 @@ try {
 const strings = {
   he: {
     navLinks: ['עליי', 'הסיפור שלי', 'איך זה עובד', 'מחיר'],
+    backHome: 'חזור לעמוד הראשי',
     auth: { loginTop: 'כניסה', logout: 'התנתק', hello: 'שלום', tabLogin: 'התחברות', tabRegister: 'הרשמה', titleLogin: 'התחבר לחשבון', titleRegister: 'צור חשבון חדש', name: 'שם מלא', email: 'אימייל', pass: 'סיסמה', submitLogin: 'התחבר', submitRegister: 'הירשם', requireMsg: 'יש להתחבר לחשבון לפני ביצוע הפעולה.', verifySent: 'נשלח אליך קישור אימות למייל! (בדוק גם בספאם). אנא אמת את החשבון והתחבר.', notVerified: 'טרם אימתת את כתובת האימייל שלך. בדוק את תיבת הדואר.' },
     settings: { title: 'הגדרות חשבון', name: 'שם משתמש', email: 'כתובת אימייל', notLoggedIn: 'עדיין לא מחובר למערכת.', lightMode: '☀️ מצב בהיר', darkMode: '🌙 מצב כהה' },
     heroBadge: '🚀 Rocket League Academy',
@@ -529,7 +531,7 @@ const strings = {
     journeyTag: 'הסיפור שלי',
     journeyTitle: 'מהבטא ועד לטופ',
     journey: [
-      { year: '2015-2017', title: 'ההתחלה', text: 'התחלתי לשחק עוד ב-Closed Beta ב-2015. תמיד אהבתי לעלות לאוויר ולנסות דברים מגניבים. קיבלתי השראה מפריסטיילרים כמו JZR, Pulse MK, ו-Pulse Muirie. הראנק הראשון שלי היה Gold 3 Div 2, ובזכות ההשקעה במכניקות הגעתי ל-Champion בקלות.' },
+      { year: '2015-2017', title: 'התחלה', text: 'התחלתי לשחק עוד ב-Closed Beta ב-2015. תמיד אהבתי לעלות לאוויר ולנסות דברים מגניבים. קיבלתי השראה מפריסטיילרים כמו JZR, Pulse MK, ו-Pulse Muirie. הראנק הראשון שלי היה Gold 3 Div 2, ובזכות ההשקעה במכניקות הגעתי ל-Champion בקלות.' },
       { year: '2019-2020', title: 'Grand Champion ושליטה במכניקות', text: 'כבר ב-2019 הייתי GC. המכניקות שלי היו כל כך טובות שבכל פעם שהכדור היה באוויר, זה היה גול - כמעט ללא צורך ב-Game Sense. ב-2020 התחלתי לשפר גם את ה-Game Sense והגעתי ל-1600-1700 MMR. בנוסף <span class="mech-highlight">זכיתי במקום ה-1 באליפות הארץ</span> של Hype League (2v2).' },
       { year: '2020-2023', title: 'שירות קרבי וטורניר Pulse Clan', text: 'התגייסתי ללוחמה, מה שהשאיר לי מעט מאוד זמן למשחק. למרות הקושי לשמור על הרמה, ב-2021 אני ופריסטיילר נוסף (הראל) נבחנו, <span class="mech-highlight">התקבלנו והשתתפנו בטורניר הפריסטייל 2v2 של Pulse Clan</span> ששודר לאלפי צופים ביוטיוב.' },
       { year: 'כיום', title: 'סטודנט, יוצר תוכן, וממציא מכניקות', text: 'כיום אני סטודנט להנדסת חשמל ומדעי המחשב. בחופשת הסמסטר חזרתי חזק והגעתי ל-SSL. אני מפעיל עמוד טיקטוק מצליח, מעביר לייבים לימודיים, ואפילו המצאתי 2 מכניקות חדשות: <span class="mech-highlight">Reverse Musty, Shay pop</span>.' }
@@ -540,10 +542,11 @@ const strings = {
     rlfxItems: [
       { text: 'ROCKET LEAGUE INSANITY 40' }, { text: 'ROCKET LEAGUE INSANITY 41' }, { text: 'ROCKET LEAGUE INSANITY 44' }, { text: 'ROCKET LEAGUE INSANITY 53' }, { text: 'ROCKET LEAGUE INSANITY 55' }, { text: 'ROCKET LEAGUE INSANITY 56' }, { text: 'ROCKET LEAGUE INSANITY 58' }, { text: 'ROCKET LEAGUE INSANITY 59' }, { text: 'ROCKET LEAGUE INSANITY 60' }, { text: 'ROCKET LEAGUE INSANITY 62' }, { text: 'TEAM PUZL - JIGSAW' }, { text: 'TOP 100 FREESTYLES' }, { text: 'TOP 100 REDIRECTS' }, { text: 'TOP 100 PINCHES' }, { text: 'BEST OF 2021' }, { text: 'TOP 100 PREFLIPS' }, { text: 'ROCKET LEAGUE AROUND THE WORLD 🇮🇱', special: true }
     ],
-    ttt: { title: '🎮 אתגר האיקס-עיגול!', desc: 'נצח אותי במשחק וקבל <span class="highlight-discount">10 שקלים הנחה</span> על כל החבילות. יש לך ניסיון אחד בלבד!', btn: 'שחק עכשיו', win: 'ניצחת! זכית ב-10 שקלים הנחה.', lose: 'הפסדת! אולי בפעם הבאה.', draw: 'תיקו! ניסיון יפה.' }
+    ttt: { title: '🎮 אתגר האיקס-עיגול!', desc: 'נצח אותי במשחק וקבל <span class="highlight-discount">10 שקלים הנחה</span> על כל החבילות.', btn: 'שחק עכשיו', win: 'ניצחת! זכית ב-10 שקלים הנחה.', lose: 'הפסדת! המתן שעתיים לניסיון נוסף.', draw: 'תיקו! המתן שעתיים לניסיון נוסף.', winTitle: 'זכית ב-10 שקלים הנחה!', winDesc: 'ההנחה הופעלה אוטומטית על כל החבילות למטה.', cooldownTitle: '⏳ בהמתנה לניסיון הבא' }
   },
   en: {
     navLinks: ['About', 'My Journey', 'How it works', 'Pricing'],
+    backHome: 'Back to Homepage',
     auth: { loginTop: 'Sign In', logout: 'Logout', hello: 'Hello', tabLogin: 'Login', tabRegister: 'Register', titleLogin: 'Login to Account', titleRegister: 'Create New Account', name: 'Full Name', email: 'Email', pass: 'Password', submitLogin: 'Login', submitRegister: 'Register', requireMsg: 'You must log in to perform this action.', verifySent: 'Verification link sent to your email! (Check spam). Please verify and log in.', notVerified: 'You have not verified your email address yet. Please check your inbox.' },
     settings: { title: 'Account Settings', name: 'Username', email: 'Email Address', notLoggedIn: 'You are not logged in yet.', lightMode: '☀️ Light Mode', darkMode: '🌙 Dark Mode' },
     heroBadge: '🚀 Rocket League Academy',
@@ -591,7 +594,7 @@ const strings = {
     rlfxItems: [
       { text: 'ROCKET LEAGUE INSANITY 40' }, { text: 'ROCKET LEAGUE INSANITY 41' }, { text: 'ROCKET LEAGUE INSANITY 44' }, { text: 'ROCKET LEAGUE INSANITY 53' }, { text: 'ROCKET LEAGUE INSANITY 55' }, { text: 'ROCKET LEAGUE INSANITY 56' }, { text: 'ROCKET LEAGUE INSANITY 58' }, { text: 'ROCKET LEAGUE INSANITY 59' }, { text: 'ROCKET LEAGUE INSANITY 60' }, { text: 'ROCKET LEAGUE INSANITY 62' }, { text: 'TEAM PUZL - JIGSAW' }, { text: 'TOP 100 FREESTYLES' }, { text: 'TOP 100 REDIRECTS' }, { text: 'TOP 100 PINCHES' }, { text: 'BEST OF 2021' }, { text: 'TOP 100 PREFLIPS' }, { text: 'ROCKET LEAGUE AROUND THE WORLD 🇮🇱', special: true }
     ],
-    ttt: { title: '🎮 Tic-Tac-Toe Challenge!', desc: 'Beat me in a game to get a <span class="highlight-discount">10₪ discount</span> on all plans. You have only 1 attempt!', btn: 'Play Now', win: 'You won! 10₪ discount applied.', lose: 'You lost! Maybe next time.', draw: 'Draw! Nice try.' }
+    ttt: { title: '🎮 Tic-Tac-Toe Challenge!', desc: 'Beat me in a game to get a <span class="highlight-discount">10₪ discount</span> on all plans.', btn: 'Play Now', win: 'You won! 10₪ discount applied.', lose: 'You lost! Wait 2 hours to try again.', draw: 'Draw! Wait 2 hours to try again.', winTitle: 'You won a 10₪ discount!', winDesc: 'The discount has been automatically applied to all plans below.', cooldownTitle: '⏳ Waiting for next attempt' }
   }
 };
 
@@ -680,8 +683,6 @@ async function handleLogin(e) {
 
   authMsg.style.display = 'none';
   authMsg.style.color = 'var(--orange)';
-  
-  // נעילת הכפתור כדי למנוע לחיצה כפולה
   submitBtn.disabled = true;
   submitBtn.style.opacity = '0.5';
   const originalBtnText = submitBtn.innerText;
@@ -698,38 +699,26 @@ async function handleLogin(e) {
         const user = userCredential.user;
         
         await updateProfile(user, { displayName: name });
-        
-        // 1. שליחת מייל האימות קודם כל (כדי שאם מסד הנתונים חסום עדיין נשלח מייל)
         await sendEmailVerification(user);
         
-        // 2. ניסיון כתיבה למסד נתונים, מוגן ב-Try/Catch!
         try {
             const userDocRef = doc(db, 'artifacts', appId, 'users', user.uid, 'profile', 'userData');
             await setDoc(userDocRef, {
-              name: name, email: email, isPaid: false, hasPlayedTicTacToe: false, discountActive: false, orderId: null, createdAt: new Date().toISOString()
+              name: name, email: email, isPaid: false, discountActive: false, lastPlayedTTT: null, orderId: null, createdAt: new Date().toISOString()
             });
-        } catch (dbError) {
-            console.warn("Database rules blocked saving, but user was created.", dbError);
-            // לא עוצרים את התהליך, המשתמש נוצר!
-        }
+        } catch (dbError) { console.warn("Database rules blocked saving.", dbError); }
         
-        await signOut(auth); // מנתק אותו כדי שיאמת את המייל
+        await signOut(auth);
 
         authMsg.style.display = 'block';
         authMsg.style.color = 'var(--cyan)'; 
         authMsg.innerText = s.auth.verifySent;
-
-        document.getElementById('authName').value = '';
-        document.getElementById('authEmail').value = '';
-        document.getElementById('authPass').value = '';
-        
+        document.getElementById('authName').value = ''; document.getElementById('authEmail').value = ''; document.getElementById('authPass').value = '';
         setAuthMode('login');
         
-        // שחרור הכפתור
         submitBtn.disabled = false;
         submitBtn.style.opacity = '1';
         submitBtn.innerText = s.auth.submitLogin;
-
         return; 
 
       } else {
@@ -738,66 +727,51 @@ async function handleLogin(e) {
 
         if (!user.emailVerified) {
             await signOut(auth);
-            authMsg.style.display = 'block';
-            authMsg.style.color = 'var(--orange)';
-            authMsg.innerText = s.auth.notVerified;
-            
-            submitBtn.disabled = false;
-            submitBtn.style.opacity = '1';
-            submitBtn.innerText = originalBtnText;
+            authMsg.style.display = 'block'; authMsg.style.color = 'var(--orange)'; authMsg.innerText = s.auth.notVerified;
+            submitBtn.disabled = false; submitBtn.style.opacity = '1'; submitBtn.innerText = originalBtnText;
             return;
         }
         
         try {
             const userDocRef = doc(db, 'artifacts', appId, 'users', user.uid, 'profile', 'userData');
             const docSnap = await getDoc(userDocRef);
-            
             if (docSnap.exists()) {
               const data = docSnap.data();
               currentUser = data.name || user.displayName || email.split('@')[0];
               currentUserEmail = user.email;
               isPaid = data.isPaid || false;
-              hasPlayedTicTacToe = data.hasPlayedTicTacToe || false;
               discountActive = data.discountActive || false;
+              lastPlayedTTT = data.lastPlayedTTT || null;
               orderId = data.orderId || null;
             } else {
-              // יוצר את הנתונים אם המשתמש התחבר בהצלחה אבל ה-DB נכשל פעם קודמת
               await setDoc(userDocRef, {
-                  name: user.displayName || email.split('@')[0],
-                  email: email, isPaid: false, hasPlayedTicTacToe: false, discountActive: false, orderId: null, createdAt: new Date().toISOString()
+                  name: user.displayName || email.split('@')[0], email: email, isPaid: false, discountActive: false, lastPlayedTTT: null, orderId: null, createdAt: new Date().toISOString()
               });
               currentUser = user.displayName || email.split('@')[0];
-              currentUserEmail = user.email; isPaid = false; hasPlayedTicTacToe = false; discountActive = false; orderId = null;
+              currentUserEmail = user.email; isPaid = false; discountActive = false; lastPlayedTTT = null; orderId = null;
             }
         } catch(dbError) {
             console.error("Database read error:", dbError);
-            currentUser = user.displayName || email.split('@')[0];
-            currentUserEmail = user.email; isPaid = false; hasPlayedTicTacToe = false; discountActive = false; orderId = null;
+            currentUser = user.displayName || email.split('@')[0]; currentUserEmail = user.email; isPaid = false; discountActive = false; lastPlayedTTT = null; orderId = null;
         }
       }
       
       updateAuthUI();
       closeAuthModal();
       document.getElementById('authName').value = ''; document.getElementById('authEmail').value = ''; document.getElementById('authPass').value = '';
-      
       if (isPaid) toggleDashboard(true);
       
     } catch (error) {
       console.error("Auth Error:", error);
-      authMsg.style.display = 'block';
-      authMsg.style.color = 'var(--orange)';
-      authMsg.innerText = getFirebaseErrorMessage(error.code);
-      
-      submitBtn.disabled = false;
-      submitBtn.style.opacity = '1';
-      submitBtn.innerText = originalBtnText;
+      authMsg.style.display = 'block'; authMsg.style.color = 'var(--orange)'; authMsg.innerText = getFirebaseErrorMessage(error.code);
+      submitBtn.disabled = false; submitBtn.style.opacity = '1'; submitBtn.innerText = originalBtnText;
     }
   }
 }
 
 async function handleLogout() {
   if (useFirebase) await signOut(auth);
-  currentUser = null; currentUserEmail = null; isPaid = false; hasPlayedTicTacToe = false; discountActive = false; orderId = null;
+  currentUser = null; currentUserEmail = null; isPaid = false; discountActive = false; lastPlayedTTT = null; orderId = null;
   updateAuthUI();
   toggleDashboard(false);
 }
@@ -811,7 +785,6 @@ async function initiatePurchase() {
     openAuthModal(); 
   } else {
     if (!orderId) orderId = 'DRX-' + Math.floor(100000 + Math.random() * 900000);
-    
     if (useFirebase && auth.currentUser) {
       try {
         const userDocRef = doc(db, 'artifacts', appId, 'users', auth.currentUser.uid, 'profile', 'userData');
@@ -835,15 +808,15 @@ if (useFirebase) {
           const data = docSnap.data();
           currentUser = data.name || user.displayName || user.email.split('@')[0];
           isPaid = data.isPaid || false;
-          hasPlayedTicTacToe = data.hasPlayedTicTacToe || false;
           discountActive = data.discountActive || false;
+          lastPlayedTTT = data.lastPlayedTTT || null;
           orderId = data.orderId || null;
         } else {
           currentUser = user.displayName || user.email.split('@')[0];
           isPaid = false;
         }
       } catch (e) {
-        console.error("Error loading user profile on auth change:", e);
+        console.error("Error loading profile:", e);
         currentUser = user.displayName || (user.email ? user.email.split('@')[0] : "User");
         currentUserEmail = user.email;
       }
@@ -851,17 +824,17 @@ if (useFirebase) {
       if (isPaid) toggleDashboard(true);
     } else {
       if (user) await signOut(auth); 
-      currentUser = null; currentUserEmail = null; isPaid = false; hasPlayedTicTacToe = false; discountActive = false; orderId = null;
+      currentUser = null; currentUserEmail = null; isPaid = false; discountActive = false; lastPlayedTTT = null; orderId = null;
       updateAuthUI();
     }
   });
 }
 
+// TIC TAC TOE MEDIUM AI
 let tttBoard = ['', '', '', '', '', '', '', '', ''];
 let tttActive = true;
 
-function openTTTModal() {
-  if(!currentUser) { openAuthModal(); return; }
+window.openTTTModal = function() {
   document.getElementById('tttModal').classList.add('active');
   document.getElementById('tttResultMsg').style.display = 'none';
   tttBoard = ['', '', '', '', '', '', '', '', ''];
@@ -879,6 +852,32 @@ function renderTTT() {
   });
 }
 
+function checkWin(player) {
+  const winCombos = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+  return winCombos.some(combo => combo.every(idx => tttBoard[idx] === player));
+}
+
+function getBestMove() {
+  let emptyIndices = tttBoard.map((val, i) => val === '' ? i : null).filter(val => val !== null);
+  
+  // 1. Can AI Win?
+  for (let i of emptyIndices) {
+    tttBoard[i] = 'O';
+    if (checkWin('O')) { tttBoard[i] = ''; return i; }
+    tttBoard[i] = '';
+  }
+  // 2. Can Player Win? Block them.
+  for (let i of emptyIndices) {
+    tttBoard[i] = 'X';
+    if (checkWin('X')) { tttBoard[i] = ''; return i; }
+    tttBoard[i] = '';
+  }
+  // 3. Take center if free
+  if (tttBoard[4] === '') return 4;
+  // 4. Random move
+  return emptyIndices[Math.floor(Math.random() * emptyIndices.length)];
+}
+
 window.playTTT = async function(index) {
   if(!tttActive || tttBoard[index] !== '') return;
   tttBoard[index] = 'X';
@@ -886,34 +885,33 @@ window.playTTT = async function(index) {
   if(checkWin('X')) { await endTTT('win'); return; }
   if(!tttBoard.includes('')) { await endTTT('draw'); return; }
 
-  let emptyIndices = tttBoard.map((val, i) => val === '' ? i : null).filter(val => val !== null);
-  let compMove = emptyIndices[Math.floor(Math.random() * emptyIndices.length)];
+  let compMove = getBestMove();
   tttBoard[compMove] = 'O';
-  renderTTT();
-  if(checkWin('O')) { await endTTT('lose'); return; }
-  if(!tttBoard.includes('')) { await endTTT('draw'); return; }
+  setTimeout(async () => {
+      renderTTT();
+      if(checkWin('O')) { await endTTT('lose'); return; }
+      if(!tttBoard.includes('')) { await endTTT('draw'); return; }
+  }, 200); 
 };
-
-function checkWin(player) {
-  const winCombos = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
-  return winCombos.some(combo => combo.every(idx => tttBoard[idx] === player));
-}
 
 async function endTTT(result) {
   tttActive = false;
-  hasPlayedTicTacToe = true;
   const s = strings[currentLang].ttt;
-  
   const resultMsg = document.getElementById('tttResultMsg');
-  if(result === 'win') { resultMsg.innerText = s.win; discountActive = true; } 
-  else if(result === 'lose') { resultMsg.innerText = s.lose; } 
-  else { resultMsg.innerText = s.draw; }
+  
+  if(result === 'win') { 
+      resultMsg.innerText = s.win; 
+      discountActive = true; 
+  } else { 
+      resultMsg.innerText = result === 'lose' ? s.lose : s.draw; 
+      lastPlayedTTT = new Date().toISOString(); 
+  }
   resultMsg.style.display = 'block';
 
   if(useFirebase && auth.currentUser) {
      try {
         const userDocRef = doc(db, 'artifacts', appId, 'users', auth.currentUser.uid, 'profile', 'userData');
-        await updateDoc(userDocRef, { hasPlayedTicTacToe: true, discountActive: discountActive });
+        await updateDoc(userDocRef, { discountActive: discountActive, lastPlayedTTT: lastPlayedTTT });
      } catch(e) { console.error("Error saving game result:", e); }
   }
   updateTTTBanner();
@@ -922,25 +920,49 @@ async function endTTT(result) {
 
 function updateTTTBanner() {
   const banner = document.getElementById('tttBannerWrapper');
+  const titleEl = document.getElementById('tttBannerTitle');
+  const descEl = document.getElementById('tttBannerDesc');
+  const btnEl = document.getElementById('tttBannerBtn');
   const s = strings[currentLang].ttt;
   
-  if(!currentUser) {
-     banner.style.display = 'block'; 
-     document.getElementById('tttBannerTitle').innerText = s.title;
-     document.getElementById('tttBannerDesc').innerHTML = s.desc;
-     document.getElementById('tttBannerBtn').style.display = 'inline-block';
-     document.getElementById('tttBannerBtn').innerText = s.btn;
-  } else if(!hasPlayedTicTacToe) {
-     banner.style.display = 'block';
-     document.getElementById('tttBannerTitle').innerText = s.title;
-     document.getElementById('tttBannerDesc').innerHTML = s.desc;
-     document.getElementById('tttBannerBtn').style.display = 'inline-block';
-     document.getElementById('tttBannerBtn').innerText = s.btn;
+  banner.style.display = 'block';
+  
+  if (!currentUser) {
+     titleEl.innerText = s.title;
+     descEl.innerHTML = s.desc;
+     btnEl.style.display = 'inline-block';
+     btnEl.innerText = s.btn;
+     btnEl.onclick = () => openAuthModal();
+  } else if (discountActive) {
+     titleEl.innerText = "🎉 " + s.winTitle;
+     descEl.innerHTML = s.winDesc;
+     btnEl.style.display = 'none';
   } else {
-     banner.style.display = 'block';
-     document.getElementById('tttBannerBtn').style.display = 'none';
-     document.getElementById('tttBannerTitle').innerText = discountActive ? "🎉 " + s.win : s.title;
-     document.getElementById('tttBannerDesc').innerHTML = discountActive ? "" : "כבר ניצלת את משחק האיקס-עיגול שלך.";
+     let canPlay = true;
+     let timeStr = "";
+     if (lastPlayedTTT) {
+         const diffMs = new Date() - new Date(lastPlayedTTT);
+         const diffHours = diffMs / (1000 * 60 * 60);
+         if (diffHours < 2) {
+             canPlay = false;
+             const remMin = Math.ceil((2 * 60 * 60 * 1000 - diffMs) / (1000 * 60));
+             const h = Math.floor(remMin / 60);
+             const m = remMin % 60;
+             timeStr = currentLang === 'he' ? (h > 0 ? `${h} שעות ו-${m} דקות` : `${m} דקות`) : (h > 0 ? `${h}h ${m}m` : `${m} minutes`);
+         }
+     }
+     
+     if (canPlay) {
+         titleEl.innerText = s.title;
+         descEl.innerHTML = s.desc;
+         btnEl.style.display = 'inline-block';
+         btnEl.innerText = s.btn;
+         btnEl.onclick = () => openTTTModal();
+     } else {
+         titleEl.innerText = s.cooldownTitle;
+         descEl.innerHTML = currentLang === 'he' ? `הפסדת במשחק האחרון. תוכל לנסות שוב בעוד <strong>${timeStr}</strong>.` : `You lost. Try again in <strong>${timeStr}</strong>.`;
+         btnEl.style.display = 'none';
+     }
   }
 }
 
@@ -1147,8 +1169,6 @@ window.initiatePurchase = initiatePurchase;
 window.openSettingsModal = openSettingsModal;
 window.closeSettingsModal = closeSettingsModal;
 window.toggleTheme = toggleTheme;
-window.openTTTModal = openTTTModal;
-window.closeTTTModal = closeTTTModal;
 </script>
 </body>
 </html>
