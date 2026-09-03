@@ -51,43 +51,6 @@ h1, h2, h3, h4, h5, h6 { color: var(--white); }
 canvas#particles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; opacity: 0.35; transition: opacity 0.3s; }
 body.light-mode canvas#particles { opacity: 0.85; }
 
-/* --- SIDE DECORATIONS (PARALLAX) --- */
-.side-decorations {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 1;
-  overflow: hidden;
-}
-
-.dec-element {
-  position: absolute;
-  opacity: 0.15;
-  transition: opacity 0.3s;
-}
-
-body.light-mode .dec-element {
-  opacity: 0.3;
-}
-
-.dec-ring-1 { top: 15%; left: 3%; width: 200px; height: 200px; border: 1px solid var(--cyan); border-radius: 50%; opacity: 0.1; }
-.dec-cross-1 { top: 25%; left: 8%; font-size: 32px; color: var(--muted); font-family: monospace; }
-.dec-line-l { top: -20%; left: 5%; width: 1px; height: 150vh; background: linear-gradient(to bottom, transparent, var(--cyan), transparent); opacity: 0.2; }
-.dec-circle-filled { top: 75%; left: 7%; width: 6px; height: 6px; background: var(--orange); border-radius: 50%; box-shadow: 0 0 15px var(--orange); }
-
-.dec-hex-1 { top: 50%; right: 4%; width: 120px; height: 135px; background: transparent; border: 1px dashed var(--orange); clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); opacity: 0.1; }
-.dec-cross-2 { top: 10%; right: 7%; font-size: 24px; color: var(--cyan); font-family: monospace; }
-.dec-square { top: 80%; right: 6%; width: 40px; height: 40px; border: 2px solid var(--muted); opacity: 0.2; }
-.dec-line-r { top: 30%; right: 5%; width: 1px; height: 120vh; background: linear-gradient(to bottom, transparent, var(--orange), transparent); opacity: 0.2; }
-
-@media(max-width: 1300px) {
-  .side-decorations { display: none; } /* הסתרת האנימציות בצדדים במסכים קטנים יחסית */
-}
-/* --------------------------------- */
-
 .wrap { position: relative; z-index: 2; max-width: 960px; margin: 0 auto; padding: 0 24px; flex: 1; width: 100%; }
 
 /* NAV */
@@ -290,19 +253,6 @@ footer { position: relative; z-index: 2; border-top: 1px solid var(--border); pa
 <div class="app-container">
   <canvas id="particles"></canvas>
   
-  <!-- --- PARALLAX SIDE DECORATIONS --- -->
-  <div class="side-decorations">
-    <div class="dec-element dec-ring-1" id="dec1"></div>
-    <div class="dec-element dec-cross-1" id="dec2">+</div>
-    <div class="dec-element dec-circle-filled" id="dec3"></div>
-    <div class="dec-element dec-line-l" id="dec4"></div>
-    
-    <div class="dec-element dec-hex-1" id="dec5"></div>
-    <div class="dec-element dec-cross-2" id="dec6">+</div>
-    <div class="dec-element dec-square" id="dec7"></div>
-    <div class="dec-element dec-line-r" id="dec8"></div>
-  </div>
-  
   <nav>
     <div class="nav-inner">
       <div class="logo" onclick="toggleDashboard(false)">drexm<span>.</span>academy</div>
@@ -319,12 +269,10 @@ footer { position: relative; z-index: 2; border-top: 1px solid var(--border); pa
       </ul>
 
       <div class="nav-actions">
-        <!-- אזור המשתמש וההתחברות -->
         <div class="user-area" id="userArea">
           <button class="btn-login" id="nav-login-btn" onclick="openAuthModal()">התחברות</button>
         </div>
 
-        <!-- כפתור הגדרות -->
         <button class="settings-icon-btn" onclick="openSettingsModal()" title="הגדרות">
           <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
               <path d="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.06-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61 l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41 h-3.84c-0.24,0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.73,8.87 C2.62,9.08,2.66,9.34,2.86,9.48l2.03,1.58C4.84,11.36,4.8,11.69,4.8,12s0.02,0.64,0.06,0.94l-2.03,1.58 c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54 c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24,0,0.43-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96 c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.49-0.12-0.61L19.14,12.94z M12,15.6c-1.98,0-3.6-1.62-3.6-3.6 s1.62-3.6,3.6-3.6s3.6,1.62,3.6,3.6S13.98,15.6,12,15.6z"/>
@@ -372,7 +320,7 @@ footer { position: relative; z-index: 2; border-top: 1px solid var(--border); pa
             </div>
           </div>
           <div class="hero-visual">
-            <img src="hero-bg.png" alt="Rocket League Gamer">
+            <img src="hero-bg.png" alt="Rocket League Gamer" onerror="this.src='https://placehold.co/600x400/12121F/00C6FF?text=Rocket+League+Coach'">
           </div>
         </div>
       </section>
@@ -442,7 +390,7 @@ footer { position: relative; z-index: 2; border-top: 1px solid var(--border); pa
         <p style="color: var(--muted); font-size: 16px" id="dash-sub">ברוך הבא לאקדמיה! בחר את השירות שרכשת כדי להתחיל.</p>
       </div>
 
-      <!-- קוביית ה-Order ID שנוספה עכשיו -->
+      <!-- קוביית ה-Order ID -->
       <div id="order-box-container" style="display: none; background: rgba(0,198,255,0.05); border: 1px dashed var(--cyan); border-radius: 12px; padding: 24px; text-align: center; margin-bottom: 32px;">
         <h3 style="color: var(--cyan); margin-bottom: 12px; font-size: 18px;" id="order-box-title">קוד האימות שלך (Order ID)</h3>
         <div style="font-family: monospace; font-size: 26px; font-weight: bold; letter-spacing: 2px; color: var(--white); background: var(--bg2); display: inline-block; padding: 12px 24px; border-radius: 8px; border: 1px solid var(--border); margin-bottom: 12px;" id="order-box-id"></div>
@@ -515,12 +463,15 @@ footer { position: relative; z-index: 2; border-top: 1px solid var(--border); pa
   </div>
 </div>
 
-<!-- טעינת ספריות Firebase -->
+<!-- טעינת ספריות Firebase בגרסה מעודכנת (CDN) -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
 import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
+// ==========================================
+// --- קונפיגורציית ה-FIREBASE של האתר ---
+// ==========================================
 const firebaseConfig = {
   apiKey: "AIzaSyDMX0kcsqD5azgP6NAAt21TY75jwee1RxM",
   authDomain: "drexm-academy.firebaseapp.com",
@@ -541,7 +492,7 @@ let currentTheme = 'dark';
 let currentUser = null; 
 let currentUserEmail = null;
 let isPaid = false; 
-let currentOrderId = null; // מזהה ההזמנה החדש
+let currentOrderId = null; 
 let authMode = 'login'; 
 
 try {
@@ -621,7 +572,7 @@ const strings = {
     settings: { title: 'Account Settings', name: 'Username', email: 'Email Address', notLoggedIn: 'You are not logged in yet.', lightMode: '☀️ Light Mode', darkMode: '🌙 Dark Mode' },
     heroBadge: '🚀 Rocket League Academy',
     h1: ['Elevate Your', 'Rocket League', 'To The Next Level'],
-    heroSub: '11 years of Rocket League experience. I am here to take your gameplay personally and help you rank up through replay analysis and 1-on-1 consultations.',
+    heroSub: 'I am here to take your gameplay personally and help you rank up through replay analysis and 1-on-1 consultations.',
     heroCTA1: 'Join Now', heroCTA2: 'How it works',
     stats: ['Years Playing', 'Peak Rank', 'Mechanics', 'Packages'],
     aboutTag: 'About drexm', aboutTitle: 'Who I Am & Why You Should<br/>Learn From Me',
@@ -882,7 +833,6 @@ async function initiatePurchase() {
   } else {
     if (useFirebase && auth.currentUser) {
       try {
-        // יצירת קוד רכישה רנדומלי לדוגמה DRX-459021
         const newOrderId = 'DRX-' + Math.floor(100000 + Math.random() * 900000);
         
         const userDocRef = doc(db, 'artifacts', appId, 'users', auth.currentUser.uid, 'profile', 'userData');
@@ -1077,7 +1027,6 @@ function toggleDashboard(show) {
     document.getElementById('view-dashboard').style.display = 'block';
     document.getElementById('dash-nav').style.display = 'flex';
     
-    // הצגת קוביית ה-Order ID במידה ויש קוד למשתמש
     if (currentOrderId) {
       document.getElementById('order-box-container').style.display = 'block';
       document.getElementById('order-box-id').innerText = currentOrderId;
@@ -1118,28 +1067,6 @@ window.switchTab = switchTab;
 window.openSettingsModal = openSettingsModal;
 window.closeSettingsModal = closeSettingsModal;
 window.toggleTheme = toggleTheme;
-
-// Parallax Effect
-window.addEventListener('scroll', () => {
-  const y = window.scrollY;
-  const dec1 = document.getElementById('dec1');
-  const dec2 = document.getElementById('dec2');
-  const dec3 = document.getElementById('dec3');
-  const dec4 = document.getElementById('dec4');
-  const dec5 = document.getElementById('dec5');
-  const dec6 = document.getElementById('dec6');
-  const dec7 = document.getElementById('dec7');
-  const dec8 = document.getElementById('dec8');
-  
-  if(dec1) dec1.style.transform = `translateY(${y * 0.15}px) rotate(${y * 0.05}deg)`;
-  if(dec2) dec2.style.transform = `translateY(${y * 0.05}px)`;
-  if(dec3) dec3.style.transform = `translateY(${-y * 0.1}px)`;
-  if(dec4) dec4.style.transform = `translateY(${-y * 0.2}px)`;
-  if(dec5) dec5.style.transform = `translateY(${-y * 0.08}px) rotate(${-y * 0.03}deg)`;
-  if(dec6) dec6.style.transform = `translateY(${y * 0.12}px)`;
-  if(dec7) dec7.style.transform = `translateY(${y * 0.2}px) rotate(${y * 0.08}deg)`;
-  if(dec8) dec8.style.transform = `translateY(${y * 0.15}px)`;
-});
 
 const canvas = document.getElementById('particles');
 const ctx = canvas.getContext('2d');
