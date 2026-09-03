@@ -450,7 +450,6 @@ footer { position: relative; z-index: 2; border-top: 1px solid var(--border); pa
 </div>
 
 <script type="module">
-// Added sendEmailVerification to the imports
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile, sendEmailVerification } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
 import { getFirestore, doc, setDoc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
@@ -662,8 +661,11 @@ function setAuthMode(mode) {
 function openAuthModal() {
   const s = strings[currentLang];
   const authMsg = document.getElementById('authMsg');
+  const submitBtn = document.getElementById('authSubmitBtn');
   authMsg.style.display = 'none';
-  authMsg.style.color = 'var(--orange)'; // Reset color to default orange
+  authMsg.style.color = 'var(--orange)'; 
+  submitBtn.disabled = false;
+  submitBtn.style.opacity = '1';
   setAuthMode('login'); 
   document.getElementById('authModal').classList.add('active');
 }
@@ -673,13 +675,21 @@ function closeAuthModal() { document.getElementById('authModal').classList.remov
 async function handleLogin(e) {
   e.preventDefault();
   const authMsg = document.getElementById('authMsg');
+  const submitBtn = document.getElementById('authSubmitBtn');
+  const s = strings[currentLang];
+
   authMsg.style.display = 'none';
-  authMsg.style.color = 'var(--orange)'; // Default error color
+  authMsg.style.color = 'var(--orange)';
+  
+  // נעילת הכפתור כדי למנוע לחיצה כפולה
+  submitBtn.disabled = true;
+  submitBtn.style.opacity = '0.5';
+  const originalBtnText = submitBtn.innerText;
+  submitBtn.innerText = currentLang === 'he' ? 'טוען...' : 'Loading...';
 
   const email = document.getElementById('authEmail').value.trim();
   const password = document.getElementById('authPass').value;
   const name = document.getElementById('authName').value.trim();
-  const s = strings[currentLang];
   
   if (useFirebase) {
     try {
@@ -694,32 +704,39 @@ async function handleLogin(e) {
           name: name, email: email, isPaid: false, hasPlayedTicTacToe: false, discountActive: false, orderId: null, createdAt: new Date().toISOString()
         });
         
-        // --- EMAIL VERIFICATION ADDED HERE ---
         await sendEmailVerification(user);
-        await signOut(auth); // Sign them out immediately so they have to verify
+        await signOut(auth); // מנתק אותו כדי שיאמת את המייל
 
         authMsg.style.display = 'block';
-        authMsg.style.color = 'var(--cyan)'; // Blue color for success message
+        authMsg.style.color = 'var(--cyan)'; 
         authMsg.innerText = s.auth.verifySent;
 
         document.getElementById('authName').value = '';
         document.getElementById('authEmail').value = '';
         document.getElementById('authPass').value = '';
         
-        // Visually switch them to login mode to wait for their return
         setAuthMode('login');
-        return; // Stop the flow here
+        
+        // שחרור הכפתור
+        submitBtn.disabled = false;
+        submitBtn.style.opacity = '1';
+        submitBtn.innerText = s.auth.submitLogin;
+
+        return; 
 
       } else {
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
 
-        // --- CHECK VERIFICATION BEFORE ALLOWING LOGIN ---
         if (!user.emailVerified) {
             await signOut(auth);
             authMsg.style.display = 'block';
             authMsg.style.color = 'var(--orange)';
             authMsg.innerText = s.auth.notVerified;
+            
+            submitBtn.disabled = false;
+            submitBtn.style.opacity = '1';
+            submitBtn.innerText = originalBtnText;
             return;
         }
         
@@ -751,6 +768,10 @@ async function handleLogin(e) {
       authMsg.style.display = 'block';
       authMsg.style.color = 'var(--orange)';
       authMsg.innerText = getFirebaseErrorMessage(error.code);
+      
+      submitBtn.disabled = false;
+      submitBtn.style.opacity = '1';
+      submitBtn.innerText = originalBtnText;
     }
   }
 }
@@ -786,7 +807,6 @@ async function initiatePurchase() {
 
 if (useFirebase) {
   onAuthStateChanged(auth, async (user) => {
-    // Only accept verified users automatically
     if (user && user.emailVerified) {
       try {
         const userDocRef = doc(db, 'artifacts', appId, 'users', user.uid, 'profile', 'userData');
@@ -811,7 +831,7 @@ if (useFirebase) {
       updateAuthUI();
       if (isPaid) toggleDashboard(true);
     } else {
-      if (user) await signOut(auth); // Kick out silently if unverified
+      if (user) await signOut(auth); 
       currentUser = null; currentUserEmail = null; isPaid = false; hasPlayedTicTacToe = false; discountActive = false; orderId = null;
       updateAuthUI();
     }
