@@ -44,41 +44,49 @@ body, html {
   background-color: var(--bg);
   color: var(--white);
   transition: background-color 0.3s;
-  overflow: hidden; /* למנוע גלילה רוחבית מהצורות בצדדים */
 }
 
 h1, h2, h3, h4, h5, h6 { color: var(--white); }
 
-/* רקע החלקיקים הראשי */
 canvas#particles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; opacity: 0.35; transition: opacity 0.3s; }
 body.light-mode canvas#particles { opacity: 0.85; }
 
-/* צורות גיאומטריות בצדדים (Parallax Shards) */
-.shards-container {
-  position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
+/* --- SIDE DECORATIONS (PARALLAX) --- */
+.side-decorations {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   pointer-events: none;
-  z-index: 0;
+  z-index: 1;
   overflow: hidden;
 }
 
-.shard {
+.dec-element {
   position: absolute;
-  opacity: 0.45; /* הגדלנו שקיפות כדי שהזוהר יבלוט */
+  opacity: 0.15;
   transition: opacity 0.3s;
-  will-change: transform; /* הוספנו לשיפור ביצועי גלילה עם הרבה צורות */
 }
 
-body.light-mode .shard {
-  opacity: 0.7; /* בולט יותר במצב הבהיר */
+body.light-mode .dec-element {
+  opacity: 0.3;
 }
 
-.shard svg {
-  width: 100%; height: 100%;
-  fill: transparent;
-  stroke-width: 4px; /* קווים עבים יותר לקריסטלים קטנים */
+.dec-ring-1 { top: 15%; left: 3%; width: 200px; height: 200px; border: 1px solid var(--cyan); border-radius: 50%; opacity: 0.1; }
+.dec-cross-1 { top: 25%; left: 8%; font-size: 32px; color: var(--muted); font-family: monospace; }
+.dec-line-l { top: -20%; left: 5%; width: 1px; height: 150vh; background: linear-gradient(to bottom, transparent, var(--cyan), transparent); opacity: 0.2; }
+.dec-circle-filled { top: 75%; left: 7%; width: 6px; height: 6px; background: var(--orange); border-radius: 50%; box-shadow: 0 0 15px var(--orange); }
+
+.dec-hex-1 { top: 50%; right: 4%; width: 120px; height: 135px; background: transparent; border: 1px dashed var(--orange); clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); opacity: 0.1; }
+.dec-cross-2 { top: 10%; right: 7%; font-size: 24px; color: var(--cyan); font-family: monospace; }
+.dec-square { top: 80%; right: 6%; width: 40px; height: 40px; border: 2px solid var(--muted); opacity: 0.2; }
+.dec-line-r { top: 30%; right: 5%; width: 1px; height: 120vh; background: linear-gradient(to bottom, transparent, var(--orange), transparent); opacity: 0.2; }
+
+@media(max-width: 1300px) {
+  .side-decorations { display: none; } /* הסתרת האנימציות בצדדים במסכים קטנים יחסית */
 }
+/* --------------------------------- */
 
 .wrap { position: relative; z-index: 2; max-width: 960px; margin: 0 auto; padding: 0 24px; flex: 1; width: 100%; }
 
@@ -117,11 +125,11 @@ body.light-mode .lang-btn.active { color: #fff; }
 
 /* MODAL */
 .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 1000; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(5px); opacity: 0; pointer-events: none; transition: opacity 0.3s, background 0.3s; }
-body.light-mode .modal { background: rgba(130, 135, 145, 0.6); backdrop-filter: blur(6px); } 
+body.light-mode .modal { background: rgba(130, 135, 145, 0.6); backdrop-filter: blur(6px); }
 
 .modal.active { opacity: 1; pointer-events: auto; }
 .modal-content { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 40px; width: 90%; max-width: 400px; position: relative; box-shadow: 0 10px 40px rgba(0,0,0,0.5); transform: translateY(20px); transition: transform 0.3s, background-color 0.3s; }
-body.light-mode .modal-content { background: #F4F5F7; box-shadow: 0 10px 40px rgba(0,0,0,0.15); } 
+body.light-mode .modal-content { background: #F4F5F7; box-shadow: 0 10px 40px rgba(0,0,0,0.15); }
 
 .close-btn { position: absolute; top: 16px; right: 24px; font-size: 28px; cursor: pointer; color: var(--muted); transition: color 0.2s; }
 [dir="ltr"] .close-btn { right: auto; left: 24px; }
@@ -146,7 +154,7 @@ body.light-mode .modal-content { background: #F4F5F7; box-shadow: 0 10px 40px rg
 .hero h1 .hl2 { color: var(--orange); }
 .hero-sub { font-size: 17px; color: var(--muted); max-width: 520px; line-height: 1.7; margin-bottom: 40px; font-weight: 300; }
 .hero-cta { display: flex; gap: 12px; flex-wrap: wrap; }
-.btn-primary { background: var(--cyan); color: #fff; border: none; padding: 14px 32px; font-family: 'Rajdhani', sans-serif; font-size: 16px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; border-radius: 6px; cursor: pointer; transition: all 0.2s; }
+.btn-primary { background: var(--cyan); color: #000; border: none; padding: 14px 32px; font-family: 'Rajdhani', sans-serif; font-size: 16px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; border-radius: 6px; cursor: pointer; transition: all 0.2s; }
 .btn-primary:hover { background: #33D1FF; transform: translateY(-1px); }
 body.light-mode .btn-primary { color: #fff; }
 
@@ -234,8 +242,9 @@ body.light-mode .btn-primary { color: #fff; }
 .pricing-features li { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; color: var(--muted); line-height: 1.4; }
 .pricing-features li::before { content: '✓'; color: var(--cyan); font-weight: 700; font-size: 16px; margin-top: -2px; }
 .plan-support .pricing-features li::before { color: var(--orange); }
-.btn-buy { width: 100%; background: var(--cyan); color: #fff; border: none; padding: 14px; font-family: 'Rajdhani', sans-serif; font-size: 16px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; border-radius: 8px; cursor: pointer; transition: all 0.2s; margin-bottom: 12px; }
+.btn-buy { width: 100%; background: var(--cyan); color: #000; border: none; padding: 14px; font-family: 'Rajdhani', sans-serif; font-size: 16px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; border-radius: 8px; cursor: pointer; transition: all 0.2s; margin-bottom: 12px; }
 .btn-buy:hover { background: #33D1FF; }
+body.light-mode .btn-buy { color: #fff; }
 .plan-support .btn-buy { background: var(--orange); color: #fff; }
 .plan-support .btn-buy:hover { background: #D896FF; }
 .pricing-note { text-align: center; font-size: 12px; color: var(--muted); }
@@ -246,19 +255,9 @@ body.light-mode .btn-primary { color: #fff; }
 .dash-tab { background: none; border: none; color: var(--muted); font-size: 16px; font-family: 'Rajdhani', sans-serif; font-weight: 600; text-transform: uppercase; cursor: pointer; padding: 8px 16px; transition: all 0.2s; white-space: nowrap; }
 .dash-tab.active { color: var(--cyan); border-bottom: 2px solid var(--cyan); }
 .dash-tab:hover:not(.active) { color: var(--white); }
-.video-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px; }
-.video-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; transition: all 0.2s; cursor: pointer; }
-.video-card:hover { border-color: var(--cyan); transform: translateY(-4px); }
-.video-thumb { height: 160px; background: #1a1a2e; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; }
-.video-thumb::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.8) 100%); }
-.play-btn { width: 48px; height: 48px; background: rgba(0,198,255,0.2); border: 2px solid var(--cyan); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--cyan); font-size: 20px; padding-left: 4px; transition: all 0.2s; position: relative; z-index: 2; }
-.video-card:hover .play-btn { background: var(--cyan); color: #fff; transform: scale(1.1); }
-.video-info { padding: 16px; }
-.video-info h4 { font-size: 16px; font-weight: 500; margin-bottom: 8px; color: var(--white); }
-.video-info p { font-size: 13px; color: var(--muted); line-height: 1.5; }
+
 .coaching-card { background: linear-gradient(135deg, var(--bg2) 0%, #241033 100%); border: 1px solid var(--orange); border-radius: 12px; padding: 40px; text-align: center; }
 body.light-mode .coaching-card { background: linear-gradient(135deg, var(--bg2) 0%, #F3E8FF 100%); }
-
 .coaching-card h3 { font-family: 'Rajdhani', sans-serif; font-size: 28px; color: var(--orange); margin-bottom: 16px; }
 .coaching-card p { color: var(--white); font-size: 16px; max-width: 600px; margin: 0 auto 32px; line-height: 1.6; }
 .btn-discord { background: #5865F2; color: #fff; border: none; padding: 14px 32px; font-family: 'Rajdhani', sans-serif; font-size: 16px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; border-radius: 6px; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; justify-content: center; gap: 12px; margin: 0 auto; }
@@ -276,7 +275,6 @@ footer { position: relative; z-index: 2; border-top: 1px solid var(--border); pa
   .hero-stats { justify-content: center; }
   .hero-cta { justify-content: center; }
   .hero-sub { margin-left: auto; margin-right: auto; }
-  .shard { display: none; } /* הסתרת צורות במסכים קטנים מאוד כדי לא להעמיס */
 }
 @media(max-width:640px) {
   .about-grid { grid-template-columns: 1fr; }
@@ -291,7 +289,19 @@ footer { position: relative; z-index: 2; border-top: 1px solid var(--border); pa
 
 <div class="app-container">
   <canvas id="particles"></canvas>
-  <div class="shards-container" id="shards-container"></div>
+  
+  <!-- --- PARALLAX SIDE DECORATIONS --- -->
+  <div class="side-decorations">
+    <div class="dec-element dec-ring-1" id="dec1"></div>
+    <div class="dec-element dec-cross-1" id="dec2">+</div>
+    <div class="dec-element dec-circle-filled" id="dec3"></div>
+    <div class="dec-element dec-line-l" id="dec4"></div>
+    
+    <div class="dec-element dec-hex-1" id="dec5"></div>
+    <div class="dec-element dec-cross-2" id="dec6">+</div>
+    <div class="dec-element dec-square" id="dec7"></div>
+    <div class="dec-element dec-line-r" id="dec8"></div>
+  </div>
   
   <nav>
     <div class="nav-inner">
@@ -300,8 +310,8 @@ footer { position: relative; z-index: 2; border-top: 1px solid var(--border); pa
       <ul class="nav-links" id="home-nav">
         <li><button onclick="scrollToId('about')" id="nav-about">עליי</button></li>
         <li><button onclick="scrollToId('journey')" id="nav-journey">הסיפור שלי</button></li>
-        <li><button onclick="scrollToId('content')" id="nav-content">תכנים</button></li>
-        <li><button onclick="scrollToId('pricing')" id="nav-pricing">מחיר</button></li>
+        <li><button onclick="scrollToId('content')" id="nav-content">איך זה עובד</button></li>
+        <li><button onclick="scrollToId('pricing')" id="nav-pricing">חבילות</button></li>
       </ul>
 
       <ul class="nav-links" id="dash-nav" style="display: none;">
@@ -346,13 +356,13 @@ footer { position: relative; z-index: 2; border-top: 1px solid var(--border); pa
             <div class="hero-badge" id="hero-badge">🚀 Rocket League Academy</div>
             <h1>
               <span class="hl" id="h1-0">שדרג את</span><br/>
-              <span id="h1-1">המשחק שלך</span><br/>
+              <span id="h1-1">הרוקט ליג שלך</span><br/>
               <span class="hl2" id="h1-2">לרמה הבאה</span>
             </h1>
-            <p class="hero-sub" id="hero-sub">11 שנות ניסיון ברוקט ליג. מדריכים למכניקות, טיפים מקצועיים, וליווי אישי — הכל במקום אחד.</p>
+            <p class="hero-sub" id="hero-sub">עכשיו אני כאן כדי לקחת את המשחק שלכם אישית ולעזור לכם לעלות ראנק ולהשתפר במכניקות בעזרת ניתוח משחקים ושיחות ייעוץ ולימוד.</p>
             <div class="hero-cta">
               <button class="btn-primary" onclick="scrollToId('pricing')" id="hero-btn1">הצטרף עכשיו</button>
-              <button class="btn-outline" onclick="scrollToId('content')" id="hero-btn2">ראה תכנים</button>
+              <button class="btn-outline" onclick="scrollToId('content')" id="hero-btn2">איך זה עובד</button>
             </div>
             <div class="hero-stats">
               <div><div class="stat-val">11</div><div class="stat-lbl" id="stat-0">שנות משחק</div></div>
@@ -404,9 +414,9 @@ footer { position: relative; z-index: 2; border-top: 1px solid var(--border); pa
       <div class="divider"></div>
 
       <section class="section" id="content">
-        <div class="section-tag" id="content-tag">תכנים</div>
-        <h2 class="section-title"><span id="content-title">מה תלמד ב-</span><span style="color: var(--cyan)">drexm academy</span></h2>
-        <p class="section-sub" id="content-sub">וידאו מדריכים וקריאה — רק למי שמשלם. חלק מהתכנים זמינים לצפייה כדי שתוכל לקבל טעימה.</p>
+        <div class="section-tag" id="content-tag">התהליך</div>
+        <h2 class="section-title"><span id="content-title">איך עובד הליווי ב-</span><span style="color: var(--cyan)">drexm academy</span></h2>
+        <p class="section-sub" id="content-sub">במקום לצפות במדריכים כלליים, אנחנו נתמקד בדיוק במה שאתה צריך כדי להשתפר בשלושה שלבים פשוטים:</p>
         <div class="content-list" id="home-content-list">
           <!-- Rendered via JS -->
         </div>
@@ -429,29 +439,36 @@ footer { position: relative; z-index: 2; border-top: 1px solid var(--border); pa
     <main class="wrap">
       <div class="dashboard-header">
         <h1 style="font-family: 'Rajdhani', sans-serif; font-size: 36px; margin-bottom: 8px" id="dash-title">אזור אישי</h1>
-        <p style="color: var(--muted); font-size: 16px" id="dash-sub">ברוך הבא לאקדמיה! בחר קטגוריה כדי להתחיל ללמוד.</p>
+        <p style="color: var(--muted); font-size: 16px" id="dash-sub">ברוך הבא לאקדמיה! בחר את השירות שרכשת כדי להתחיל.</p>
+      </div>
+
+      <!-- קוביית ה-Order ID שנוספה עכשיו -->
+      <div id="order-box-container" style="display: none; background: rgba(0,198,255,0.05); border: 1px dashed var(--cyan); border-radius: 12px; padding: 24px; text-align: center; margin-bottom: 32px;">
+        <h3 style="color: var(--cyan); margin-bottom: 12px; font-size: 18px;" id="order-box-title">קוד האימות שלך (Order ID)</h3>
+        <div style="font-family: monospace; font-size: 26px; font-weight: bold; letter-spacing: 2px; color: var(--white); background: var(--bg2); display: inline-block; padding: 12px 24px; border-radius: 8px; border: 1px solid var(--border); margin-bottom: 12px;" id="order-box-id"></div>
+        <p style="color: var(--muted); font-size: 15px; max-width: 400px; margin: 0 auto; line-height: 1.5;" id="order-box-desc">העתק את הקוד ושמור אותו. פתח טיקט בשרת הדיסקורד ושלח אותו שם כדי לאמת את הרכישה שלך.</p>
       </div>
 
       <div class="dashboard-tabs">
-        <button class="dash-tab active" id="tab-videos" onclick="switchTab('videos')">סרטונים</button>
-        <button class="dash-tab" id="tab-drills" onclick="switchTab('drills')">תרגולים</button>
-        <button class="dash-tab" id="tab-coaching" onclick="switchTab('coaching')">עזרה וטיפים</button>
+        <button class="dash-tab active" id="tab-analysis" onclick="switchTab('analysis')">ניתוח משחקים</button>
+        <button class="dash-tab" id="tab-qa" onclick="switchTab('qa')">שיחת ייעוץ</button>
       </div>
 
-      <div id="pane-videos" class="video-grid">
-        <!-- Rendered via JS -->
-      </div>
-
-      <div id="pane-drills" class="content-list" style="margin-top: 0; display: none;">
-        <!-- Rendered via JS -->
-      </div>
-
-      <div id="pane-coaching" class="coaching-card" style="display: none;">
-        <h3 id="coach-title">מענה ותמיכה (Q&A)</h3>
-        <p id="coach-desc">רכשת את מסלול התמיכה? שלח לי הודעה בדיסקורד עם שאלות, טיפים שאתה צריך או בקשת עזרה במכניקה. אני שם כדי להכווין אותך.</p>
-        <button class="btn-discord">
+      <div id="pane-analysis" class="coaching-card" style="display: block;">
+        <h3 id="analysis-title">שלח משחקים לניתוח</h3>
+        <p id="analysis-desc">רכשת את חבילת הניתוח? שלח לי בהודעה בטיקט את קבצי הריפליי (או קישורים ל-ballchasing) ונתאם שעה לעבור עליהם יחד.</p>
+        <button class="btn-discord" onclick="window.open('https://discord.gg/kvVmkFrZnC', '_blank')">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/></svg>
-          <span id="coach-btn">התחבר לשרת הדיסקורד</span>
+          <span id="analysis-btn">פתח קריאה בדיסקורד</span>
+        </button>
+      </div>
+
+      <div id="pane-qa" class="coaching-card" style="display: none;">
+        <h3 id="qa-title">קביעת שיחת Q&A</h3>
+        <p id="qa-desc">רכשת את ה-20 דקות? שלח לי בהודעה בטיקט שאתה מוכן, ונמצא זמן שנוח לשנינו לשבת על כל השאלות שלך.</p>
+        <button class="btn-discord" onclick="window.open('https://discord.gg/kvVmkFrZnC', '_blank')">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/></svg>
+          <span id="qa-btn">תיאום שיחה בדיסקורד</span>
         </button>
       </div>
     </main>
@@ -498,14 +515,12 @@ footer { position: relative; z-index: 2; border-top: 1px solid var(--border); pa
   </div>
 </div>
 
+<!-- טעינת ספריות Firebase -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
 import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-// ==========================================
-// --- קונפיגורציית ה-FIREBASE של האתר ---
-// ==========================================
 const firebaseConfig = {
   apiKey: "AIzaSyDMX0kcsqD5azgP6NAAt21TY75jwee1RxM",
   authDomain: "drexm-academy.firebaseapp.com",
@@ -526,6 +541,7 @@ let currentTheme = 'dark';
 let currentUser = null; 
 let currentUserEmail = null;
 let isPaid = false; 
+let currentOrderId = null; // מזהה ההזמנה החדש
 let authMode = 'login'; 
 
 try {
@@ -538,53 +554,59 @@ try {
   console.error("Firebase initialization failed.", e);
 }
 
+// --- DICTIONARY ---
 const strings = {
   he: {
-    navLinks: ['עליי', 'הסיפור שלי', 'תכנים', 'מחיר'],
-    auth: { loginTop: 'כניסה', logout: 'התנתק', hello: 'שלום', tabLogin: 'התחברות', tabRegister: 'הרשמה', titleLogin: 'התחבר לחשבון', titleRegister: 'צור חשבון חדש', name: 'שם מלא', email: 'אימייל', pass: 'סיסמה', submitLogin: 'התחבר', submitRegister: 'הירשם', requireMsg: 'יש להתחבר לחשבון לפני רכישת מנוי או צפייה בתכנים.' },
+    navLinks: ['עליי', 'הסיפור שלי', 'איך זה עובד', 'חבילות'],
+    auth: { loginTop: 'כניסה', logout: 'התנתק', hello: 'שלום', tabLogin: 'התחברות', tabRegister: 'הרשמה', titleLogin: 'התחבר לחשבון', titleRegister: 'צור חשבון חדש', name: 'שם מלא', email: 'אימייל', pass: 'סיסמה', submitLogin: 'התחבר', submitRegister: 'הירשם', requireMsg: 'יש להתחבר לחשבון לפני רכישת מסלול.' },
     settings: { title: 'הגדרות חשבון', name: 'שם משתמש', email: 'כתובת אימייל', notLoggedIn: 'עדיין לא מחובר למערכת.', lightMode: '☀️ מצב בהיר', darkMode: '🌙 מצב כהה' },
     heroBadge: '🚀 Rocket League Academy',
-    h1: ['שדרג את', 'המשחק שלך', 'לרמה הבאה'],
-    heroSub: '11 שנות ניסיון ברוקט ליג. מדריכים למכניקות, טיפים מקצועיים, וליווי אישי — הכל במקום אחד.',
-    heroCTA1: 'הצטרף עכשיו', heroCTA2: 'ראה תכנים',
+    h1: ['שדרג את', 'הרוקט ליג שלך', 'לרמה הבאה'],
+    heroSub: 'עכשיו אני כאן כדי לקחת את המשחק שלכם אישית ולעזור לכם לעלות ראנק ולהשתפר במכניקות בעזרת ניתוח משחקים ושיחות ייעוץ ולימוד.',
+    heroCTA1: 'הצטרף עכשיו', heroCTA2: 'איך זה עובד',
     stats: ['שנות משחק', 'פיק ראנק', 'מכניקות', 'מסלולים'],
     aboutTag: 'על drexm', aboutTitle: 'מי אני ולמה כדאי לך<br/>ללמוד ממני',
     aboutSub: 'שחקן ישראלי מהטופ. משחק מהיום שרוקט ליג יצא - עם המון ניסיון, הבנה וכישורים כדי להסביר כל מכניקה ולענות על כל שאלה בצורה הכי ברורה שיש.',
     cards: [
       ['11 שנות ניסיון', 'שחקן ותיק מיום ההשקה. עברתי את כל המטא, המכניקות, והשינויים — וידעתי להתאים ולהשתפר בכל אחד מהם.'],
-      ['שחקן בין הטובים בארץ', 'בין השחקנים התחרותיים הכי מכניים בארץ ופריסטיילר מהטופ בארץ. עם הבנה מעמיקה של המשחק ויכולת לפרק כל מצב בשניות.'],
-      ['תוכן מקצועי מרוכז', 'סרטוני הסבר, תרגולים מפורטים, ומפות אימון — הכל מסודר לפי רמה. מתחיל עד הדרגות הגבוהות ביותר.'],
-      ['מענה ותמיכה', 'אני לא אהיה שם 24/7, אבל מי שמשלם על מסלול התמיכה מקבל גישה אליי לשאלות, טיפים, ולעיתים גם הסברים בשיחה.']
+      ['שחקן בין הטובים בארץ', 'בין השחקנים התחרותיים המכניים בישראל ופריסטיילר טופ ארצי. עם הבנה מעמיקה של המשחק ויכולת לפרק כל מצב בשניות.'],
+      ['ניתוח משחקים מדויק', 'אין תחליף לעין מקצועית שעוברת איתך על המשחקיות שלך. אני אזהה בדיוק מה תוקע אותך בראנק ואיך לתקן את זה.'],
+      ['ייעוץ מותאם אישית', 'בין אם זה שאלות על מכניקה, הגדרות מצלמה, או הלך רוח מנטלי - בשיחות שלנו אני אעזור לך ליישר קו.']
     ],
-    contentTag: 'תכנים', contentTitle: 'מה תלמד ב-',
-    contentSub: 'וידאו מדריכים וקריאה — רק למי שמשלם. חלק מהתכנים זמינים לצפייה כדי שתוכל לקבל טעימה.',
-    items: ['Air Roll — מהיסוד למרחק', 'איך לחשוב כמו Grand Champion', 'Ceiling Shot — מדריך מלא', 'Boost Management — הסוד לניצחון', 'Double Tap — הצינה שמפילה כולם', 'Positioning & Rotation — מדריך מתקדם', 'Musty Flick, Breezi Flick ועוד', 'ותכנים נוספים בדרך...'],
+    contentTag: 'התהליך', contentTitle: 'איך עובד הליווי ב-',
+    contentSub: 'במקום לצפות במדריכים כלליים, אנחנו נתמקד בדיוק במה שאתה צריך כדי להשתפר בשלושה שלבים פשוטים:',
+    items: ['בוחרים את החבילה שמתאימה לך מתוך המסלולים למטה', 'משלמים, מקבלים קוד אימות (Order ID), ופותחים טיקט בשרת הדיסקורד', 'קובעים זמן שנוח לשנינו, עולים לשיחה ומתחילים לעבוד על הראנק שלך יחד'],
     pricingTag: 'מחיר', pricingTitle: 'בחר את המסלול שלך',
     plans: [
       {
-        id: 'content', badge: 'תכנים', title: 'גישה לכל התכנים', price: '70', period: 'תשלום חד פעמי',
-        features: ['כל מדריכי הוידאו', 'גישה לכל התרגולים והתרגילים', 'גישה לתכנים עתידיים', 'למידה עצמית בקצב שלך'],
-        btn: '🚀 רכוש גישה לתכנים', note: 'תשלום מאובטח · גישה לתמיד'
+        id: 'content', badge: 'PRO', title: 'ניתוח 3 משחקי ראנק', price: '150', period: 'תשלום חד פעמי',
+        features: ['מעבר משותף על 3 ריפלייז', 'זיהוי טעויות רוטציה ומיקום', 'טיפים לשיפור מכניקות', 'משוב מפורט ואישי על המשחק שלך'],
+        btn: '🚀 בחר בניתוח משחקים', note: 'תשלום מאובטח · תיאום מראש בדיסקורד'
       },
       {
-        id: 'support', badge: 'תמיכה', title: 'מענה ועזרה מרחוק', price: '29', period: 'לחודש',
-        features: ['גישה לשרת הדיסקורד הפרטי', 'מענה על שאלות וטיפים ממוקדים', 'עזרה בהבנת מכניקות', 'לעיתים הסברים בשיחות קוליות'],
-        btn: '💬 הצטרף למסלול התמיכה', note: 'ללא התחייבות · ניתן לביטול בכל עת'
+        id: 'support', badge: 'Q&A', title: '20 דקות שאלות ותשובות', price: '50', period: 'תשלום חד פעמי',
+        features: ['שיחה אחד-על-אחד בדיסקורד', 'תשובות לכל השאלות שלך', 'ייעוץ על הגדרות ומנטליות', 'טיפים למכניקות ספציפיות'],
+        btn: '💬 בחר בשיחת ייעוץ', note: 'תשלום מאובטח · תיאום מראש בדיסקורד'
       }
     ],
     footerSub: 'DREXM ROCKET LEAGUE ACADEMY 2026 כל הזכויות שמורות',
-    dashTitle: 'אזור אישי', dashSub: 'ברוך הבא לאקדמיה! בחר קטגוריה כדי להתחיל ללמוד.',
-    tabs: ['סרטונים', 'תרגולים', 'עזרה וטיפים'],
-    vidBtn: 'צפה עכשיו',
-    coachTitle: 'מענה ותמיכה (Q&A)', coachDesc: 'רכשת את מסלול התמיכה? שלח לי הודעה בדיסקורד עם שאלות, טיפים שאתה צריך או בקשת עזרה במכניקה. אני שם כדי להכווין אותך.', coachBtn: 'התחבר לשרת הדיסקורד',
+    dashTitle: 'אזור אישי', dashSub: 'ברוך הבא לאקדמיה! בחר את השירות שרכשת כדי להתחיל.',
+    dashOrderTitle: 'קוד האימות שלך (Order ID)', dashOrderDesc: 'העתק את הקוד ושמור אותו. פתח טיקט בשרת הדיסקורד ושלח אותו שם כדי לאמת את הרכישה שלך.',
+    tabs: ['ניתוח משחקים', 'שיחת ייעוץ (Q&A)'],
+    dashAnalysisTitle: 'שלח משחקים לניתוח',
+    dashAnalysisDesc: 'רכשת את חבילת הניתוח? שלח לי בהודעה בטיקט את קבצי הריפליי (או קישורים ל-ballchasing) ונתאם שעה לעבור עליהם יחד.',
+    dashAnalysisBtn: 'פתח קריאה בדיסקורד',
+    dashQaTitle: 'קביעת שיחת Q&A',
+    dashQaDesc: 'רכשת את ה-20 דקות? שלח לי בהודעה בטיקט שאתה מוכן, ונמצא זמן שנוח לשנינו לשבת על כל השאלות שלך.',
+    dashQaBtn: 'תיאום שיחה בדיסקורד',
     backHome: 'חזור לעמוד הראשי',
     journeyTag: 'הסיפור שלי',
     journeyTitle: 'מהבטא ועד לטופ',
     journey: [
-      { year: '2015-2017', title: 'ההתחלה והפצת הכישרון', text: 'התחלתי לשחק עוד ב-Closed Beta ב-2015. תמיד אהבתי לעלות לאוויר ולנסות דברים מגניבים. קיבלתי השראה מפריסטיילרים כמו JZR, Pulse MK, ו-Pulse Muirie. הראנק הראשון שלי היה Gold 3 Div 2, ובזכות ההשקעה במכניקות הגעתי ל-Champion בקלות.' },
+      { year: '2015-2017', title: 'ההתחלה', text: 'התחלתי לשחק עוד ב-Closed Beta ב-2015. תמיד אהבתי לעלות לאוויר ולנסות דברים מגניבים. קיבלתי השראה מפריסטיילרים כמו JZR, Pulse MK, ו-Pulse Muirie. הראנק הראשון שלי היה Gold 3 Div 2, ובזכות ההשקעה במכניקות הגעתי ל-Champion בקלות.' },
       { year: '2019-2020', title: 'Grand Champion ושליטה במכניקות', text: 'כבר ב-2019 הייתי GC. המכניקות שלי היו כל כך טובות שבכל פעם שהכדור היה באוויר, זה היה גול - כמעט ללא צורך ב-Game Sense. ב-2020 התחלתי לשפר גם את ה-Game Sense והגעתי ל-1600-1700 MMR. בנוסף <span class="mech-highlight">זכיתי במקום ה-1 באליפות הארץ</span> של Hype League (2v2).' },
       { year: '2020-2023', title: 'שירות קרבי וטורניר Pulse Clan', text: 'התגייסתי ללוחמה, מה שהשאיר לי מעט מאוד זמן למשחק. למרות הקושי לשמור על הרמה, ב-2021 אני ופריסטיילר נוסף (הראל) נבחנו, <span class="mech-highlight">התקבלנו והשתתפנו בטורניר הפריסטייל 2v2 של Pulse Clan</span> ששודר לאלפי צופים ביוטיוב.' },
-      { year: 'כיום', title: 'סטודנט, יוצר תוכן, וממציא מכניקות', text: 'כיום אני סטודנט להנדסת חשמל ומדעי המחשב. בחופשת הסמסטר חזרתי חזק והגעתי ל-SSL. אני מפעיל עמוד טיקטוק מצליח, מעביר לייבים לימודיים, ואפילו המצאתי 3 מכניקות חדשות: <span class="mech-highlight">Reverse Musty, Shay pop, Front Windmill</span>.' }
+      { year: 'כיום', title: 'סטודנט, יוצר תוכן, וממציא מכניקות', text: 'כיום אני סטודנט להנדסת חשמל ומדעי המחשב. בחופשת הסמסטר חזרתי חזק והגעתי ל-SSL. אני מפעיל עמוד טיקטוק מצליח, מעביר לייבים לימודיים, ואפילו המצאתי 2 מכניקות חדשות: <span class="mech-highlight">Reverse Musty, Shay pop</span>.' }
     ],
     rlfxTag: 'הופעות וקליפים',
     rlfxTitle: 'Featured On <span style="color: var(--cyan)">RLFX</span>',
@@ -594,51 +616,56 @@ const strings = {
     ]
   },
   en: {
-    navLinks: ['About', 'My Journey', 'Content', 'Pricing'],
-    auth: { loginTop: 'Sign In', logout: 'Logout', hello: 'Hello', tabLogin: 'Login', tabRegister: 'Register', titleLogin: 'Login to Account', titleRegister: 'Create New Account', name: 'Full Name', email: 'Email', pass: 'Password', submitLogin: 'Login', submitRegister: 'Register', requireMsg: 'You must log in to an account before purchasing a plan.' },
+    navLinks: ['About', 'My Journey', 'How it works', 'Packages'],
+    auth: { loginTop: 'Sign In', logout: 'Logout', hello: 'Hello', tabLogin: 'Login', tabRegister: 'Register', titleLogin: 'Login to Account', titleRegister: 'Create New Account', name: 'Full Name', email: 'Email', pass: 'Password', submitLogin: 'Login', submitRegister: 'Register', requireMsg: 'You must log in to an account before purchasing a package.' },
     settings: { title: 'Account Settings', name: 'Username', email: 'Email Address', notLoggedIn: 'You are not logged in yet.', lightMode: '☀️ Light Mode', darkMode: '🌙 Dark Mode' },
     heroBadge: '🚀 Rocket League Academy',
     h1: ['Elevate Your', 'Rocket League', 'To The Next Level'],
-    heroSub: '11 years of Rocket League experience. Mechanic guides, pro tips, and personal coaching — all in one place.',
-    heroCTA1: 'Join Now', heroCTA2: 'Browse Content',
-    stats: ['Years Playing', 'Peak Rank', 'Mechanics', 'Plans'],
+    heroSub: '11 years of Rocket League experience. I am here to take your gameplay personally and help you rank up through replay analysis and 1-on-1 consultations.',
+    heroCTA1: 'Join Now', heroCTA2: 'How it works',
+    stats: ['Years Playing', 'Peak Rank', 'Mechanics', 'Packages'],
     aboutTag: 'About drexm', aboutTitle: 'Who I Am & Why You Should<br/>Learn From Me',
     aboutSub: "Top-tier Israeli player. Playing since day one — with the vast experience, understanding, and skills to explain any mechanic and answer any question clearly.",
     cards: [
       ['11 Years Experience', "A veteran since launch day. I've lived through every meta, mechanic, and update — and adapted to each one."],
       ['Among Israel\'s Best', "Among the most mechanical competitive players in the country and a top freestyler in Israel, with the ability to read any situation in seconds."],
-      ['Focused Professional Content', 'Video guides, detailed drills, and training maps — all organized by rank. From beginner to the highest ranks.'],
-      ['Support & Tips', 'Not a full-time coach, but support subscribers get access to me for questions, tips, and occasional voice explanations.']
+      ['Accurate Game Analysis', 'There is no substitute for a professional eye reviewing your gameplay. I will pinpoint exactly what is holding you back in your rank.'],
+      ['Personalized Coaching', 'Whether it is questions about mechanics, camera settings, or mindset - in our calls I will help you get on track.']
     ],
-    contentTag: 'Content', contentTitle: 'What You\'ll Learn at ',
-    contentSub: 'Video guides and drills — for paying members only. Some content is free so you can get a taste.',
-    items: ['Air Roll — Foundation to Advanced', 'How to Think Like a Grand Champion', 'Ceiling Shot — Full Guide', 'Boost Management — The Winning Secret', 'Double Tap — The Shot That Breaks Everyone', 'Positioning & Rotation — Advanced Guide', 'Musty Flick, Breezi Flick & More', 'More content coming soon...'],
-    pricingTag: 'Pricing', pricingTitle: 'Choose Your Plan',
+    contentTag: 'The Process', contentTitle: 'How Coaching Works at ',
+    contentSub: 'Instead of watching general guides, we will focus exactly on what YOU need to improve in 3 simple steps:',
+    items: ['Choose the package that suits you from the options below', 'Pay, receive an Order ID, and open a ticket on my Discord server', 'Hop on a call and start working on your rank together'],
+    pricingTag: 'Pricing', pricingTitle: 'Choose Your Package',
     plans: [
       {
-        id: 'content', badge: 'CONTENT', title: 'Full Content Access', price: '70', period: 'One-time payment',
-        features: ['All video guides', 'Access to all drills and practices', 'Access to new future content', 'Self-paced learning'],
-        btn: '🚀 Buy Content Access', note: 'Secure payment · Lifetime access'
+        id: 'content', badge: 'PRO', title: '3 Replays Analysis', price: '150', period: 'One-time payment',
+        features: ['Joint review of 3 replays', 'Identify rotation and positioning mistakes', 'Tips to improve mechanics', 'Detailed personal feedback'],
+        btn: '🚀 Choose Analysis', note: 'Secure payment · Pre-schedule on Discord'
       },
       {
-        id: 'support', badge: 'SUPPORT', title: 'Q&A and Tips', price: '29', period: 'Per month',
-        features: ['Private Discord server access', 'Answers to questions & personal tips', 'Help understanding mechanics', 'Occasional voice explanations'],
-        btn: '💬 Join Support Plan', note: 'No commitment · Cancel anytime'
+        id: 'support', badge: 'Q&A', title: '20 Min Q&A Session', price: '50', period: 'One-time payment',
+        features: ['1-on-1 call on Discord', 'Answers to all your questions', 'Advice on settings and mindset', 'Tips for specific mechanics'],
+        btn: '💬 Choose Q&A Session', note: 'Secure payment · Pre-schedule on Discord'
       }
     ],
     footerSub: 'DREXM ROCKET LEAGUE ACADEMY 2026 All rights reserved',
-    dashTitle: 'Dashboard', dashSub: 'Welcome to the Academy! Choose a category to start learning.',
-    tabs: ['Videos', 'Drills', 'Help & Tips'],
-    vidBtn: 'Watch Now',
-    coachTitle: 'Support & Q&A', coachDesc: 'Subscribed to the support plan? Send me a message on Discord with your questions, or if you need help with a mechanic. I\'m here to guide you.', coachBtn: 'Join Discord Server',
+    dashTitle: 'Dashboard', dashSub: 'Welcome to the Academy! Choose your purchased service to begin.',
+    dashOrderTitle: 'Your Verification Code (Order ID)', dashOrderDesc: 'Copy this code and save it. Open a ticket on Discord and send it there to verify your purchase.',
+    tabs: ['Replay Analysis', 'Q&A Session'],
+    dashAnalysisTitle: 'Submit Replays for Analysis',
+    dashAnalysisDesc: 'Purchased the analysis package? Send me a message on Discord with your replay files (or ballchasing links) and we will schedule a time to review them.',
+    dashAnalysisBtn: 'Open a Ticket on Discord',
+    dashQaTitle: 'Schedule your Q&A',
+    dashQaDesc: 'Purchased the 20-minute session? Message me on Discord when you are ready, and we will find a time to sit down and answer all your questions.',
+    dashQaBtn: 'Schedule on Discord',
     backHome: 'Back to Homepage',
     journeyTag: 'My Journey',
     journeyTitle: 'From Beta to the Top',
     journey: [
-      { year: '2015-2017', title: 'The Beginning & Talent', text: 'Started playing in the Closed Beta in 2015. I always loved going up in the air and trying cool things. Inspired by freestylers like JZR, Pulse MK, and Pulse Muirie. My first rank was Gold 3 Div 2, and thanks to mechanical dedication, I reached Champion easily.' },
+      { year: '2015-2017', title: 'The Beginning', text: 'Started playing in the Closed Beta in 2015. I always loved going up in the air and trying cool things. Inspired by freestylers like JZR, Pulse MK, and Pulse Muirie. My first rank was Gold 3 Div 2, and thanks to mechanical dedication, I reached Champion easily.' },
       { year: '2019-2020', title: 'Grand Champion & Mechanical Dominance', text: 'By 2019 I was GC. My mechanics were so good that whenever the ball was in the air, it was a goal - almost without needing Game Sense. In 2020 I improved my Game Sense reaching 1600-1700 MMR, and <span class="mech-highlight">won 1st place in the Hype League National Championship</span> (2v2).' },
       { year: '2020-2023', title: 'Military Service & Pulse Clan Tournament', text: 'I enlisted in combat service, leaving very little time to play. Despite the difficulty of maintaining my level, in 2021 another freestyler (Harel) and I tried out, <span class="mech-highlight">got accepted and participated in the Pulse Clan 2v2 Freestyle Tournament</span> broadcasted to thousands of viewers on YouTube.' },
-      { year: 'Today', title: 'Student, Content Creator & Mechanics Inventor', text: 'Today I am a student in Electrical Engineering & Computer Science. During the semester break, I came back strong and reached SSL. I run a successful TikTok page, stream educational content, and invented 3 new mechanics: <span class="mech-highlight">Reverse Musty, Shay pop, Front Windmill</span>.' }
+      { year: 'Today', title: 'Student, Content Creator & Mechanics Inventor', text: 'Today I am a student in Electrical Engineering & Computer Science. During the semester break, I came back strong and reached SSL. I run a successful TikTok page, stream educational content, and invented 2 new mechanics: <span class="mech-highlight">Reverse Musty, Shay pop</span>.' }
     ],
     rlfxTag: 'Features & Clips',
     rlfxTitle: 'Featured On <span style="color: var(--cyan)">RLFX</span>',
@@ -647,7 +674,7 @@ const strings = {
       { text: 'ROCKET LEAGUE INSANITY 40' }, { text: 'ROCKET LEAGUE INSANITY 41' }, { text: 'ROCKET LEAGUE INSANITY 44' }, { text: 'ROCKET LEAGUE INSANITY 53' }, { text: 'ROCKET LEAGUE INSANITY 55' }, { text: 'ROCKET LEAGUE INSANITY 56' }, { text: 'ROCKET LEAGUE INSANITY 58' }, { text: 'ROCKET LEAGUE INSANITY 59' }, { text: 'ROCKET LEAGUE INSANITY 60' }, { text: 'ROCKET LEAGUE INSANITY 62' }, { text: 'TEAM PUZL - JIGSAW' }, { text: 'TOP 100 FREESTYLES' }, { text: 'TOP 100 REDIRECTS' }, { text: 'TOP 100 PINCHES' }, { text: 'BEST OF 2021' }, { text: 'TOP 100 PREFLIPS' }, { text: 'ROCKET LEAGUE AROUND THE WORLD 🇮🇱', special: true }
     ]
   }
-};
+}
 
 function getFirebaseErrorMessage(code) {
   if (currentLang === 'he') {
@@ -791,6 +818,7 @@ async function handleLogin(e) {
         currentUser = name;
         currentUserEmail = email;
         isPaid = false;
+        currentOrderId = null;
       } else {
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
@@ -803,10 +831,12 @@ async function handleLogin(e) {
           currentUser = data.name || email.split('@')[0];
           currentUserEmail = user.email;
           isPaid = data.isPaid || false;
+          currentOrderId = data.orderId || null;
         } else {
           currentUser = email.split('@')[0];
           currentUserEmail = user.email;
           isPaid = false;
+          currentOrderId = null;
         }
       }
       
@@ -836,11 +866,13 @@ async function handleLogout() {
   currentUser = null;
   currentUserEmail = null;
   isPaid = false;
+  currentOrderId = null;
   updateAuthUI();
   toggleDashboard(false);
 }
 
-function initiatePurchase() {
+// כפתור רכישה שיוצר קוד אימות חדש למשתמש
+async function initiatePurchase() {
   if (!currentUser) {
     const s = strings[currentLang];
     const authMsg = document.getElementById('authMsg');
@@ -848,7 +880,24 @@ function initiatePurchase() {
     authMsg.innerText = s.auth.requireMsg;
     openAuthModal(); 
   } else {
-    console.log("Payment integration pending...");
+    if (useFirebase && auth.currentUser) {
+      try {
+        // יצירת קוד רכישה רנדומלי לדוגמה DRX-459021
+        const newOrderId = 'DRX-' + Math.floor(100000 + Math.random() * 900000);
+        
+        const userDocRef = doc(db, 'artifacts', appId, 'users', auth.currentUser.uid, 'profile', 'userData');
+        await setDoc(userDocRef, {
+          isPaid: true,
+          orderId: newOrderId
+        }, { merge: true });
+        
+        isPaid = true;
+        currentOrderId = newOrderId;
+        toggleDashboard(true);
+      } catch (e) {
+        console.error("Error updating purchase status:", e);
+      }
+    }
   }
 }
 
@@ -863,12 +912,14 @@ if (useFirebase) {
           const data = docSnap.data();
           currentUser = data.name || user.email.split('@')[0];
           isPaid = data.isPaid || false;
+          currentOrderId = data.orderId || null;
         } else {
           currentUser = user.email.split('@')[0];
           isPaid = false;
+          currentOrderId = null;
         }
       } catch (e) {
-        console.error("Error loading user profile on auth change:", e);
+        console.error("Error loading user profile:", e);
         currentUser = user.email ? user.email.split('@')[0] : "User";
         currentUserEmail = user.email;
       }
@@ -880,6 +931,7 @@ if (useFirebase) {
       currentUser = null;
       currentUserEmail = null;
       isPaid = false;
+      currentOrderId = null;
       updateAuthUI();
     }
   });
@@ -961,26 +1013,12 @@ function setLang(lang) {
   document.getElementById('content-title').innerText = s.contentTitle;
   document.getElementById('content-sub').innerText = s.contentSub;
   
-  let contentHtml = `
-    <div class="content-item"><span class="content-badge badge-video">🎬</span><span class="content-title">${s.items[0]}</span></div>
-    <div class="content-item"><span class="content-badge badge-article">🎯</span><span class="content-title">${s.items[1]}</span></div>
-  `;
-  [2,3,4,5,6].forEach(i => {
-    const isVid = i%2 === 0;
-    contentHtml += `
-      <div class="content-item locked">
-        <span class="content-badge ${isVid ? 'badge-video' : 'badge-guide'}">${isVid ? '🎬' : '🎯'}</span>
-        <span class="content-title">${s.items[i]}</span>
-        <span class="lock-icon">🔒</span>
-      </div>
-    `;
-  });
-  contentHtml += `
-    <div class="content-item locked" style="border-style: dashed; opacity: 0.5">
-      <span class="content-badge badge-guide">+</span>
-      <span class="content-title">${s.items[7]}</span>
+  let contentHtml = s.items.map((item, i) => `
+    <div class="content-item" style="cursor: default;">
+      <span class="content-badge badge-video">${i + 1}</span>
+      <span class="content-title">${item}</span>
     </div>
-  `;
+  `).join('');
   document.getElementById('home-content-list').innerHTML = contentHtml;
 
   document.getElementById('pricing-tag').innerText = s.pricingTag;
@@ -1010,32 +1048,18 @@ function setLang(lang) {
 
   document.getElementById('dash-title').innerText = s.dashTitle;
   document.getElementById('dash-sub').innerText = s.dashSub;
-  document.getElementById('tab-videos').innerText = s.tabs[0];
-  document.getElementById('tab-drills').innerText = s.tabs[1];
-  document.getElementById('tab-coaching').innerText = s.tabs[2];
+  document.getElementById('order-box-title').innerText = s.dashOrderTitle;
+  document.getElementById('order-box-desc').innerText = s.dashOrderDesc;
+  document.getElementById('tab-analysis').innerText = s.tabs[0];
+  document.getElementById('tab-qa').innerText = s.tabs[1];
   
-  document.getElementById('coach-title').innerText = s.coachTitle;
-  document.getElementById('coach-desc').innerText = s.coachDesc;
-  document.getElementById('coach-btn').innerText = s.coachBtn;
+  document.getElementById('analysis-title').innerText = s.dashAnalysisTitle;
+  document.getElementById('analysis-desc').innerText = s.dashAnalysisDesc;
+  document.getElementById('analysis-btn').innerText = s.dashAnalysisBtn;
 
-  const videosHtml = [0, 2, 4, 6].map(i => `
-    <div class="video-card">
-      <div class="video-thumb"><div class="play-btn">▶</div></div>
-      <div class="video-info">
-        <h4>${s.items[i]}</h4>
-        <p>${s.vidBtn}</p>
-      </div>
-    </div>
-  `).join('');
-  document.getElementById('pane-videos').innerHTML = videosHtml;
-
-  const drillsHtml = [1, 3, 5].map(i => `
-    <div class="content-item">
-      <span class="content-badge ${i%2 !== 0 ? 'badge-article' : 'badge-guide'}">🎯</span>
-      <span class="content-title">${s.items[i]}</span>
-    </div>
-  `).join('');
-  document.getElementById('pane-drills').innerHTML = drillsHtml;
+  document.getElementById('qa-title').innerText = s.dashQaTitle;
+  document.getElementById('qa-desc').innerText = s.dashQaDesc;
+  document.getElementById('qa-btn').innerText = s.dashQaBtn;
 
   document.getElementById('footer-sub').innerText = s.footerSub;
 }
@@ -1052,6 +1076,15 @@ function toggleDashboard(show) {
     document.getElementById('home-nav').style.display = 'none';
     document.getElementById('view-dashboard').style.display = 'block';
     document.getElementById('dash-nav').style.display = 'flex';
+    
+    // הצגת קוביית ה-Order ID במידה ויש קוד למשתמש
+    if (currentOrderId) {
+      document.getElementById('order-box-container').style.display = 'block';
+      document.getElementById('order-box-id').innerText = currentOrderId;
+    } else {
+      document.getElementById('order-box-container').style.display = 'none';
+    }
+
   } else {
     document.getElementById('view-dashboard').style.display = 'none';
     document.getElementById('dash-nav').style.display = 'none';
@@ -1061,18 +1094,15 @@ function toggleDashboard(show) {
 }
 
 function switchTab(tab) {
-  document.getElementById('tab-videos').className = 'dash-tab';
-  document.getElementById('tab-drills').className = 'dash-tab';
-  document.getElementById('tab-coaching').className = 'dash-tab';
+  document.getElementById('tab-analysis').className = 'dash-tab';
+  document.getElementById('tab-qa').className = 'dash-tab';
   document.getElementById('tab-' + tab).className = 'dash-tab active';
 
-  document.getElementById('pane-videos').style.display = 'none';
-  document.getElementById('pane-drills').style.display = 'none';
-  document.getElementById('pane-coaching').style.display = 'none';
+  document.getElementById('pane-analysis').style.display = 'none';
+  document.getElementById('pane-qa').style.display = 'none';
   
-  if (tab === 'videos') document.getElementById('pane-videos').style.display = 'grid';
-  if (tab === 'drills') document.getElementById('pane-drills').style.display = 'grid';
-  if (tab === 'coaching') document.getElementById('pane-coaching').style.display = 'block';
+  if (tab === 'analysis') document.getElementById('pane-analysis').style.display = 'block';
+  if (tab === 'qa') document.getElementById('pane-qa').style.display = 'block';
 }
 
 window.setLang = setLang;
@@ -1089,7 +1119,28 @@ window.openSettingsModal = openSettingsModal;
 window.closeSettingsModal = closeSettingsModal;
 window.toggleTheme = toggleTheme;
 
-// --- חלקיקים ראשיים (Particles) ---
+// Parallax Effect
+window.addEventListener('scroll', () => {
+  const y = window.scrollY;
+  const dec1 = document.getElementById('dec1');
+  const dec2 = document.getElementById('dec2');
+  const dec3 = document.getElementById('dec3');
+  const dec4 = document.getElementById('dec4');
+  const dec5 = document.getElementById('dec5');
+  const dec6 = document.getElementById('dec6');
+  const dec7 = document.getElementById('dec7');
+  const dec8 = document.getElementById('dec8');
+  
+  if(dec1) dec1.style.transform = `translateY(${y * 0.15}px) rotate(${y * 0.05}deg)`;
+  if(dec2) dec2.style.transform = `translateY(${y * 0.05}px)`;
+  if(dec3) dec3.style.transform = `translateY(${-y * 0.1}px)`;
+  if(dec4) dec4.style.transform = `translateY(${-y * 0.2}px)`;
+  if(dec5) dec5.style.transform = `translateY(${-y * 0.08}px) rotate(${-y * 0.03}deg)`;
+  if(dec6) dec6.style.transform = `translateY(${y * 0.12}px)`;
+  if(dec7) dec7.style.transform = `translateY(${y * 0.2}px) rotate(${y * 0.08}deg)`;
+  if(dec8) dec8.style.transform = `translateY(${y * 0.15}px)`;
+});
+
 const canvas = document.getElementById('particles');
 const ctx = canvas.getContext('2d');
 let W, H, particles = [];
@@ -1102,7 +1153,7 @@ function resizeCanvas() {
 window.addEventListener('resize', resizeCanvas);
 resizeCanvas();
 
-for (let i = 0; i < 70; i++) {
+for (let i = 0; i < 150; i++) {
   particles.push({
     x: Math.random() * 2000,
     y: Math.random() * 1200,
@@ -1133,91 +1184,7 @@ function drawParticles() {
 }
 drawParticles();
 
-// --- גיאומטריה בצדדים (Parallax Crystals) ---
-const shardsContainer = document.getElementById('shards-container');
-
-// 4 סוגים שונים של נתיבי קריסטלים / שברים
-const crystalPaths = [
-  "M50 0 L75 35 L50 100 L25 35 Z", // קריסטל ארוך
-  "M40 0 L100 30 L60 100 L0 50 Z", // שבר א-סימטרי
-  "M50 0 L65 50 L50 100 L35 50 Z", // קריסטל דק וחד
-  "M30 0 L80 15 L100 70 L40 100 L0 60 Z" // גביש רחב
-];
-
-const shardsElements = [];
-const numCrystals = 35; // כמות הקריסטלים - אפשר לשחק עם המספר הזה
-const totalHeightVh = 650; // סך הגובה לפיזור (בערך 6 וחצי מסכים)
-const segmentVh = totalHeightVh / numCrystals; // חלוקת הגובה למקטעים שווים למניעת חורים וצפיפויות
-
-for (let i = 0; i < numCrystals; i++) {
-  const el = document.createElement('div');
-  el.className = 'shard';
-
-  // פיזור מבוקר (Stratified): 
-  // כל קריסטל מקבל "בלוק" גובה משלו. מוסיפים טיפה רנדומליות בתוך הבלוק שלו.
-  const topVh = (i * segmentVh) + (Math.random() * (segmentVh * 0.7)) + 5;
-  el.style.top = topVh + 'vh';
-
-  // פיזור שווה בין צד ימין לצד שמאל (אחד ימין, אחד שמאל לסירוגין)
-  const isLeft = i % 2 === 0;
-  const horizontalPos = Math.random() * 12; // מרחק מהקצה (0% עד 12%)
-  
-  if (isLeft) {
-    el.style.left = horizontalPos + '%';
-  } else {
-    el.style.right = horizontalPos + '%';
-  }
-
-  // גודל רנדומלי עדין וקטן יותר (מראה נקי ולא משתלט)
-  const size = Math.random() * 45 + 30; // גודל בין 30 ל-75 פיקסלים
-  el.style.width = size + 'px';
-  el.style.height = size + 'px';
-
-  // צבע רנדומלי (תכלת, סגול, או אפור)
-  const colorRand = Math.random();
-  const colorVar = colorRand > 0.66 ? 'var(--cyan)' : colorRand > 0.33 ? 'var(--orange)' : 'var(--muted)';
-
-  // נתיב קריסטל רנדומלי
-  const path = crystalPaths[Math.floor(Math.random() * crystalPaths.length)];
-
-  // יצירת ה-SVG עם פילטר Glow מרוכז יותר (רדיוס קטן יותר = זוהר חזק יותר לקווים קטנים)
-  el.innerHTML = `<svg viewBox="0 0 100 100" style="stroke: ${colorVar}; filter: drop-shadow(0 0 6px ${colorVar});">
-    <path d="${path}" />
-  </svg>`;
-
-  shardsContainer.appendChild(el);
-
-  // הגדרות תנועה ייחודיות לכל קריסטל
-  shardsElements.push({
-    el,
-    speed: (Math.random() - 0.5) * 1.5, // מהירות גלילה רנדומלית (חלק עולים, חלק יורדים מהר/לאט)
-    initialRot: Math.random() * 360,    // זווית התחלתית
-    rotSpeed: (Math.random() - 0.5) * 0.2 // מהירות סיבוב תוך כדי גלילה
-  });
-}
-
-// מאזין לאירוע גלילה - מזיז את הקריסטלים בצורה חלקה (Parallax)
-let lastKnownScrollPosition = 0;
-let ticking = false;
-
-window.addEventListener('scroll', () => {
-  lastKnownScrollPosition = window.scrollY;
-  
-  // שימוש ב-requestAnimationFrame כדי לא להעמיס על הדפדפן ולשמור על גלילה חלקה
-  if (!ticking) {
-    window.requestAnimationFrame(() => {
-      shardsElements.forEach(s => {
-        const yMove = lastKnownScrollPosition * s.speed;
-        const rMove = s.initialRot + (lastKnownScrollPosition * s.rotSpeed);
-        s.el.style.transform = `translateY(${yMove}px) rotate(${rMove}deg)`;
-      });
-      ticking = false;
-    });
-    ticking = true;
-  }
-});
-
-// אתחול שפה ראשוני
+// Initialize first render
 setLang('he');
 
 </script>
