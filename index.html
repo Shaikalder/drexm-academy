@@ -12,7 +12,6 @@
   --card: #12121F; --border: #1E1E35;
 }
 
-/* הגדרות למצב הבהיר (Light Mode) */
 body.light-mode {
   --bg: #D0D4DA; 
   --bg2: #E2E6EA; 
@@ -51,9 +50,34 @@ h1, h2, h3, h4, h5, h6 { color: var(--white); }
 canvas#particles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; opacity: 0.35; transition: opacity 0.3s; }
 body.light-mode canvas#particles { opacity: 0.85; }
 
+.side-decorations {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.dec-element { position: absolute; opacity: 0.15; transition: opacity 0.3s; }
+body.light-mode .dec-element { opacity: 0.3; }
+
+.dec-ring-1 { top: 15%; left: 3%; width: 200px; height: 200px; border: 1px solid var(--cyan); border-radius: 50%; opacity: 0.1; }
+.dec-cross-1 { top: 25%; left: 8%; font-size: 32px; color: var(--muted); font-family: monospace; }
+.dec-line-l { top: -20%; left: 5%; width: 1px; height: 150vh; background: linear-gradient(to bottom, transparent, var(--cyan), transparent); opacity: 0.2; }
+.dec-circle-filled { top: 75%; left: 7%; width: 6px; height: 6px; background: var(--orange); border-radius: 50%; box-shadow: 0 0 15px var(--orange); }
+
+.dec-hex-1 { top: 50%; right: 4%; width: 120px; height: 135px; background: transparent; border: 1px dashed var(--orange); clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); opacity: 0.1; }
+.dec-cross-2 { top: 10%; right: 7%; font-size: 24px; color: var(--cyan); font-family: monospace; }
+.dec-square { top: 80%; right: 6%; width: 40px; height: 40px; border: 2px solid var(--muted); opacity: 0.2; }
+.dec-line-r { top: 30%; right: 5%; width: 1px; height: 120vh; background: linear-gradient(to bottom, transparent, var(--orange), transparent); opacity: 0.2; }
+
+@media(max-width: 1300px) { .side-decorations { display: none; } }
+
 .wrap { position: relative; z-index: 2; max-width: 960px; margin: 0 auto; padding: 0 24px; flex: 1; width: 100%; }
 
-/* NAV */
 nav { position: sticky; top: 0; z-index: 100; background: rgba(8,8,15,0.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 14px 0; transition: background-color 0.3s, border-color 0.3s; }
 body.light-mode nav { background: rgba(244,245,247,0.85); }
 .nav-inner { display: flex; align-items: center; justify-content: space-between; max-width: 960px; margin: 0 auto; padding: 0 24px; }
@@ -63,7 +87,6 @@ body.light-mode nav { background: rgba(244,245,247,0.85); }
 .nav-links button { background: none; border: none; color: var(--muted); text-decoration: none; font-size: 14px; font-weight: 500; transition: color 0.2s; cursor: pointer; font-family: 'Heebo', sans-serif; }
 .nav-links button:hover { color: var(--white); }
 
-/* SOCIAL LINKS & LANG */
 .nav-actions { display: flex; align-items: center; gap: 20px; }
 .social-links { display: flex; align-items: center; gap: 16px; }
 .social-links a { color: var(--muted); display: flex; transition: all 0.2s; }
@@ -74,11 +97,9 @@ body.light-mode nav { background: rgba(244,245,247,0.85); }
 .lang-btn.active { background: var(--cyan); color: #000; font-weight: 700; }
 body.light-mode .lang-btn.active { color: #fff; }
 
-/* SETTINGS ICON */
 .settings-icon-btn { background: none; border: none; color: var(--muted); cursor: pointer; transition: color 0.2s; display: flex; align-items: center; justify-content: center; padding: 4px; }
 .settings-icon-btn:hover { color: var(--white); }
 
-/* USER AREA */
 .user-area { display: flex; align-items: center; gap: 12px; }
 .user-name { font-size: 14px; font-weight: 500; color: var(--cyan); }
 .btn-login { background: transparent; border: 1px solid var(--cyan); color: var(--cyan); padding: 6px 16px; border-radius: 6px; cursor: pointer; font-family: 'Heebo', sans-serif; font-size: 13px; font-weight: 600; transition: all 0.2s; }
@@ -86,13 +107,12 @@ body.light-mode .lang-btn.active { color: #fff; }
 .btn-logout { background: none; border: none; color: var(--muted); cursor: pointer; font-size: 12px; text-decoration: underline; font-family: 'Heebo', sans-serif; transition: color 0.2s; }
 .btn-logout:hover { color: var(--orange); }
 
-/* MODAL */
 .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 1000; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(5px); opacity: 0; pointer-events: none; transition: opacity 0.3s, background 0.3s; }
-body.light-mode .modal { background: rgba(130, 135, 145, 0.6); backdrop-filter: blur(6px); } 
+body.light-mode .modal { background: rgba(130, 135, 145, 0.6); backdrop-filter: blur(6px); }
 
 .modal.active { opacity: 1; pointer-events: auto; }
 .modal-content { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 40px; width: 90%; max-width: 400px; position: relative; box-shadow: 0 10px 40px rgba(0,0,0,0.5); transform: translateY(20px); transition: transform 0.3s, background-color 0.3s; }
-body.light-mode .modal-content { background: #F4F5F7; box-shadow: 0 10px 40px rgba(0,0,0,0.15); } 
+body.light-mode .modal-content { background: #F4F5F7; box-shadow: 0 10px 40px rgba(0,0,0,0.15); }
 
 .close-btn { position: absolute; top: 16px; right: 24px; font-size: 28px; cursor: pointer; color: var(--muted); transition: color 0.2s; }
 [dir="ltr"] .close-btn { right: auto; left: 24px; }
@@ -109,12 +129,6 @@ body.light-mode .modal-content { background: #F4F5F7; box-shadow: 0 10px 40px rg
 .modal-form input:focus { outline: none; border-color: var(--cyan); }
 .auth-msg { color: var(--orange); font-size: 13px; text-align: center; display: none; margin-bottom: 8px; line-height: 1.5; }
 
-.ttt-board { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; width: 220px; margin: 20px auto; direction: ltr; }
-.ttt-cell { width: 100%; aspect-ratio: 1; background: var(--bg); border: 2px solid var(--border); border-radius: 8px; font-size: 40px; color: var(--cyan); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s; user-select: none; font-family: 'Inter', sans-serif; font-weight: bold; }
-.ttt-cell:hover { border-color: var(--cyan); }
-.ttt-cell.o { color: var(--orange); }
-
-/* HERO */
 .hero { min-height: 88vh; display: flex; align-items: center; padding: 80px 0 60px; }
 .hero-badge { display: inline-block; background: rgba(0,198,255,0.1); border: 1px solid rgba(0,198,255,0.3); color: var(--cyan); font-size: 11px; letter-spacing: 2px; text-transform: uppercase; padding: 6px 16px; border-radius: 4px; margin-bottom: 28px; font-weight: 500; }
 .hero h1 { font-family: 'Rajdhani', sans-serif; font-size: clamp(48px,7vw,84px); font-weight: 700; line-height: 1.0; letter-spacing: -1px; margin-bottom: 20px; color: var(--white); }
@@ -135,20 +149,17 @@ body.light-mode .btn-primary { color: #fff; }
 .hero-visual img { width: 100%; max-width: 650px; object-fit: cover; border-radius: 20px; -webkit-mask-image: radial-gradient(circle at center, black 45%, transparent 85%); mask-image: radial-gradient(circle at center, black 45%, transparent 85%); animation: float 6s ease-in-out infinite; }
 @keyframes float { 0% { transform: translateY(0px) rotate(0deg); } 50% { transform: translateY(-15px) rotate(-2deg); } 100% { transform: translateY(0px) rotate(0deg); } }
 
-/* Stats */
 .hero-stats { display: flex; gap: 40px; margin-top: 60px; padding-top: 40px; border-top: 1px solid var(--border); flex-wrap: wrap; }
 .hero-stats > div { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; min-width: 70px; }
 .stat-val { font-family: 'Rajdhani', sans-serif; font-size: 36px; font-weight: 700; color: var(--cyan); line-height: 1; margin-bottom: 6px; display: block; }
 .stat-lbl { font-size: 13px; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; margin-top: 0; display: block; }
 
-/* ABOUT */
 .section { padding: 80px 0; }
 .section-tag { font-size: 11px; color: var(--orange); letter-spacing: 3px; text-transform: uppercase; font-weight: 600; margin-bottom: 16px; }
 .section-title { font-family: 'Rajdhani', sans-serif; font-size: clamp(28px,4vw,44px); font-weight: 700; margin-bottom: 16px; line-height: 1.15; color: var(--white); }
 .section-sub { color: var(--muted); font-size: 16px; line-height: 1.7; max-width: 580px; font-weight: 300; }
 .divider { width: 100%; height: 1px; background: var(--border); margin: 0; }
 
-/* ABOUT GRID */
 .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 48px; }
 .about-card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 28px; transition: border-color 0.2s; }
 .about-card:hover { border-color: rgba(0,198,255,0.3); }
@@ -156,7 +167,6 @@ body.light-mode .btn-primary { color: #fff; }
 .about-card h3 { font-family: 'Rajdhani', sans-serif; font-size: 20px; font-weight: 600; margin-bottom: 10px; color: var(--white); }
 .about-card p { color: var(--muted); font-size: 14px; line-height: 1.7; font-weight: 300; }
 
-/* TIMELINE (JOURNEY) */
 .timeline { position: relative; max-width: 800px; margin: 48px auto 0; padding-left: 20px; border-left: 2px solid var(--border); }
 [dir="rtl"] .timeline { padding-left: 0; padding-right: 20px; border-left: none; border-right: 2px solid var(--border); }
 .timeline-item { position: relative; margin-bottom: 32px; padding-left: 24px; }
@@ -170,69 +180,60 @@ body.light-mode .btn-primary { color: #fff; }
 .timeline-content p { font-size: 14px; color: var(--muted); line-height: 1.6; }
 .mech-highlight { color: var(--cyan); font-weight: 500; }
 
-/* RLFX GRID */
 .rlfx-grid { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 40px; max-width: 860px; margin-left: auto; margin-right: auto; }
 .rlfx-tag { background: rgba(0,198,255,0.05); border: 1px solid rgba(0,198,255,0.2); padding: 10px 18px; border-radius: 6px; font-family: 'Rajdhani', sans-serif; font-size: 15px; font-weight: 600; color: var(--white); letter-spacing: 1px; transition: all 0.2s; cursor: default; }
 .rlfx-tag:hover { background: rgba(0,198,255,0.15); border-color: var(--cyan); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,198,255,0.1); }
 .rlfx-tag.special { border-color: var(--orange); color: var(--orange); background: rgba(199,125,255,0.05); }
 .rlfx-tag.special:hover { background: rgba(199,125,255,0.15); box-shadow: 0 4px 12px rgba(199,125,255,0.15); }
 
-/* CONTENT PREVIEW */
-.content-list { display: grid; grid-template-columns: 1fr; gap: 12px; margin-top: 40px; }
-.content-item { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 20px 24px; display: flex; align-items: center; gap: 16px; position: relative; overflow: hidden; transition: border-color 0.2s; cursor: pointer; }
-.content-item:hover { border-color: rgba(0,198,255,0.2); }
-.content-item::before { content: ''; position: absolute; right: 0; top: 0; bottom: 0; width: 3px; background: var(--cyan); }
-.content-item.locked::before { background: var(--border); }
-.content-badge { font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 3px 10px; border-radius: 3px; white-space: nowrap; flex-shrink: 0; }
-.badge-video { background: rgba(0,198,255,0.12); color: var(--cyan); border: 1px solid rgba(0,198,255,0.25); }
-.badge-article { background: rgba(199,125,255,0.12); color: var(--orange); border: 1px solid rgba(199,125,255,0.25); }
-.badge-guide { background: rgba(255,255,255,0.06); color: var(--muted); border: 1px solid var(--border); }
-.content-title { font-size: 15px; font-weight: 500; flex: 1; color: var(--white); }
-.lock-icon { color: var(--muted); font-size: 16px; flex-shrink: 0; }
-.content-item.locked .content-title { color: var(--muted); }
+.step-box { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 20px 24px; display: flex; align-items: center; gap: 16px; position: relative; margin-bottom: 12px; }
+.step-num { width: 32px; height: 32px; border-radius: 50%; background: rgba(0,198,255,0.1); color: var(--cyan); display: flex; align-items: center; justify-content: center; font-weight: bold; font-family: 'Rajdhani'; flex-shrink: 0; }
+.step-title { font-size: 15px; font-weight: 500; color: var(--white); }
 
-/* PRICING */
-.pricing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; max-width: 860px; margin: 24px auto 0; }
+/* Tic-Tac-Toe Banner */
+.ttt-banner { background: linear-gradient(135deg, rgba(0,198,255,0.15), rgba(157,78,221,0.15)); border: 2px solid var(--cyan); border-radius: 12px; padding: 32px 24px; text-align: center; margin-bottom: 40px; display: none; position: relative; overflow: hidden; box-shadow: 0 0 20px rgba(0,198,255,0.15); }
+.ttt-banner::before { content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%; background: linear-gradient(to right, transparent, rgba(255,255,255,0.1), transparent); transform: skewX(-20deg); animation: sweep 4s infinite; }
+@keyframes sweep { 0% { left: -100%; } 20% { left: 200%; } 100% { left: 200%; } }
+.highlight-discount { background: var(--cyan); color: #000; padding: 2px 10px; border-radius: 6px; font-weight: 800; display: inline-block; margin: 0 6px; box-shadow: 0 0 10px rgba(0,198,255,0.6); animation: pulseDiscount 2s infinite; font-size: 16px; }
+body.light-mode .highlight-discount { color: #fff; }
+@keyframes pulseDiscount { 0% { transform: scale(1); box-shadow: 0 0 10px rgba(0,198,255,0.6); } 50% { transform: scale(1.08); box-shadow: 0 0 20px rgba(0,198,255,0.9); } 100% { transform: scale(1); box-shadow: 0 0 10px rgba(0,198,255,0.6); } }
+
+/* Tic-Tac-Toe Game Grid */
+.ttt-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 20px auto; max-width: 200px; }
+.ttt-cell { background: var(--bg); border: 2px solid var(--border); height: 60px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 32px; font-weight: bold; cursor: pointer; color: var(--white); transition: border-color 0.2s; }
+.ttt-cell:hover { border-color: var(--cyan); }
+.ttt-cell.x { color: var(--cyan); }
+.ttt-cell.o { color: var(--orange); }
+
+.pricing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; max-width: 860px; margin: 48px auto 0; }
 .pricing-box { background: var(--card); border-radius: 14px; padding: 40px; position: relative; overflow: hidden; transition: transform 0.2s, border-color 0.2s; border: 1px solid var(--border); }
 .pricing-box:hover { transform: translateY(-4px); }
-.pricing-box.plan-analysis { border-color: rgba(0,198,255,0.4); }
-.pricing-box.plan-qa { border-color: rgba(199,125,255,0.4); }
+.pricing-box.plan-content { border-color: rgba(0,198,255,0.4); }
+.pricing-box.plan-support { border-color: rgba(199,125,255,0.4); }
 .plan-badge { position: absolute; top: 20px; font-size: 10px; letter-spacing: 2px; font-weight: 700; text-transform: uppercase; }
 [dir="rtl"] .plan-badge { right: 24px; }
 [dir="ltr"] .plan-badge { left: 24px; }
-.plan-analysis .plan-badge { color: var(--cyan); }
-.plan-qa .plan-badge { color: var(--orange); }
+.plan-content .plan-badge { color: var(--cyan); }
+.plan-support .plan-badge { color: var(--orange); }
 .pricing-label { font-size: 16px; color: var(--white); font-weight: 600; margin-bottom: 8px; font-family: 'Rajdhani', sans-serif; }
-.pricing-price { font-family: 'Rajdhani', sans-serif; font-size: 56px; font-weight: 700; color: var(--white); line-height: 1; margin-bottom: 4px; display: flex; align-items: baseline; }
+.pricing-price { font-family: 'Rajdhani', sans-serif; font-size: 56px; font-weight: 700; color: var(--white); line-height: 1; margin-bottom: 4px; transition: color 0.3s, text-shadow 0.3s; }
 .pricing-price sup { font-size: 24px; color: var(--muted); }
 .pricing-once { font-size: 13px; color: var(--muted); font-weight: 500; margin-bottom: 32px; }
 .pricing-features { list-style: none; margin-bottom: 36px; display: flex; flex-direction: column; gap: 12px; }
 .pricing-features li { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; color: var(--muted); line-height: 1.4; }
 .pricing-features li::before { content: '✓'; color: var(--cyan); font-weight: 700; font-size: 16px; margin-top: -2px; }
-.plan-qa .pricing-features li::before { color: var(--orange); }
+.plan-support .pricing-features li::before { color: var(--orange); }
 .btn-buy { width: 100%; background: var(--cyan); color: #000; border: none; padding: 14px; font-family: 'Rajdhani', sans-serif; font-size: 16px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; border-radius: 8px; cursor: pointer; transition: all 0.2s; margin-bottom: 12px; }
 .btn-buy:hover { background: #33D1FF; }
 body.light-mode .btn-buy { color: #fff; }
-.plan-qa .btn-buy { background: var(--orange); color: #fff; }
-.plan-qa .btn-buy:hover { background: #D896FF; }
+.plan-support .btn-buy { background: var(--orange); color: #fff; }
+.plan-support .btn-buy:hover { background: #D896FF; }
 .pricing-note { text-align: center; font-size: 12px; color: var(--muted); }
 
-/* DASHBOARD */
 .dashboard-header { margin-bottom: 40px; padding-top: 40px; border-bottom: 1px solid var(--border); padding-bottom: 24px; }
-.dashboard-tabs { display: flex; gap: 16px; margin-bottom: 32px; border-bottom: 1px solid var(--border); padding-bottom: 16px; overflow-x: auto; }
-.dash-tab { background: none; border: none; color: var(--muted); font-size: 16px; font-family: 'Rajdhani', sans-serif; font-weight: 600; text-transform: uppercase; cursor: pointer; padding: 8px 16px; transition: all 0.2s; white-space: nowrap; }
-.dash-tab.active { color: var(--cyan); border-bottom: 2px solid var(--cyan); }
-.dash-tab:hover:not(.active) { color: var(--white); }
-
-.coaching-card { background: linear-gradient(135deg, var(--bg2) 0%, #241033 100%); border: 1px solid var(--orange); border-radius: 12px; padding: 40px; text-align: center; }
-body.light-mode .coaching-card { background: linear-gradient(135deg, var(--bg2) 0%, #F3E8FF 100%); }
-
-.coaching-card h3 { font-family: 'Rajdhani', sans-serif; font-size: 28px; color: var(--orange); margin-bottom: 16px; }
-.coaching-card p { color: var(--white); font-size: 16px; max-width: 600px; margin: 0 auto 32px; line-height: 1.6; }
 .btn-discord { background: #5865F2; color: #fff; border: none; padding: 14px 32px; font-family: 'Rajdhani', sans-serif; font-size: 16px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; border-radius: 6px; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; justify-content: center; gap: 12px; margin: 0 auto; }
 .btn-discord:hover { background: #4752C4; transform: translateY(-2px); }
 
-/* FOOTER */
 footer { position: relative; z-index: 2; border-top: 1px solid var(--border); padding: 32px 0; text-align: center; margin-top: auto; }
 .footer-logo { font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 20px; color: var(--cyan); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; }
 .footer-sub { font-size: 13px; color: var(--muted); }
@@ -259,6 +260,18 @@ footer { position: relative; z-index: 2; border-top: 1px solid var(--border); pa
 <div class="app-container">
   <canvas id="particles"></canvas>
   
+  <div class="side-decorations">
+    <div class="dec-element dec-ring-1" id="dec1"></div>
+    <div class="dec-element dec-cross-1" id="dec2">+</div>
+    <div class="dec-element dec-circle-filled" id="dec3"></div>
+    <div class="dec-element dec-line-l" id="dec4"></div>
+    
+    <div class="dec-element dec-hex-1" id="dec5"></div>
+    <div class="dec-element dec-cross-2" id="dec6">+</div>
+    <div class="dec-element dec-square" id="dec7"></div>
+    <div class="dec-element dec-line-r" id="dec8"></div>
+  </div>
+  
   <nav>
     <div class="nav-inner">
       <div class="logo" onclick="toggleDashboard(false)">drexm<span>.</span>academy</div>
@@ -267,7 +280,7 @@ footer { position: relative; z-index: 2; border-top: 1px solid var(--border); pa
         <li><button onclick="scrollToId('about')" id="nav-about">עליי</button></li>
         <li><button onclick="scrollToId('journey')" id="nav-journey">הסיפור שלי</button></li>
         <li><button onclick="scrollToId('content')" id="nav-content">איך זה עובד</button></li>
-        <li><button onclick="scrollToId('pricing')" id="nav-pricing">מסלולים</button></li>
+        <li><button onclick="scrollToId('pricing')" id="nav-pricing">מחיר</button></li>
       </ul>
 
       <ul class="nav-links" id="dash-nav" style="display: none;">
@@ -275,12 +288,10 @@ footer { position: relative; z-index: 2; border-top: 1px solid var(--border); pa
       </ul>
 
       <div class="nav-actions">
-        <!-- אזור המשתמש וההתחברות -->
         <div class="user-area" id="userArea">
           <button class="btn-login" id="nav-login-btn" onclick="openAuthModal()">התחברות</button>
         </div>
 
-        <!-- כפתור הגדרות -->
         <button class="settings-icon-btn" onclick="openSettingsModal()" title="הגדרות">
           <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
               <path d="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.06-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61 l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41 h-3.84c-0.24,0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.73,8.87 C2.62,9.08,2.66,9.34,2.86,9.48l2.03,1.58C4.84,11.36,4.8,11.69,4.8,12s0.02,0.64,0.06,0.94l-2.03,1.58 c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54 c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24,0,0.43-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96 c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.49-0.12-0.61L19.14,12.94z M12,15.6c-1.98,0-3.6-1.62-3.6-3.6 s1.62-3.6,3.6-3.6s3.6,1.62,3.6,3.6S13.98,15.6,12,15.6z"/>
@@ -303,7 +314,6 @@ footer { position: relative; z-index: 2; border-top: 1px solid var(--border); pa
     </div>
   </nav>
 
-  <!-- HOME VIEW -->
   <div id="view-home">
     <main class="wrap">
       <section class="hero" id="home">
@@ -346,7 +356,6 @@ footer { position: relative; z-index: 2; border-top: 1px solid var(--border); pa
 
       <div class="divider"></div>
 
-      <!-- JOURNEY SECTION -->
       <section class="section" id="journey">
         <div class="section-tag" id="journey-tag">הסיפור שלי</div>
         <h2 class="section-title" id="journey-title">מהבטא ועד לטופ</h2>
@@ -357,7 +366,6 @@ footer { position: relative; z-index: 2; border-top: 1px solid var(--border); pa
 
       <div class="divider"></div>
 
-      <!-- RLFX SECTION -->
       <section class="section" id="rlfx">
         <div class="section-tag" id="rlfx-tag">הופעות וקליפים</div>
         <h2 class="section-title" style="text-align: center" id="rlfx-title">Featured On <span style="color: var(--cyan)">RLFX</span></h2>
@@ -370,10 +378,10 @@ footer { position: relative; z-index: 2; border-top: 1px solid var(--border); pa
       <div class="divider"></div>
 
       <section class="section" id="content">
-        <div class="section-tag" id="content-tag">התהליך</div>
-        <h2 class="section-title"><span id="content-title">איך עובד הליווי ב-</span><span style="color: var(--cyan)">drexm academy</span></h2>
-        <p class="section-sub" id="content-sub">במקום לצפות במדריכים כלליים, אנחנו נתמקד בדיוק במה שאתה צריך כדי להשתפר בשלושה שלבים פשוטים:</p>
-        <div class="content-list" id="home-content-list">
+        <div class="section-tag" id="content-tag">איך זה עובד</div>
+        <h2 class="section-title"><span id="content-title">התהליך ב-</span><span style="color: var(--cyan)">drexm academy</span></h2>
+        <p class="section-sub" id="content-sub">בחר את החבילה המתאימה לך, פתח טיקט בדיסקורד ויאללה מתחילים לעבוד.</p>
+        <div class="content-list" id="home-content-list" style="max-width: 600px;">
           <!-- Rendered via JS -->
         </div>
       </section>
@@ -381,61 +389,39 @@ footer { position: relative; z-index: 2; border-top: 1px solid var(--border); pa
       <div class="divider"></div>
 
       <section class="section" id="pricing">
-        <div class="section-tag" id="pricing-tag">מחיר</div>
-        <h2 class="section-title" style="text-align: center; margin-bottom: 40px;" id="pricing-title">בחר את המסלול שלך</h2>
-        
-        <!-- אזור משחק איקס עיגול -->
-        <div id="ttt-banner-container" style="text-align: center; margin-bottom: 24px;">
-            <div style="background: rgba(0,198,255,0.05); border: 1px dashed var(--cyan); border-radius: 8px; padding: 20px; display: inline-block; max-width: 90%;">
-                <h3 style="color: var(--cyan); margin-bottom: 8px; font-size: 18px;" id="ttt-banner-title">🎁 שחק נגד המחשב וקבל הנחה!</h3>
-                <p style="color: var(--muted); font-size: 14px; margin-bottom: 16px;" id="ttt-banner-desc">מגיע לך ניסיון אחד בלבד. נצח את המחשב באיקס-עיגול וקבל 10 שקלים הנחה על החבילות.</p>
-                <button class="btn-primary" style="padding: 10px 24px; font-size: 15px;" id="ttt-banner-btn" onclick="openTttModal()">שחק עכשיו</button>
-            </div>
+        <!-- Tic-Tac-Toe Banner -->
+        <div class="ttt-banner" id="tttBannerWrapper">
+           <h3 id="tttBannerTitle" style="color: var(--white); margin-bottom: 12px; font-family: 'Rajdhani', sans-serif; font-size: 32px;">🎮 אתגר האיקס-עיגול!</h3>
+           <p id="tttBannerDesc" style="color: var(--white); font-size: 16px; margin-bottom: 24px;">נצח אותי במשחק וקבל <span class="highlight-discount">10 שקלים הנחה</span> על כל החבילות. יש לך ניסיון אחד בלבד!</p>
+           <button class="btn-primary" style="padding: 12px 32px; font-size: 16px; box-shadow: 0 0 15px rgba(0,198,255,0.4);" onclick="openTTTModal()" id="tttBannerBtn">שחק עכשיו</button>
         </div>
 
-        <div class="pricing-grid" id="pricing-plans-container" style="margin-top: 0;">
+        <div class="section-tag" id="pricing-tag">מחיר</div>
+        <h2 class="section-title" style="text-align: center" id="pricing-title">בחר את המסלול שלך</h2>
+        <div class="pricing-grid" id="pricing-plans-container">
           <!-- Rendered via JS -->
         </div>
       </section>
     </main>
   </div>
 
-  <!-- DASHBOARD VIEW -->
   <div id="view-dashboard" style="display: none;">
     <main class="wrap">
       <div class="dashboard-header">
         <h1 style="font-family: 'Rajdhani', sans-serif; font-size: 36px; margin-bottom: 8px" id="dash-title">אזור אישי</h1>
-        <p style="color: var(--muted); font-size: 16px" id="dash-sub">ברוך הבא לאקדמיה! בחר את השירות שרכשת כדי להתחיל.</p>
+        <p style="color: var(--muted); font-size: 16px" id="dash-sub">ברוך הבא! כאן מופיע המספר הסידורי שלך כדי לתאם מולי בדיסקורד.</p>
       </div>
 
-      <!-- קוביית ה-Order ID -->
-      <div id="order-box-container" style="display: none; background: rgba(0,198,255,0.05); border: 1px dashed var(--cyan); border-radius: 12px; padding: 24px; text-align: center; margin-bottom: 32px;">
-        <h3 style="color: var(--cyan); margin-bottom: 12px; font-size: 18px;" id="order-box-title">קוד האימות שלך (Order ID)</h3>
-        <div style="font-family: monospace; font-size: 26px; font-weight: bold; letter-spacing: 2px; color: var(--white); background: var(--bg2); display: inline-block; padding: 12px 24px; border-radius: 8px; border: 1px solid var(--border); margin-bottom: 12px;" id="order-box-id"></div>
-        <p style="color: var(--muted); font-size: 15px; max-width: 400px; margin: 0 auto; line-height: 1.5;" id="order-box-desc">העתק את הקוד ושמור אותו. פתח טיקט בשרת הדיסקורד ושלח אותו שם כדי לאמת את הרכישה שלך.</p>
-      </div>
-
-      <div class="dashboard-tabs">
-        <button class="dash-tab active" id="tab-analysis" onclick="switchTab('analysis')">ניתוח משחקים</button>
-        <button class="dash-tab" id="tab-qa" onclick="switchTab('qa')">שיחת ייעוץ (Q&A)</button>
-      </div>
-
-      <div id="pane-analysis" class="coaching-card" style="display: block;">
-        <h3 id="analysis-title">שלח משחקים לניתוח</h3>
-        <p id="analysis-desc">רכשת את חבילת הניתוח? שלח לי בהודעה בטיקט את קבצי הריפליי (או קישורים ל-ballchasing) ונתאם שעה לעבור עליהם יחד.</p>
-        <button class="btn-discord" onclick="window.open('https://discord.gg/kvVmkFrZnC', '_blank')">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/></svg>
-          <span id="analysis-btn">פתח קריאה בדיסקורד</span>
-        </button>
-      </div>
-
-      <div id="pane-qa" class="coaching-card" style="display: none;">
-        <h3 id="qa-title">קביעת שיחת Q&A</h3>
-        <p id="qa-desc">רכשת את ה-20 דקות? שלח לי בהודעה בטיקט שאתה מוכן, ונמצא זמן שנוח לשנינו לשבת על כל השאלות שלך.</p>
-        <button class="btn-discord" onclick="window.open('https://discord.gg/kvVmkFrZnC', '_blank')">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/></svg>
-          <span id="qa-btn">תיאום שיחה בדיסקורד</span>
-        </button>
+      <div style="background: var(--card); border: 1px solid var(--cyan); padding: 32px; border-radius: 12px; text-align: center; margin-bottom: 32px;">
+         <h3 style="color: var(--white); font-family: 'Rajdhani', sans-serif; font-size: 24px; margin-bottom: 12px;" id="orderIdTitle">המספר הסידורי שלך (Order ID):</h3>
+         <div style="font-size: 42px; color: var(--cyan); font-family: monospace; font-weight: bold; letter-spacing: 3px; margin-bottom: 16px;" id="orderIdDisplay">----</div>
+         <p style="color: var(--muted); font-size: 15px; max-width: 500px; margin: 0 auto 24px;" id="orderIdDesc">
+            העתק את המספר הסידורי, פתח טיקט בשרת הדיסקורד שלנו ושלח אותו שם כדי שנוכל לאמת את התשלום ולהתחיל בעבודה!
+         </p>
+         <button class="btn-discord" onclick="window.open('https://discord.gg/kvVmkFrZnC', '_blank')">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/></svg>
+            <span id="coach-btn">התחבר לשרת הדיסקורד</span>
+         </button>
       </div>
     </main>
   </div>
@@ -446,7 +432,6 @@ footer { position: relative; z-index: 2; border-top: 1px solid var(--border); pa
   </footer>
 </div>
 
-<!-- AUTH MODAL -->
 <div class="modal" id="authModal">
   <div class="modal-content">
     <span class="close-btn" onclick="closeAuthModal()">&times;</span>
@@ -455,7 +440,7 @@ footer { position: relative; z-index: 2; border-top: 1px solid var(--border); pa
       <button class="auth-tab" id="tab-register" onclick="setAuthMode('register')">הרשמה</button>
     </div>
     <h2 class="modal-title" id="authModalTitle">התחבר לחשבון</h2>
-    <p class="auth-msg" id="authMsg">יש להתחבר לחשבון לפני רכישת מנוי</p>
+    <p class="auth-msg" id="authMsg">יש להתחבר לחשבון לפני ביצוע הפעולה</p>
     <form class="modal-form" id="authForm" onsubmit="handleLogin(event)">
       <div id="nameInputWrapper" style="display: none;">
         <input type="text" id="authName" placeholder="שם מלא">
@@ -467,7 +452,6 @@ footer { position: relative; z-index: 2; border-top: 1px solid var(--border); pa
   </div>
 </div>
 
-<!-- SETTINGS MODAL -->
 <div class="modal" id="settingsModal">
   <div class="modal-content" style="max-width: 340px;">
     <span class="close-btn" onclick="closeSettingsModal()">&times;</span>
@@ -481,29 +465,33 @@ footer { position: relative; z-index: 2; border-top: 1px solid var(--border); pa
   </div>
 </div>
 
-<!-- TIC-TAC-TOE MODAL -->
 <div class="modal" id="tttModal">
-  <div class="modal-content" style="text-align: center; padding: 32px 24px;">
-    <span class="close-btn" onclick="closeTttModal()">&times;</span>
-    <h2 class="modal-title" style="margin-bottom: 8px; font-size: 24px;" id="ttt-modal-title">שחק איקס עיגול</h2>
-    <p style="color: var(--muted); font-size: 14px; margin-bottom: 20px;" id="ttt-modal-desc">נצח את המחשב וקבל 10 ש"ח הנחה! (ניסיון אחד בלבד)</p>
+  <div class="modal-content" style="max-width: 340px; text-align: center;">
+    <span class="close-btn" onclick="closeTTTModal()">&times;</span>
+    <h2 class="modal-title" style="margin-bottom: 8px;">איקס-עיגול</h2>
+    <p style="color: var(--muted); font-size: 14px; margin-bottom: 20px;">נצח אותי וקבל 10₪ הנחה!</p>
     
-    <div id="ttt-board" class="ttt-board">
-        <!-- Cells generated via JS -->
+    <div class="ttt-grid" id="tttGrid">
+       <div class="ttt-cell" onclick="playTTT(0)"></div>
+       <div class="ttt-cell" onclick="playTTT(1)"></div>
+       <div class="ttt-cell" onclick="playTTT(2)"></div>
+       <div class="ttt-cell" onclick="playTTT(3)"></div>
+       <div class="ttt-cell" onclick="playTTT(4)"></div>
+       <div class="ttt-cell" onclick="playTTT(5)"></div>
+       <div class="ttt-cell" onclick="playTTT(6)"></div>
+       <div class="ttt-cell" onclick="playTTT(7)"></div>
+       <div class="ttt-cell" onclick="playTTT(8)"></div>
     </div>
-    
-    <p id="ttt-msg" style="margin-top: 20px; font-size: 16px; font-weight: bold; color: var(--white); min-height: 24px;">התור שלך (X)</p>
+
+    <div id="tttResultMsg" style="display: none; padding: 16px; border-radius: 8px; background: rgba(0,198,255,0.1); color: var(--cyan); margin-top: 20px; font-weight: bold;"></div>
   </div>
 </div>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+import { getFirestore, doc, setDoc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-// ==========================================
-// --- קונפיגורציית ה-FIREBASE של האתר ---
-// ==========================================
 const firebaseConfig = {
   apiKey: "AIzaSyDMX0kcsqD5azgP6NAAt21TY75jwee1RxM",
   authDomain: "drexm-academy.firebaseapp.com",
@@ -524,12 +512,11 @@ let currentTheme = 'dark';
 let currentUser = null; 
 let currentUserEmail = null;
 let isPaid = false; 
-let currentOrderId = null; 
 let authMode = 'login'; 
 
-// חדש: משתני איקס עיגול
 let hasPlayedTicTacToe = false;
 let discountActive = false;
+let orderId = null;
 
 try {
   const app = initializeApp(firebaseConfig);
@@ -541,12 +528,12 @@ try {
   console.error("Firebase initialization failed.", e);
 }
 
+// --- DICTIONARY ---
 const strings = {
   he: {
-    navLinks: ['עליי', 'הסיפור שלי', 'איך זה עובד', 'מסלולים'],
-    auth: { loginTop: 'כניסה', logout: 'התנתק', hello: 'שלום', tabLogin: 'התחברות', tabRegister: 'הרשמה', titleLogin: 'התחבר לחשבון', titleRegister: 'צור חשבון חדש', name: 'שם מלא', email: 'אימייל', pass: 'סיסמה', submitLogin: 'התחבר', submitRegister: 'הירשם', requireMsg: 'יש להתחבר לחשבון לפני רכישת מסלול.' },
+    navLinks: ['עליי', 'הסיפור שלי', 'איך זה עובד', 'מחיר'],
+    auth: { loginTop: 'כניסה', logout: 'התנתק', hello: 'שלום', tabLogin: 'התחברות', tabRegister: 'הרשמה', titleLogin: 'התחבר לחשבון', titleRegister: 'צור חשבון חדש', name: 'שם מלא', email: 'אימייל', pass: 'סיסמה', submitLogin: 'התחבר', submitRegister: 'הירשם', requireMsg: 'יש להתחבר לחשבון לפני ביצוע הפעולה.' },
     settings: { title: 'הגדרות חשבון', name: 'שם משתמש', email: 'כתובת אימייל', notLoggedIn: 'עדיין לא מחובר למערכת.', lightMode: '☀️ מצב בהיר', darkMode: '🌙 מצב כהה' },
-    ttt: { bannerTitle: '🎁 שחק נגד המחשב וקבל הנחה!', bannerDesc: 'מגיע לך ניסיון אחד בלבד. נצח את המחשב באיקס-עיגול וקבל 10 שקלים הנחה על החבילות.', playBtn: 'שחק עכשיו', loginBtn: 'התחבר כדי לשחק', modalTitle: 'שחק איקס עיגול', modalDesc: 'נצח את המחשב וקבל 10 ש"ח הנחה! (ניסיון אחד בלבד)', turnX: 'התור שלך (X)', turnO: 'המחשב חושב...', winMsg: 'ניצחת! קיבלת 10 ש"ח הנחה!', loseMsg: 'הפסדת! המחשב ניצח.', drawMsg: 'תיקו. לא נורא!' },
     heroBadge: '🚀 Rocket League Academy',
     h1: ['שדרג את', 'הרוקט ליג שלך', 'לרמה הבאה'],
     heroSub: 'עכשיו אני כאן כדי לקחת את המשחק שלכם אישית ולעזור לכם לעלות ראנק ולהשתפר במכניקות בעזרת ניתוח משחקים ושיחות ייעוץ ולימוד.',
@@ -557,36 +544,27 @@ const strings = {
     cards: [
       ['11 שנות ניסיון', 'שחקן ותיק מיום ההשקה. עברתי את כל המטא, המכניקות, והשינויים — וידעתי להתאים ולהשתפר בכל אחד מהם.'],
       ['שחקן בין הטובים בארץ', 'בין השחקנים התחרותיים המכניים בישראל ופריסטיילר טופ ארצי. עם הבנה מעמיקה של המשחק ויכולת לפרק כל מצב בשניות.'],
-      ['ניתוח משחקים מדויק', 'אין תחליף לעין מקצועית שעוברת איתך על המשחקיות שלך. אני אזהה בדיוק מה תוקע אותך בראנק ואיך לתקן את זה.'],
-      ['ייעוץ מותאם אישית', 'בין אם זה שאלות על מכניקה, הגדרות מצלמה, או הלך רוח מנטלי - בשיחות שלנו אני אעזור לך ליישר קו.']
+      ['ניתוח משחקים מדויק', 'מעבר על הריפלייז שלכם כדי לזהות טעויות מיקום, קבלת החלטות ושימוש נכון בבוסט.'],
+      ['ייעוץ מותאם אישית', 'שיחות שאלות ותשובות שיעזרו לכם להתגבר על מחסומים מנטליים וטכניים ולבנות תוכנית אימונים.']
     ],
-    contentTag: 'התהליך', contentTitle: 'איך עובד הליווי ב-',
-    contentSub: 'במקום לצפות במדריכים כלליים, אנחנו נתמקד בדיוק במה שאתה צריך כדי להשתפר בשלושה שלבים פשוטים:',
-    items: ['בוחרים את החבילה שמתאימה לך מתוך המסלולים למטה', 'משלמים, מקבלים קוד אימות (Order ID), ופותחים טיקט בשרת הדיסקורד', 'קובעים זמן שנוח לשנינו, עולים לשיחה ומתחילים לעבוד על הראנק שלך יחד'],
+    contentTag: 'איך זה עובד', contentTitle: 'התהליך ב-',
+    contentSub: 'בחר את החבילה המתאימה לך, פתח טיקט בדיסקורד ויאללה מתחילים לעבוד.',
+    items: ['1. בוחרים חבילה ונרשמים באתר', '2. מקבלים מספר סידורי אישי (Order ID)', '3. פותחים טיקט בדיסקורד עם המספר', '4. מתאמים מועד לשיחה או לניתוח!'],
     pricingTag: 'מחיר', pricingTitle: 'בחר את המסלול שלך',
     plans: [
       {
-        id: 'analysis', badge: 'PRO', title: 'ניתוח 3 משחקי ראנק', price: '149', period: 'תשלום חד פעמי',
-        features: ['מעבר משותף על 3 ריפלייז', 'זיהוי טעויות רוטציה ומיקום', 'טיפים לשיפור מכניקות', 'משוב מפורט ואישי על המשחק שלך'],
-        btn: '🚀 בחר בניתוח משחקים', note: 'תשלום מאובטח · תיאום מראש בדיסקורד'
+        id: 'content', badge: 'ניתוח', title: 'ניתוח 3 משחקי ראנק', price: 149, period: 'תשלום חד פעמי',
+        features: ['מעבר מדוקדק על 3 ריפלייז', 'זיהוי טעויות ונקודות לשיפור', 'דגשים למכניקות ול-Game Sense'],
+        btn: '🚀 רכוש ניתוח משחקים', note: 'תשלום מאובטח · תיאום מראש בדיסקורד'
       },
       {
-        id: 'qa', badge: 'Q&A', title: '20 דקות שאלות (Q&A)', price: '59', period: 'תשלום חד פעמי',
-        features: ['שיחה אחד-על-אחד בדיסקורד', 'תשובות לכל השאלות שלך', 'ייעוץ על הגדרות ומנטליות', 'הכוונה וטיפים ספציפיים'],
-        btn: '💬 בחר בשיחת ייעוץ', note: 'תשלום מאובטח · תיאום מראש בדיסקורד'
+        id: 'support', badge: 'ייעוץ', title: '20 דקות שיחת ייעוץ (Q&A)', price: 59, period: 'תשלום חד פעמי',
+        features: ['מענה על כל שאלה בלייב', 'טיפים להתקדמות מהירה', 'הכוונה אישית ובניית תוכנית אימונים'],
+        btn: '💬 רכוש שיחת ייעוץ', note: 'תשלום מאובטח · תיאום מראש בדיסקורד'
       }
     ],
     footerSub: 'DREXM ROCKET LEAGUE ACADEMY 2026 כל הזכויות שמורות',
-    dashTitle: 'אזור אישי', dashSub: 'ברוך הבא לאקדמיה! בחר את השירות שרכשת כדי להתחיל.',
-    dashOrderTitle: 'קוד האימות שלך (Order ID)', dashOrderDesc: 'העתק את הקוד ושמור אותו. פתח טיקט בשרת הדיסקורד ושלח אותו שם כדי לאמת את הרכישה שלך.',
-    tabs: ['ניתוח משחקים', 'שיחת ייעוץ (Q&A)'],
-    dashAnalysisTitle: 'שלח משחקים לניתוח',
-    dashAnalysisDesc: 'רכשת את חבילת הניתוח? שלח לי בהודעה בטיקט את קבצי הריפליי (או קישורים ל-ballchasing) ונתאם שעה לעבור עליהם יחד.',
-    dashAnalysisBtn: 'פתח קריאה בדיסקורד',
-    dashQaTitle: 'קביעת שיחת Q&A',
-    dashQaDesc: 'רכשת את ה-20 דקות? שלח לי בהודעה בטיקט שאתה מוכן, ונמצא זמן שנוח לשנינו לשבת על כל השאלות שלך.',
-    dashQaBtn: 'תיאום שיחה בדיסקורד',
-    backHome: 'חזור לעמוד הראשי',
+    dashTitle: 'אזור אישי', dashSub: 'ברוך הבא! כאן מופיע המספר הסידורי שלך כדי לתאם מולי בדיסקורד.',
     journeyTag: 'הסיפור שלי',
     journeyTitle: 'מהבטא ועד לטופ',
     journey: [
@@ -600,53 +578,44 @@ const strings = {
     rlfxSub: 'הופעתי בעשרות סרטונים של ערוץ הפריסטייל הגדול בעולם.',
     rlfxItems: [
       { text: 'ROCKET LEAGUE INSANITY 40' }, { text: 'ROCKET LEAGUE INSANITY 41' }, { text: 'ROCKET LEAGUE INSANITY 44' }, { text: 'ROCKET LEAGUE INSANITY 53' }, { text: 'ROCKET LEAGUE INSANITY 55' }, { text: 'ROCKET LEAGUE INSANITY 56' }, { text: 'ROCKET LEAGUE INSANITY 58' }, { text: 'ROCKET LEAGUE INSANITY 59' }, { text: 'ROCKET LEAGUE INSANITY 60' }, { text: 'ROCKET LEAGUE INSANITY 62' }, { text: 'TEAM PUZL - JIGSAW' }, { text: 'TOP 100 FREESTYLES' }, { text: 'TOP 100 REDIRECTS' }, { text: 'TOP 100 PINCHES' }, { text: 'BEST OF 2021' }, { text: 'TOP 100 PREFLIPS' }, { text: 'ROCKET LEAGUE AROUND THE WORLD 🇮🇱', special: true }
-    ]
+    ],
+    ttt: { title: '🎮 אתגר האיקס-עיגול!', desc: 'נצח אותי במשחק וקבל <span class="highlight-discount">10 שקלים הנחה</span> על כל החבילות. יש לך ניסיון אחד בלבד!', btn: 'שחק עכשיו', win: 'ניצחת! זכית ב-10 שקלים הנחה.', lose: 'הפסדת! אולי בפעם הבאה.', draw: 'תיקו! ניסיון יפה.' }
   },
   en: {
-    navLinks: ['About', 'My Journey', 'How it works', 'Packages'],
-    auth: { loginTop: 'Sign In', logout: 'Logout', hello: 'Hello', tabLogin: 'Login', tabRegister: 'Register', titleLogin: 'Login to Account', titleRegister: 'Create New Account', name: 'Full Name', email: 'Email', pass: 'Password', submitLogin: 'Login', submitRegister: 'Register', requireMsg: 'You must log in to an account before purchasing a package.' },
+    navLinks: ['About', 'My Journey', 'How it works', 'Pricing'],
+    auth: { loginTop: 'Sign In', logout: 'Logout', hello: 'Hello', tabLogin: 'Login', tabRegister: 'Register', titleLogin: 'Login to Account', titleRegister: 'Create New Account', name: 'Full Name', email: 'Email', pass: 'Password', submitLogin: 'Login', submitRegister: 'Register', requireMsg: 'You must log in to perform this action.' },
     settings: { title: 'Account Settings', name: 'Username', email: 'Email Address', notLoggedIn: 'You are not logged in yet.', lightMode: '☀️ Light Mode', darkMode: '🌙 Dark Mode' },
-    ttt: { bannerTitle: '🎁 Play vs PC & Get a Discount!', bannerDesc: 'You have ONE attempt. Beat the computer in Tic-Tac-Toe for a 10₪ discount on packages.', playBtn: 'Play Now', loginBtn: 'Login to Play', modalTitle: 'Play Tic-Tac-Toe', modalDesc: 'Beat the computer for a 10₪ discount! (One attempt only)', turnX: 'Your turn (X)', turnO: 'Computer thinking...', winMsg: 'You won! 10₪ discount applied!', loseMsg: 'You lost! Computer wins.', drawMsg: 'Draw. Better luck next time!' },
     heroBadge: '🚀 Rocket League Academy',
     h1: ['Elevate Your', 'Rocket League', 'To The Next Level'],
-    heroSub: 'I am here to take your gameplay personally and help you rank up and improve mechanics through replay analysis and 1-on-1 consultations.',
+    heroSub: 'I am here to take your game personally and help you rank up and improve mechanics with replay analysis and coaching sessions.',
     heroCTA1: 'Join Now', heroCTA2: 'How it works',
-    stats: ['Years Playing', 'Peak Rank', 'Mechanics', 'Packages'],
+    stats: ['Years Playing', 'Peak Rank', 'Mechanics', 'Plans'],
     aboutTag: 'About drexm', aboutTitle: 'Who I Am & Why You Should<br/>Learn From Me',
     aboutSub: "Top-tier Israeli player. Playing since day one — with the vast experience, understanding, and skills to explain any mechanic and answer any question clearly.",
     cards: [
       ['11 Years Experience', "A veteran since launch day. I've lived through every meta, mechanic, and update — and adapted to each one."],
       ['Among Israel\'s Best', "Among the most mechanical competitive players in the country and a top freestyler in Israel, with the ability to read any situation in seconds."],
-      ['Accurate Game Analysis', 'There is no substitute for a professional eye reviewing your gameplay. I will pinpoint exactly what is holding you back in your rank.'],
-      ['Personalized Coaching', 'Whether it is questions about mechanics, camera settings, or mindset - in our calls I will help you get on track.']
+      ['Replay Analysis', 'Going through your replays to spot positioning mistakes, decision making and boost usage.'],
+      ['Personal Coaching', 'Q&A sessions to help you overcome mental and technical barriers and build a training plan.']
     ],
-    contentTag: 'The Process', contentTitle: 'How Coaching Works at ',
-    contentSub: 'Instead of watching general guides, we will focus exactly on what YOU need to improve in 3 simple steps:',
-    items: ['Choose the package that suits you from the options below', 'Pay, receive an Order ID, and open a ticket on my Discord server', 'Hop on a call and start working on your rank together'],
-    pricingTag: 'Pricing', pricingTitle: 'Choose Your Package',
+    contentTag: 'How it works', contentTitle: 'The Process at ',
+    contentSub: 'Choose your plan, open a discord ticket, and let\'s start working.',
+    items: ['1. Choose a plan and register', '2. Get your personal Order ID', '3. Open a Discord ticket with your ID', '4. Schedule the session!'],
+    pricingTag: 'Pricing', pricingTitle: 'Choose Your Plan',
     plans: [
       {
-        id: 'analysis', badge: 'PRO', title: '3 Replays Analysis', price: '149', period: 'One-time payment',
-        features: ['Joint review of 3 replays', 'Identify rotation and positioning mistakes', 'Tips to improve mechanics', 'Detailed personal feedback'],
-        btn: '🚀 Choose Analysis', note: 'Secure payment · Pre-schedule on Discord'
+        id: 'content', badge: 'ANALYSIS', title: '3 Replays Analysis', price: 149, period: 'One-time payment',
+        features: ['Thorough review of 3 replays', 'Spotting mistakes and areas to improve', 'Mechanics and Game Sense tips'],
+        btn: '🚀 Buy Analysis', note: 'Secure payment · Schedule via Discord'
       },
       {
-        id: 'qa', badge: 'Q&A', title: '20 Min Q&A Session', price: '59', period: 'One-time payment',
-        features: ['1-on-1 call on Discord', 'Answers to all your questions', 'Advice on settings and mindset', 'Tips for specific mechanics'],
-        btn: '💬 Choose Q&A Session', note: 'Secure payment · Pre-schedule on Discord'
+        id: 'support', badge: 'COACHING', title: '20 Min Q&A Session', price: 59, period: 'One-time payment',
+        features: ['Live answers to your questions', 'Tips for fast improvement', 'Personal guidance and training plan'],
+        btn: '💬 Buy Q&A Session', note: 'Secure payment · Schedule via Discord'
       }
     ],
     footerSub: 'DREXM ROCKET LEAGUE ACADEMY 2026 All rights reserved',
-    dashTitle: 'Dashboard', dashSub: 'Welcome to the Academy! Choose your purchased service to begin.',
-    dashOrderTitle: 'Your Verification Code (Order ID)', dashOrderDesc: 'Copy this code and save it. Open a ticket on Discord and send it there to verify your purchase.',
-    tabs: ['Replay Analysis', 'Q&A Session'],
-    dashAnalysisTitle: 'Submit Replays for Analysis',
-    dashAnalysisDesc: 'Purchased the analysis package? Send me a message on Discord with your replay files (or ballchasing links) and we will schedule a time to review them.',
-    dashAnalysisBtn: 'Open a Ticket on Discord',
-    dashQaTitle: 'Schedule your Q&A',
-    dashQaDesc: 'Purchased the 20-minute session? Message me on Discord when you are ready, and we will find a time to sit down and answer all your questions.',
-    dashQaBtn: 'Schedule on Discord',
-    backHome: 'Back to Homepage',
+    dashTitle: 'Dashboard', dashSub: 'Welcome! Here is your Order ID to coordinate with me on Discord.',
     journeyTag: 'My Journey',
     journeyTitle: 'From Beta to the Top',
     journey: [
@@ -660,9 +629,10 @@ const strings = {
     rlfxSub: 'Featured in dozens of videos on the largest freestyle channel in the world.',
     rlfxItems: [
       { text: 'ROCKET LEAGUE INSANITY 40' }, { text: 'ROCKET LEAGUE INSANITY 41' }, { text: 'ROCKET LEAGUE INSANITY 44' }, { text: 'ROCKET LEAGUE INSANITY 53' }, { text: 'ROCKET LEAGUE INSANITY 55' }, { text: 'ROCKET LEAGUE INSANITY 56' }, { text: 'ROCKET LEAGUE INSANITY 58' }, { text: 'ROCKET LEAGUE INSANITY 59' }, { text: 'ROCKET LEAGUE INSANITY 60' }, { text: 'ROCKET LEAGUE INSANITY 62' }, { text: 'TEAM PUZL - JIGSAW' }, { text: 'TOP 100 FREESTYLES' }, { text: 'TOP 100 REDIRECTS' }, { text: 'TOP 100 PINCHES' }, { text: 'BEST OF 2021' }, { text: 'TOP 100 PREFLIPS' }, { text: 'ROCKET LEAGUE AROUND THE WORLD 🇮🇱', special: true }
-    ]
+    ],
+    ttt: { title: '🎮 Tic-Tac-Toe Challenge!', desc: 'Beat me in a game to get a <span class="highlight-discount">10₪ discount</span> on all plans. You have only 1 attempt!', btn: 'Play Now', win: 'You won! 10₪ discount applied.', lose: 'You lost! Maybe next time.', draw: 'Draw! Nice try.' }
   }
-}
+};
 
 function getFirebaseErrorMessage(code) {
   if (currentLang === 'he') {
@@ -674,18 +644,18 @@ function getFirebaseErrorMessage(code) {
       case 'auth/invalid-credential': return 'פרטי ההתחברות אינם נכונים.';
       case 'auth/email-already-in-use': return 'כתובת האימייל הזו כבר רשומה במערכת.';
       case 'auth/weak-password': return 'הסיסמה חלשה מדי (חובה לפחות 6 תווים).';
-      default: return `ארעה שגיאה בתהליך. קוד שגיאה: ${code}`;
+      default: return 'ארעה שגיאה בתהליך (' + code + '). אנא נסה שנית.';
     }
   } else {
     switch(code) {
       case 'auth/invalid-email': return 'Invalid email address.';
       case 'auth/user-disabled': return 'This account has been disabled.';
-      case 'auth/user-not-found': return 'No account found with this email. Switch to "Register" to create one.';
+      case 'auth/user-not-found': return 'No account found with this email.';
       case 'auth/wrong-password': return 'Incorrect password.';
       case 'auth/invalid-credential': return 'Invalid credentials.';
       case 'auth/email-already-in-use': return 'This email is already in use.';
-      case 'auth/weak-password': return 'Password is too weak (must be at least 6 characters).';
-      default: return `An error occurred. Error code: ${code}`;
+      case 'auth/weak-password': return 'Password is too weak.';
+      default: return 'An error occurred (' + code + '). Please try again.';
     }
   }
 }
@@ -695,34 +665,15 @@ function updateAuthUI() {
   const userArea = document.getElementById('userArea');
   
   if (currentUser) {
-    userArea.innerHTML = `
-      <span class="user-name">${s.auth.hello}, ${currentUser}</span>
-      <button class="btn-logout" id="btnLogoutBtn">${s.auth.logout}</button>
-    `;
+    userArea.innerHTML = `<span class="user-name">${s.auth.hello}, ${currentUser}</span> <button class="btn-logout" id="btnLogoutBtn">${s.auth.logout}</button>`;
     document.getElementById('btnLogoutBtn').addEventListener('click', handleLogout);
   } else {
-    userArea.innerHTML = `
-      <button class="btn-login" id="btnLoginBtn">${s.auth.loginTop}</button>
-    `;
+    userArea.innerHTML = `<button class="btn-login" id="btnLoginBtn">${s.auth.loginTop}</button>`;
     document.getElementById('btnLoginBtn').addEventListener('click', () => openAuthModal());
   }
-
-  // TTT Banner logic
-  const tttBanner = document.getElementById('ttt-banner-container');
-  const tttBtn = document.getElementById('ttt-banner-btn');
-  if (!currentUser) {
-      tttBanner.style.display = 'block';
-      tttBtn.innerText = s.ttt.loginBtn;
-      tttBtn.onclick = () => openAuthModal();
-  } else {
-      if (!hasPlayedTicTacToe) {
-          tttBanner.style.display = 'block';
-          tttBtn.innerText = s.ttt.playBtn;
-          tttBtn.onclick = () => openTttModal();
-      } else {
-          tttBanner.style.display = 'none';
-      }
-  }
+  
+  updateTTTBanner();
+  updatePricingUI();
 }
 
 function setAuthMode(mode) {
@@ -736,61 +687,23 @@ function setAuthMode(mode) {
   const submitBtn = document.getElementById('authSubmitBtn');
   
   if (mode === 'login') {
-    tabLogin.classList.add('active');
-    tabRegister.classList.remove('active');
-    nameWrapper.style.display = 'none';
-    nameInput.required = false;
-    title.innerText = s.auth.titleLogin;
-    submitBtn.innerText = s.auth.submitLogin;
+    tabLogin.classList.add('active'); tabRegister.classList.remove('active');
+    nameWrapper.style.display = 'none'; nameInput.required = false;
+    title.innerText = s.auth.titleLogin; submitBtn.innerText = s.auth.submitLogin;
   } else {
-    tabRegister.classList.add('active');
-    tabLogin.classList.remove('active');
-    nameWrapper.style.display = 'block';
-    nameInput.required = true;
-    title.innerText = s.auth.titleRegister;
-    submitBtn.innerText = s.auth.submitRegister;
+    tabRegister.classList.add('active'); tabLogin.classList.remove('active');
+    nameWrapper.style.display = 'block'; nameInput.required = true;
+    title.innerText = s.auth.titleRegister; submitBtn.innerText = s.auth.submitRegister;
   }
 }
 
 function openAuthModal() {
   const s = strings[currentLang];
-  const authMsg = document.getElementById('authMsg');
-  authMsg.style.display = 'none';
+  document.getElementById('authMsg').style.display = 'none';
   setAuthMode('login'); 
   document.getElementById('authModal').classList.add('active');
 }
-
-function closeAuthModal() {
-  document.getElementById('authModal').classList.remove('active');
-}
-
-function openSettingsModal() {
-  const s = strings[currentLang];
-  document.getElementById('settingsTitle').innerText = s.settings.title;
-  document.getElementById('themeToggleBtn').innerText = currentTheme === 'dark' ? s.settings.lightMode : s.settings.darkMode;
-  const accDetails = document.getElementById('accountDetails');
-  if (currentUser) {
-    accDetails.innerHTML = `<strong>${s.settings.name}:</strong> ${currentUser}<br><strong style="margin-top:8px; display:inline-block;">${s.settings.email}:</strong> ${currentUserEmail}`;
-  } else {
-    accDetails.innerHTML = s.settings.notLoggedIn;
-  }
-  document.getElementById('settingsModal').classList.add('active');
-}
-
-function closeSettingsModal() {
-  document.getElementById('settingsModal').classList.remove('active');
-}
-
-function toggleTheme() {
-  const s = strings[currentLang];
-  currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
-  if (currentTheme === 'light') {
-    document.body.classList.add('light-mode');
-  } else {
-    document.body.classList.remove('light-mode');
-  }
-  document.getElementById('themeToggleBtn').innerText = currentTheme === 'dark' ? s.settings.lightMode : s.settings.darkMode;
-}
+function closeAuthModal() { document.getElementById('authModal').classList.remove('active'); }
 
 async function handleLogin(e) {
   e.preventDefault();
@@ -805,55 +718,41 @@ async function handleLogin(e) {
       if (authMode === 'register') {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
+        
+        await updateProfile(user, { displayName: name });
+        
         const userDocRef = doc(db, 'artifacts', appId, 'users', user.uid, 'profile', 'userData');
         await setDoc(userDocRef, {
-          name: name,
-          email: email,
-          isPaid: false,
-          hasPlayedTicTacToe: false,
-          discountActive: false,
-          createdAt: new Date().toISOString()
+          name: name, email: email, isPaid: false, hasPlayedTicTacToe: false, discountActive: false, orderId: null, createdAt: new Date().toISOString()
         });
-        currentUser = name;
-        currentUserEmail = email;
-        isPaid = false;
-        hasPlayedTicTacToe = false;
-        discountActive = false;
-        currentOrderId = null;
+        
+        currentUser = name; currentUserEmail = email; isPaid = false; hasPlayedTicTacToe = false; discountActive = false; orderId = null;
       } else {
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
         const userDocRef = doc(db, 'artifacts', appId, 'users', user.uid, 'profile', 'userData');
         const docSnap = await getDoc(userDocRef);
+        
         if (docSnap.exists()) {
           const data = docSnap.data();
-          currentUser = data.name || email.split('@')[0];
+          currentUser = data.name || user.displayName || email.split('@')[0];
           currentUserEmail = user.email;
           isPaid = data.isPaid || false;
           hasPlayedTicTacToe = data.hasPlayedTicTacToe || false;
           discountActive = data.discountActive || false;
-          currentOrderId = data.orderId || null;
+          orderId = data.orderId || null;
         } else {
-          currentUser = email.split('@')[0];
-          currentUserEmail = user.email;
-          isPaid = false;
-          hasPlayedTicTacToe = false;
-          discountActive = false;
-          currentOrderId = null;
+          currentUser = user.displayName || email.split('@')[0];
+          currentUserEmail = user.email; isPaid = false; hasPlayedTicTacToe = false; discountActive = false;
         }
       }
       
       updateAuthUI();
       closeAuthModal();
-      renderPricing();
+      document.getElementById('authName').value = ''; document.getElementById('authEmail').value = ''; document.getElementById('authPass').value = '';
       
-      document.getElementById('authName').value = '';
-      document.getElementById('authEmail').value = '';
-      document.getElementById('authPass').value = '';
+      if (isPaid) toggleDashboard(true);
       
-      if (isPaid) {
-        toggleDashboard(true);
-      }
     } catch (error) {
       console.error("Auth Error:", error);
       authMsg.style.display = 'block';
@@ -863,17 +762,9 @@ async function handleLogin(e) {
 }
 
 async function handleLogout() {
-  if (useFirebase) {
-    await signOut(auth);
-  }
-  currentUser = null;
-  currentUserEmail = null;
-  isPaid = false;
-  hasPlayedTicTacToe = false;
-  discountActive = false;
-  currentOrderId = null;
+  if (useFirebase) await signOut(auth);
+  currentUser = null; currentUserEmail = null; isPaid = false; hasPlayedTicTacToe = false; discountActive = false; orderId = null;
   updateAuthUI();
-  renderPricing();
   toggleDashboard(false);
 }
 
@@ -885,21 +776,16 @@ async function initiatePurchase() {
     authMsg.innerText = s.auth.requireMsg;
     openAuthModal(); 
   } else {
+    if (!orderId) orderId = 'DRX-' + Math.floor(100000 + Math.random() * 900000);
+    
     if (useFirebase && auth.currentUser) {
       try {
-        const newOrderId = 'DRX-' + Math.floor(100000 + Math.random() * 900000);
         const userDocRef = doc(db, 'artifacts', appId, 'users', auth.currentUser.uid, 'profile', 'userData');
-        await setDoc(userDocRef, {
-          isPaid: true,
-          orderId: newOrderId
-        }, { merge: true });
-        
+        await updateDoc(userDocRef, { isPaid: true, orderId: orderId });
         isPaid = true;
-        currentOrderId = newOrderId;
+        setLang(currentLang); 
         toggleDashboard(true);
-      } catch (e) {
-        console.error("Error updating purchase status:", e);
-      }
+      } catch (e) { console.error("Error updating purchase status:", e); }
     }
   }
 }
@@ -913,217 +799,159 @@ if (useFirebase) {
         currentUserEmail = user.email;
         if (docSnap.exists()) {
           const data = docSnap.data();
-          currentUser = data.name || user.email.split('@')[0];
+          currentUser = data.name || user.displayName || user.email.split('@')[0];
           isPaid = data.isPaid || false;
           hasPlayedTicTacToe = data.hasPlayedTicTacToe || false;
           discountActive = data.discountActive || false;
-          currentOrderId = data.orderId || null;
+          orderId = data.orderId || null;
         } else {
-          currentUser = user.email.split('@')[0];
+          currentUser = user.displayName || user.email.split('@')[0];
           isPaid = false;
-          hasPlayedTicTacToe = false;
-          discountActive = false;
-          currentOrderId = null;
         }
       } catch (e) {
         console.error("Error loading user profile on auth change:", e);
-        currentUser = user.email ? user.email.split('@')[0] : "User";
+        currentUser = user.displayName || (user.email ? user.email.split('@')[0] : "User");
         currentUserEmail = user.email;
       }
       updateAuthUI();
-      renderPricing();
-      if (isPaid) {
-        toggleDashboard(true);
-      }
+      if (isPaid) toggleDashboard(true);
     } else {
-      currentUser = null;
-      currentUserEmail = null;
-      isPaid = false;
-      hasPlayedTicTacToe = false;
-      discountActive = false;
-      currentOrderId = null;
+      currentUser = null; currentUserEmail = null; isPaid = false; hasPlayedTicTacToe = false; discountActive = false; orderId = null;
       updateAuthUI();
-      renderPricing();
     }
   });
 }
 
-let tttBoard = Array(9).fill(null);
-let tttActive = false;
+let tttBoard = ['', '', '', '', '', '', '', '', ''];
+let tttActive = true;
 
-function openTttModal() {
-    if (!currentUser) return;
-    const s = strings[currentLang];
-    
-    document.getElementById('ttt-modal-title').innerText = s.ttt.modalTitle;
-    document.getElementById('ttt-modal-desc').innerText = s.ttt.modalDesc;
-    
-    tttBoard = Array(9).fill(null);
-    tttActive = true;
-    renderTttBoard();
-    
-    document.getElementById('ttt-msg').innerText = s.ttt.turnX;
-    document.getElementById('ttt-msg').style.color = 'var(--white)';
-    document.getElementById('tttModal').classList.add('active');
+function openTTTModal() {
+  if(!currentUser) { openAuthModal(); return; }
+  document.getElementById('tttModal').classList.add('active');
+  document.getElementById('tttResultMsg').style.display = 'none';
+  tttBoard = ['', '', '', '', '', '', '', '', ''];
+  tttActive = true;
+  renderTTT();
 }
 
-function closeTttModal() {
-    document.getElementById('tttModal').classList.remove('active');
+function closeTTTModal() { document.getElementById('tttModal').classList.remove('active'); }
+
+function renderTTT() {
+  const cells = document.querySelectorAll('.ttt-cell');
+  cells.forEach((cell, i) => {
+    cell.innerText = tttBoard[i];
+    cell.className = 'ttt-cell ' + (tttBoard[i] ? tttBoard[i].toLowerCase() : '');
+  });
 }
 
-function renderTttBoard() {
-    const boardEl = document.getElementById('ttt-board');
-    boardEl.innerHTML = '';
-    tttBoard.forEach((cell, index) => {
-        const cellEl = document.createElement('div');
-        cellEl.className = `ttt-cell ${cell === 'O' ? 'o' : ''}`;
-        cellEl.innerText = cell || '';
-        cellEl.onclick = () => makeTttMove(index);
-        boardEl.appendChild(cellEl);
-    });
+window.playTTT = async function(index) {
+  if(!tttActive || tttBoard[index] !== '') return;
+  tttBoard[index] = 'X';
+  renderTTT();
+  if(checkWin('X')) { await endTTT('win'); return; }
+  if(!tttBoard.includes('')) { await endTTT('draw'); return; }
+
+  let emptyIndices = tttBoard.map((val, i) => val === '' ? i : null).filter(val => val !== null);
+  let compMove = emptyIndices[Math.floor(Math.random() * emptyIndices.length)];
+  tttBoard[compMove] = 'O';
+  renderTTT();
+  if(checkWin('O')) { await endTTT('lose'); return; }
+  if(!tttBoard.includes('')) { await endTTT('draw'); return; }
+};
+
+function checkWin(player) {
+  const winCombos = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+  return winCombos.some(combo => combo.every(idx => tttBoard[idx] === player));
 }
 
-async function makeTttMove(index) {
-    if (!tttActive || tttBoard[index]) return;
-    const s = strings[currentLang];
-    
-    tttBoard[index] = 'X';
-    renderTttBoard();
-    
-    if (checkTttWin('X')) {
-        await handleTttEnd(true, false);
-        return;
-    }
-    if (tttBoard.every(c => c !== null)) {
-        await handleTttEnd(false, true);
-        return;
-    }
+async function endTTT(result) {
+  tttActive = false;
+  hasPlayedTicTacToe = true;
+  const s = strings[currentLang].ttt;
+  
+  const resultMsg = document.getElementById('tttResultMsg');
+  if(result === 'win') { resultMsg.innerText = s.win; discountActive = true; } 
+  else if(result === 'lose') { resultMsg.innerText = s.lose; } 
+  else { resultMsg.innerText = s.draw; }
+  resultMsg.style.display = 'block';
 
-    document.getElementById('ttt-msg').innerText = s.ttt.turnO;
-    tttActive = false; 
-    
-    setTimeout(async () => {
-        const bestMove = getComputerMove();
-        if(bestMove !== -1) tttBoard[bestMove] = 'O';
-        renderTttBoard();
-        
-        if (checkTttWin('O')) {
-            await handleTttEnd(false, false);
-            return;
-        }
-        if (tttBoard.every(c => c !== null)) {
-            await handleTttEnd(false, true);
-            return;
-        }
-        
-        tttActive = true;
-        document.getElementById('ttt-msg').innerText = s.ttt.turnX;
-    }, 600);
-}
-
-function checkTttWin(player) {
-    const wins = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
-    return wins.some(w => w.every(i => tttBoard[i] === player));
-}
-
-function getComputerMove() {
-    let move = findWinningMove('O');
-    if (move !== -1) return move;
-    
-    move = findWinningMove('X');
-    if (move !== -1) return move;
-    
-    const empty = tttBoard.map((c, i) => c === null ? i : null).filter(c => c !== null);
-    if(empty.length === 0) return -1;
-    return empty[Math.floor(Math.random() * empty.length)];
-}
-
-function findWinningMove(player) {
-    const wins = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
-    for (let w of wins) {
-        let pCount = 0;
-        let emptyIdx = -1;
-        w.forEach(i => {
-            if (tttBoard[i] === player) pCount++;
-            else if (tttBoard[i] === null) emptyIdx = i;
-        });
-        if (pCount === 2 && emptyIdx !== -1) return emptyIdx;
-    }
-    return -1;
-}
-
-async function handleTttEnd(playerWon, draw) {
-    tttActive = false;
-    hasPlayedTicTacToe = true;
-    discountActive = playerWon;
-    const s = strings[currentLang];
-    
-    const msgEl = document.getElementById('ttt-msg');
-    if (playerWon) {
-        msgEl.innerText = s.ttt.winMsg;
-        msgEl.style.color = 'var(--cyan)';
-    } else if (draw) {
-        msgEl.innerText = s.ttt.drawMsg;
-    } else {
-        msgEl.innerText = s.ttt.loseMsg;
-        msgEl.style.color = 'var(--orange)';
-    }
-
-    if (useFirebase && auth.currentUser) {
+  if(useFirebase && auth.currentUser) {
+     try {
         const userDocRef = doc(db, 'artifacts', appId, 'users', auth.currentUser.uid, 'profile', 'userData');
-        await setDoc(userDocRef, {
-            hasPlayedTicTacToe: true,
-            discountActive: playerWon
-        }, { merge: true });
-    }
-    
-    updateAuthUI();
-    renderPricing();
-    
-    setTimeout(() => {
-        closeTttModal();
-    }, 3000);
+        await updateDoc(userDocRef, { hasPlayedTicTacToe: true, discountActive: discountActive });
+     } catch(e) { console.error("Error saving game result:", e); }
+  }
+  updateTTTBanner();
+  updatePricingUI();
 }
 
-function renderPricing() {
+function updateTTTBanner() {
+  const banner = document.getElementById('tttBannerWrapper');
+  const s = strings[currentLang].ttt;
+  
+  if(!currentUser) {
+     banner.style.display = 'block'; 
+     document.getElementById('tttBannerTitle').innerText = s.title;
+     document.getElementById('tttBannerDesc').innerHTML = s.desc;
+     document.getElementById('tttBannerBtn').style.display = 'inline-block';
+     document.getElementById('tttBannerBtn').innerText = s.btn;
+  } else if(!hasPlayedTicTacToe) {
+     banner.style.display = 'block';
+     document.getElementById('tttBannerTitle').innerText = s.title;
+     document.getElementById('tttBannerDesc').innerHTML = s.desc;
+     document.getElementById('tttBannerBtn').style.display = 'inline-block';
+     document.getElementById('tttBannerBtn').innerText = s.btn;
+  } else {
+     banner.style.display = 'block';
+     document.getElementById('tttBannerBtn').style.display = 'none';
+     document.getElementById('tttBannerTitle').innerText = discountActive ? "🎉 " + s.win : s.title;
+     document.getElementById('tttBannerDesc').innerHTML = discountActive ? "" : "כבר ניצלת את משחק האיקס-עיגול שלך.";
+  }
+}
+
+function updatePricingUI() {
+   const s = strings[currentLang];
+   s.plans.forEach(plan => {
+      const priceEl = document.getElementById(`price-${plan.id}`);
+      if(priceEl) {
+         let currentPrice = discountActive ? (plan.price - 10) : plan.price;
+         priceEl.innerHTML = `<sup>₪</sup>${currentPrice}`;
+         if(discountActive) {
+            priceEl.innerHTML += ` <span style="text-decoration: line-through; color: var(--muted); font-size: 24px; margin-right: 8px;">${plan.price}</span>`;
+            priceEl.style.color = 'var(--cyan)';
+            priceEl.style.textShadow = '0 0 10px rgba(0,198,255,0.4)';
+         } else {
+            priceEl.style.color = 'var(--white)';
+            priceEl.style.textShadow = 'none';
+         }
+      }
+   });
+}
+
+function openSettingsModal() {
   const s = strings[currentLang];
-  const container = document.getElementById('pricing-plans-container');
-  
-  const plansHtml = s.plans.map(plan => {
-      let basePrice = parseInt(plan.price);
-      let finalPrice = discountActive ? basePrice - 10 : basePrice;
-      let strikeHtml = discountActive ? `<span style="text-decoration: line-through; color: var(--muted); font-size: 24px; margin-right: 12px; font-weight: 500;">₪${basePrice}</span>` : '';
-      
-      return `
-      <div class="pricing-box plan-${plan.id}">
-        <div class="plan-badge">${plan.badge}</div>
-        <div class="pricing-label">${plan.title}</div>
-        <div class="pricing-price"><sup>₪</sup>${finalPrice}${strikeHtml}</div>
-        <div class="pricing-once">${plan.period}</div>
-        <ul class="pricing-features">
-          ${plan.features.map(f => `<li>${f}</li>`).join('')}
-        </ul>
-        <button class="btn-buy" id="btnBuy-${plan.id}">${plan.btn}</button>
-        <p class="pricing-note">${plan.note}</p>
-      </div>
-      `;
-  }).join('');
-  
-  container.innerHTML = plansHtml;
-  
-  s.plans.forEach(plan => {
-      const btn = document.getElementById(`btnBuy-${plan.id}`);
-      if (btn) btn.addEventListener('click', initiatePurchase);
-  });
+  document.getElementById('settingsTitle').innerText = s.settings.title;
+  document.getElementById('themeToggleBtn').innerText = currentTheme === 'dark' ? s.settings.lightMode : s.settings.darkMode;
+  const accDetails = document.getElementById('accountDetails');
+  if (currentUser) accDetails.innerHTML = `<strong>${s.settings.name}:</strong> ${currentUser}<br><strong style="margin-top:8px; display:inline-block;">${s.settings.email}:</strong> ${currentUserEmail}`;
+  else accDetails.innerHTML = s.settings.notLoggedIn;
+  document.getElementById('settingsModal').classList.add('active');
+}
+function closeSettingsModal() { document.getElementById('settingsModal').classList.remove('active'); }
+
+function toggleTheme() {
+  const s = strings[currentLang];
+  currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  if (currentTheme === 'light') document.body.classList.add('light-mode');
+  else document.body.classList.remove('light-mode');
+  document.getElementById('themeToggleBtn').innerText = currentTheme === 'dark' ? s.settings.lightMode : s.settings.darkMode;
 }
 
 function setLang(lang) {
   currentLang = lang;
   const s = strings[lang];
-  
   document.documentElement.dir = lang === 'he' ? 'rtl' : 'ltr';
   document.documentElement.lang = lang;
-  
   document.getElementById('btn-he').className = lang === 'he' ? 'lang-btn active' : 'lang-btn';
   document.getElementById('btn-en').className = lang === 'en' ? 'lang-btn active' : 'lang-btn';
 
@@ -1150,15 +978,13 @@ function setLang(lang) {
   document.getElementById('hero-btn1').innerText = s.heroCTA1;
   document.getElementById('hero-btn2').innerText = s.heroCTA2;
   
-  for(let i=0; i<4; i++) {
-    document.getElementById(`stat-${i}`).innerText = s.stats[i];
-  }
+  for(let i=0; i<4; i++) document.getElementById(`stat-${i}`).innerText = s.stats[i];
 
   document.getElementById('about-tag').innerText = s.aboutTag;
   document.getElementById('about-title').innerHTML = s.aboutTitle;
   document.getElementById('about-sub').innerText = s.aboutSub;
   
-  const aboutCards = ['🎮','🏆','📚','💬'].map((icon, i) => `
+  const aboutCards = ['🎮','🏆','🎬','💬'].map((icon, i) => `
     <div class="about-card">
       <div class="about-card-icon">${icon}</div>
       <h3>${s.cards[i][0]}</h3>
@@ -1184,19 +1010,17 @@ function setLang(lang) {
   document.getElementById('rlfx-tag').innerText = s.rlfxTag;
   document.getElementById('rlfx-title').innerHTML = s.rlfxTitle;
   document.getElementById('rlfx-sub').innerText = s.rlfxSub;
-  const rlfxHtml = s.rlfxItems.map(r => `
-    <div class="rlfx-tag ${r.special ? 'special' : ''}">${r.text}</div>
-  `).join('');
+  const rlfxHtml = s.rlfxItems.map(r => `<div class="rlfx-tag ${r.special ? 'special' : ''}">${r.text}</div>`).join('');
   document.getElementById('rlfx-container').innerHTML = rlfxHtml;
 
   document.getElementById('content-tag').innerText = s.contentTag;
   document.getElementById('content-title').innerText = s.contentTitle;
   document.getElementById('content-sub').innerText = s.contentSub;
   
-  let contentHtml = s.items.map((item, i) => `
-    <div class="content-item" style="cursor: default;">
-      <span class="content-badge badge-video">${i + 1}</span>
-      <span class="content-title">${item}</span>
+  const contentHtml = s.items.map((item, i) => `
+    <div class="step-box">
+      <div class="step-num">${i+1}</div>
+      <div class="step-title">${item}</div>
     </div>
   `).join('');
   document.getElementById('home-content-list').innerHTML = contentHtml;
@@ -1204,68 +1028,91 @@ function setLang(lang) {
   document.getElementById('pricing-tag').innerText = s.pricingTag;
   document.getElementById('pricing-title').innerText = s.pricingTitle;
   
-  document.getElementById('ttt-banner-title').innerText = s.ttt.bannerTitle;
-  document.getElementById('ttt-banner-desc').innerText = s.ttt.bannerDesc;
-  
-  renderPricing();
+  const plansHtml = s.plans.map(plan => `
+    <div class="pricing-box plan-${plan.id}">
+      <div class="plan-badge">${plan.badge}</div>
+      <div class="pricing-label">${plan.title}</div>
+      <div class="pricing-price" id="price-${plan.id}"><sup>₪</sup>${plan.price}</div>
+      <div class="pricing-once">${plan.period}</div>
+      <ul class="pricing-features">
+        ${plan.features.map(f => `<li>${f}</li>`).join('')}
+      </ul>
+      <button class="btn-buy" id="btnBuy-${plan.id}">${plan.btn}</button>
+      <p class="pricing-note">${plan.note}</p>
+    </div>
+  `).join('');
+  document.getElementById('pricing-plans-container').innerHTML = plansHtml;
+
+  s.plans.forEach(plan => {
+    const btn = document.getElementById(`btnBuy-${plan.id}`);
+    if (btn) btn.addEventListener('click', initiatePurchase);
+  });
 
   document.getElementById('dash-title').innerText = s.dashTitle;
   document.getElementById('dash-sub').innerText = s.dashSub;
-  document.getElementById('order-box-title').innerText = s.dashOrderTitle;
-  document.getElementById('order-box-desc').innerText = s.dashOrderDesc;
-  document.getElementById('tab-analysis').innerText = s.tabs[0];
-  document.getElementById('tab-qa').innerText = s.tabs[1];
-  
-  document.getElementById('analysis-title').innerText = s.dashAnalysisTitle;
-  document.getElementById('analysis-desc').innerText = s.dashAnalysisDesc;
-  document.getElementById('analysis-btn').innerText = s.dashAnalysisBtn;
-
-  document.getElementById('qa-title').innerText = s.dashQaTitle;
-  document.getElementById('qa-desc').innerText = s.dashQaDesc;
-  document.getElementById('qa-btn').innerText = s.dashQaBtn;
-
+  if (orderId) document.getElementById('orderIdDisplay').innerText = orderId;
   document.getElementById('footer-sub').innerText = s.footerSub;
+  
+  updateTTTBanner();
+  updatePricingUI();
 }
 
-function scrollToId(id) {
-  const el = document.getElementById(id);
-  if (el) el.scrollIntoView({ behavior: 'smooth' });
-}
+function scrollToId(id) { const el = document.getElementById(id); if (el) el.scrollIntoView({ behavior: 'smooth' }); }
 
 function toggleDashboard(show) {
   window.scrollTo(0, 0);
   if (show) {
-    document.getElementById('view-home').style.display = 'none';
-    document.getElementById('home-nav').style.display = 'none';
-    document.getElementById('view-dashboard').style.display = 'block';
-    document.getElementById('dash-nav').style.display = 'flex';
-    
-    if (currentOrderId) {
-      document.getElementById('order-box-container').style.display = 'block';
-      document.getElementById('order-box-id').innerText = currentOrderId;
-    } else {
-      document.getElementById('order-box-container').style.display = 'none';
-    }
-
+    document.getElementById('view-home').style.display = 'none'; document.getElementById('home-nav').style.display = 'none';
+    document.getElementById('view-dashboard').style.display = 'block'; document.getElementById('dash-nav').style.display = 'flex';
   } else {
-    document.getElementById('view-dashboard').style.display = 'none';
-    document.getElementById('dash-nav').style.display = 'none';
-    document.getElementById('view-home').style.display = 'block';
-    document.getElementById('home-nav').style.display = 'flex';
+    document.getElementById('view-dashboard').style.display = 'none'; document.getElementById('dash-nav').style.display = 'none';
+    document.getElementById('view-home').style.display = 'block'; document.getElementById('home-nav').style.display = 'flex';
   }
 }
 
-function switchTab(tab) {
-  document.getElementById('tab-analysis').className = 'dash-tab';
-  document.getElementById('tab-qa').className = 'dash-tab';
-  document.getElementById('tab-' + tab).className = 'dash-tab active';
+window.addEventListener('scroll', () => {
+  const y = window.scrollY;
+  const dec1 = document.getElementById('dec1'), dec2 = document.getElementById('dec2'), dec3 = document.getElementById('dec3'), dec4 = document.getElementById('dec4');
+  const dec5 = document.getElementById('dec5'), dec6 = document.getElementById('dec6'), dec7 = document.getElementById('dec7'), dec8 = document.getElementById('dec8');
+  if(dec1) dec1.style.transform = `translateY(${y * 0.15}px) rotate(${y * 0.05}deg)`;
+  if(dec2) dec2.style.transform = `translateY(${y * 0.05}px)`;
+  if(dec3) dec3.style.transform = `translateY(${-y * 0.1}px)`;
+  if(dec4) dec4.style.transform = `translateY(${-y * 0.2}px)`;
+  if(dec5) dec5.style.transform = `translateY(${-y * 0.08}px) rotate(${-y * 0.03}deg)`;
+  if(dec6) dec6.style.transform = `translateY(${y * 0.12}px)`;
+  if(dec7) dec7.style.transform = `translateY(${y * 0.2}px) rotate(${y * 0.08}deg)`;
+  if(dec8) dec8.style.transform = `translateY(${y * 0.15}px)`;
+});
 
-  document.getElementById('pane-analysis').style.display = 'none';
-  document.getElementById('pane-qa').style.display = 'none';
-  
-  if (tab === 'analysis') document.getElementById('pane-analysis').style.display = 'block';
-  if (tab === 'qa') document.getElementById('pane-qa').style.display = 'block';
+const canvas = document.getElementById('particles');
+const ctx = canvas.getContext('2d');
+let W, H, particles = [];
+
+function resizeCanvas() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
+window.addEventListener('resize', resizeCanvas);
+resizeCanvas();
+
+for (let i = 0; i < 150; i++) {
+  particles.push({
+    x: Math.random() * 2000, y: Math.random() * 1200,
+    vx: (Math.random() - 0.5) * 0.4 + 0.15, vy: (Math.random() - 0.5) * 0.15,
+    r: Math.random() * 1.5 + 0.3, a: Math.random() * 0.6 + 0.2, c: Math.random() > 0.6 ? '#00C6FF' : '#C77DFF'
+  });
 }
+
+function drawParticles() {
+  ctx.clearRect(0, 0, W, H);
+  particles.forEach(p => {
+    ctx.beginPath(); ctx.arc(p.x % W, p.y % H, p.r, 0, Math.PI * 2); ctx.fillStyle = p.c; ctx.globalAlpha = p.a; ctx.fill();
+    p.x += p.vx; p.y += p.vy;
+    if (p.x > W + 10) p.x = -10; if (p.y < -10) p.y = H + 10; if (p.y > H + 10) p.y = -10;
+  });
+  ctx.globalAlpha = 1;
+  requestAnimationFrame(drawParticles);
+}
+drawParticles();
+
+setLang('he');
 
 window.setLang = setLang;
 window.scrollToId = scrollToId;
@@ -1276,59 +1123,11 @@ window.setAuthMode = setAuthMode;
 window.handleLogin = handleLogin;
 window.handleLogout = handleLogout;
 window.initiatePurchase = initiatePurchase;
-window.switchTab = switchTab;
 window.openSettingsModal = openSettingsModal;
 window.closeSettingsModal = closeSettingsModal;
 window.toggleTheme = toggleTheme;
-window.openTttModal = openTttModal;
-window.closeTttModal = closeTttModal;
-window.makeTttMove = makeTttMove;
-
-const canvas = document.getElementById('particles');
-const ctx = canvas.getContext('2d');
-let W, H, particles = [];
-
-function resizeCanvas() {
-  W = canvas.width = window.innerWidth;
-  H = canvas.height = window.innerHeight;
-}
-
-window.addEventListener('resize', resizeCanvas);
-resizeCanvas();
-
-for (let i = 0; i < 150; i++) {
-  particles.push({
-    x: Math.random() * 2000,
-    y: Math.random() * 1200,
-    vx: (Math.random() - 0.5) * 0.4 + 0.15,
-    vy: (Math.random() - 0.5) * 0.15,
-    r: Math.random() * 1.5 + 0.3,
-    a: Math.random() * 0.6 + 0.2,
-    c: Math.random() > 0.6 ? '#00C6FF' : '#C77DFF'
-  });
-}
-
-function drawParticles() {
-  ctx.clearRect(0, 0, W, H);
-  particles.forEach(p => {
-    ctx.beginPath();
-    ctx.arc(p.x % W, p.y % H, p.r, 0, Math.PI * 2);
-    ctx.fillStyle = p.c;
-    ctx.globalAlpha = p.a;
-    ctx.fill();
-    p.x += p.vx;
-    p.y += p.vy;
-    if (p.x > W + 10) p.x = -10;
-    if (p.y < -10) p.y = H + 10;
-    if (p.y > H + 10) p.y = -10;
-  });
-  ctx.globalAlpha = 1;
-  requestAnimationFrame(drawParticles);
-}
-drawParticles();
-
-setLang('he');
-
+window.openTTTModal = openTTTModal;
+window.closeTTTModal = closeTTTModal;
 </script>
 </body>
 </html>
