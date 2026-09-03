@@ -50,32 +50,6 @@ h1, h2, h3, h4, h5, h6 { color: var(--white); }
 canvas#particles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; opacity: 0.35; transition: opacity 0.3s; }
 body.light-mode canvas#particles { opacity: 0.85; }
 
-.side-decorations {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 1;
-  overflow: hidden;
-}
-
-.dec-element { position: absolute; opacity: 0.15; transition: opacity 0.3s; }
-body.light-mode .dec-element { opacity: 0.3; }
-
-.dec-ring-1 { top: 15%; left: 3%; width: 200px; height: 200px; border: 1px solid var(--cyan); border-radius: 50%; opacity: 0.1; }
-.dec-cross-1 { top: 25%; left: 8%; font-size: 32px; color: var(--muted); font-family: monospace; }
-.dec-line-l { top: -20%; left: 5%; width: 1px; height: 150vh; background: linear-gradient(to bottom, transparent, var(--cyan), transparent); opacity: 0.2; }
-.dec-circle-filled { top: 75%; left: 7%; width: 6px; height: 6px; background: var(--orange); border-radius: 50%; box-shadow: 0 0 15px var(--orange); }
-
-.dec-hex-1 { top: 50%; right: 4%; width: 120px; height: 135px; background: transparent; border: 1px dashed var(--orange); clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); opacity: 0.1; }
-.dec-cross-2 { top: 10%; right: 7%; font-size: 24px; color: var(--cyan); font-family: monospace; }
-.dec-square { top: 80%; right: 6%; width: 40px; height: 40px; border: 2px solid var(--muted); opacity: 0.2; }
-.dec-line-r { top: 30%; right: 5%; width: 1px; height: 120vh; background: linear-gradient(to bottom, transparent, var(--orange), transparent); opacity: 0.2; }
-
-@media(max-width: 1300px) { .side-decorations { display: none; } }
-
 .wrap { position: relative; z-index: 2; max-width: 960px; margin: 0 auto; padding: 0 24px; flex: 1; width: 100%; }
 
 nav { position: sticky; top: 0; z-index: 100; background: rgba(8,8,15,0.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 14px 0; transition: background-color 0.3s, border-color 0.3s; }
@@ -191,12 +165,13 @@ body.light-mode .btn-primary { color: #fff; }
 .step-title { font-size: 15px; font-weight: 500; color: var(--white); }
 
 /* Tic-Tac-Toe Banner */
-.ttt-banner { background: linear-gradient(135deg, rgba(0,198,255,0.15), rgba(157,78,221,0.15)); border: 2px solid var(--cyan); border-radius: 12px; padding: 32px 24px; text-align: center; margin-bottom: 40px; display: none; position: relative; overflow: hidden; box-shadow: 0 0 20px rgba(0,198,255,0.15); }
-.ttt-banner::before { content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%; background: linear-gradient(to right, transparent, rgba(255,255,255,0.1), transparent); transform: skewX(-20deg); animation: sweep 4s infinite; }
+.ttt-banner { background: linear-gradient(135deg, rgba(0,198,255,0.05), rgba(199,125,255,0.05)); border: 1px solid var(--border); border-radius: 12px; padding: 32px 24px; text-align: center; margin-bottom: 40px; display: none; position: relative; overflow: hidden; }
+.ttt-banner::before { content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%; background: linear-gradient(to right, transparent, rgba(0,198,255,0.1), transparent); transform: skewX(-20deg); animation: sweep 3s infinite; }
 @keyframes sweep { 0% { left: -100%; } 20% { left: 200%; } 100% { left: 200%; } }
-.highlight-discount { background: var(--cyan); color: #000; padding: 2px 10px; border-radius: 6px; font-weight: 800; display: inline-block; margin: 0 6px; box-shadow: 0 0 10px rgba(0,198,255,0.6); animation: pulseDiscount 2s infinite; font-size: 16px; }
+
+.highlight-discount { background: var(--cyan); color: #000; padding: 4px 12px; border-radius: 8px; font-weight: 800; display: inline-block; margin: 0 6px; box-shadow: 0 0 15px rgba(0,198,255,0.6); animation: pulseDiscount 1.5s infinite; font-size: 18px; text-shadow: none; }
 body.light-mode .highlight-discount { color: #fff; }
-@keyframes pulseDiscount { 0% { transform: scale(1); box-shadow: 0 0 10px rgba(0,198,255,0.6); } 50% { transform: scale(1.08); box-shadow: 0 0 20px rgba(0,198,255,0.9); } 100% { transform: scale(1); box-shadow: 0 0 10px rgba(0,198,255,0.6); } }
+@keyframes pulseDiscount { 0% { transform: scale(1); box-shadow: 0 0 10px rgba(0,198,255,0.4); } 50% { transform: scale(1.05); box-shadow: 0 0 25px rgba(0,198,255,0.8); } 100% { transform: scale(1); box-shadow: 0 0 10px rgba(0,198,255,0.4); } }
 
 /* Tic-Tac-Toe Game Grid */
 .ttt-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 20px auto; max-width: 200px; }
@@ -205,7 +180,7 @@ body.light-mode .highlight-discount { color: #fff; }
 .ttt-cell.x { color: var(--cyan); }
 .ttt-cell.o { color: var(--orange); }
 
-.pricing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; max-width: 860px; margin: 48px auto 0; }
+.pricing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; max-width: 860px; margin: 20px auto 0; }
 .pricing-box { background: var(--card); border-radius: 14px; padding: 40px; position: relative; overflow: hidden; transition: transform 0.2s, border-color 0.2s; border: 1px solid var(--border); }
 .pricing-box:hover { transform: translateY(-4px); }
 .pricing-box.plan-content { border-color: rgba(0,198,255,0.4); }
@@ -227,7 +202,7 @@ body.light-mode .highlight-discount { color: #fff; }
 .btn-buy:hover { background: #33D1FF; }
 body.light-mode .btn-buy { color: #fff; }
 .plan-support .btn-buy { background: var(--orange); color: #fff; }
-.plan-support .btn-buy:hover { background: #D896FF; }
+.plan-support .btn-buy:hover { background: #B171E8; }
 .pricing-note { text-align: center; font-size: 12px; color: var(--muted); }
 
 .dashboard-header { margin-bottom: 40px; padding-top: 40px; border-bottom: 1px solid var(--border); padding-bottom: 24px; }
@@ -259,18 +234,6 @@ footer { position: relative; z-index: 2; border-top: 1px solid var(--border); pa
 
 <div class="app-container">
   <canvas id="particles"></canvas>
-  
-  <div class="side-decorations">
-    <div class="dec-element dec-ring-1" id="dec1"></div>
-    <div class="dec-element dec-cross-1" id="dec2">+</div>
-    <div class="dec-element dec-circle-filled" id="dec3"></div>
-    <div class="dec-element dec-line-l" id="dec4"></div>
-    
-    <div class="dec-element dec-hex-1" id="dec5"></div>
-    <div class="dec-element dec-cross-2" id="dec6">+</div>
-    <div class="dec-element dec-square" id="dec7"></div>
-    <div class="dec-element dec-line-r" id="dec8"></div>
-  </div>
   
   <nav>
     <div class="nav-inner">
@@ -457,7 +420,6 @@ footer { position: relative; z-index: 2; border-top: 1px solid var(--border); pa
     <span class="close-btn" onclick="closeSettingsModal()">&times;</span>
     <h2 class="modal-title" id="settingsTitle">הגדרות חשבון</h2>
     <div style="margin-bottom: 24px; color: var(--white); font-family: 'Heebo', sans-serif; font-size: 15px; line-height: 1.6; background: var(--bg); padding: 16px; border-radius: 8px; border: 1px solid var(--border);" id="accountDetails">
-      <!-- Populated via JS -->
     </div>
     <button class="btn-outline" style="width: 100%; border-color: var(--border); display: flex; align-items: center; justify-content: center; gap: 8px;" id="themeToggleBtn" onclick="toggleTheme()">
       מצב בהיר
@@ -488,8 +450,9 @@ footer { position: relative; z-index: 2; border-top: 1px solid var(--border); pa
 </div>
 
 <script type="module">
+// Added sendEmailVerification to the imports
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile, sendEmailVerification } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
 import { getFirestore, doc, setDoc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -528,11 +491,10 @@ try {
   console.error("Firebase initialization failed.", e);
 }
 
-// --- DICTIONARY ---
 const strings = {
   he: {
     navLinks: ['עליי', 'הסיפור שלי', 'איך זה עובד', 'מחיר'],
-    auth: { loginTop: 'כניסה', logout: 'התנתק', hello: 'שלום', tabLogin: 'התחברות', tabRegister: 'הרשמה', titleLogin: 'התחבר לחשבון', titleRegister: 'צור חשבון חדש', name: 'שם מלא', email: 'אימייל', pass: 'סיסמה', submitLogin: 'התחבר', submitRegister: 'הירשם', requireMsg: 'יש להתחבר לחשבון לפני ביצוע הפעולה.' },
+    auth: { loginTop: 'כניסה', logout: 'התנתק', hello: 'שלום', tabLogin: 'התחברות', tabRegister: 'הרשמה', titleLogin: 'התחבר לחשבון', titleRegister: 'צור חשבון חדש', name: 'שם מלא', email: 'אימייל', pass: 'סיסמה', submitLogin: 'התחבר', submitRegister: 'הירשם', requireMsg: 'יש להתחבר לחשבון לפני ביצוע הפעולה.', verifySent: 'נשלח אליך קישור אימות למייל! (בדוק גם בספאם). אנא אמת את החשבון והתחבר.', notVerified: 'טרם אימתת את כתובת האימייל שלך. בדוק את תיבת הדואר.' },
     settings: { title: 'הגדרות חשבון', name: 'שם משתמש', email: 'כתובת אימייל', notLoggedIn: 'עדיין לא מחובר למערכת.', lightMode: '☀️ מצב בהיר', darkMode: '🌙 מצב כהה' },
     heroBadge: '🚀 Rocket League Academy',
     h1: ['שדרג את', 'הרוקט ליג שלך', 'לרמה הבאה'],
@@ -549,7 +511,7 @@ const strings = {
     ],
     contentTag: 'איך זה עובד', contentTitle: 'התהליך ב-',
     contentSub: 'בחר את החבילה המתאימה לך, פתח טיקט בדיסקורד ויאללה מתחילים לעבוד.',
-    items: ['1. בוחרים חבילה ונרשמים באתר', '2. מקבלים מספר סידורי אישי (Order ID)', '3. פותחים טיקט בדיסקורד עם המספר', '4. מתאמים מועד לשיחה או לניתוח!'],
+    items: ['1. בוחרים חבילה ונרשמים באתר', '2. משלמים ומקבלים מספר סידורי אישי', '3. פותחים טיקט בדיסקורד עם המספר', '4. מתאמים מועד לשיחה או לניתוח!'],
     pricingTag: 'מחיר', pricingTitle: 'בחר את המסלול שלך',
     plans: [
       {
@@ -583,7 +545,7 @@ const strings = {
   },
   en: {
     navLinks: ['About', 'My Journey', 'How it works', 'Pricing'],
-    auth: { loginTop: 'Sign In', logout: 'Logout', hello: 'Hello', tabLogin: 'Login', tabRegister: 'Register', titleLogin: 'Login to Account', titleRegister: 'Create New Account', name: 'Full Name', email: 'Email', pass: 'Password', submitLogin: 'Login', submitRegister: 'Register', requireMsg: 'You must log in to perform this action.' },
+    auth: { loginTop: 'Sign In', logout: 'Logout', hello: 'Hello', tabLogin: 'Login', tabRegister: 'Register', titleLogin: 'Login to Account', titleRegister: 'Create New Account', name: 'Full Name', email: 'Email', pass: 'Password', submitLogin: 'Login', submitRegister: 'Register', requireMsg: 'You must log in to perform this action.', verifySent: 'Verification link sent to your email! (Check spam). Please verify and log in.', notVerified: 'You have not verified your email address yet. Please check your inbox.' },
     settings: { title: 'Account Settings', name: 'Username', email: 'Email Address', notLoggedIn: 'You are not logged in yet.', lightMode: '☀️ Light Mode', darkMode: '🌙 Dark Mode' },
     heroBadge: '🚀 Rocket League Academy',
     h1: ['Elevate Your', 'Rocket League', 'To The Next Level'],
@@ -600,7 +562,7 @@ const strings = {
     ],
     contentTag: 'How it works', contentTitle: 'The Process at ',
     contentSub: 'Choose your plan, open a discord ticket, and let\'s start working.',
-    items: ['1. Choose a plan and register', '2. Get your personal Order ID', '3. Open a Discord ticket with your ID', '4. Schedule the session!'],
+    items: ['1. Choose a plan and register', '2. Pay and get your personal Order ID', '3. Open a Discord ticket with your ID', '4. Schedule the session!'],
     pricingTag: 'Pricing', pricingTitle: 'Choose Your Plan',
     plans: [
       {
@@ -644,7 +606,7 @@ function getFirebaseErrorMessage(code) {
       case 'auth/invalid-credential': return 'פרטי ההתחברות אינם נכונים.';
       case 'auth/email-already-in-use': return 'כתובת האימייל הזו כבר רשומה במערכת.';
       case 'auth/weak-password': return 'הסיסמה חלשה מדי (חובה לפחות 6 תווים).';
-      default: return 'ארעה שגיאה בתהליך (' + code + '). אנא נסה שנית.';
+      default: return 'ארעה שגיאה בתהליך. אנא נסה שנית.';
     }
   } else {
     switch(code) {
@@ -655,7 +617,7 @@ function getFirebaseErrorMessage(code) {
       case 'auth/invalid-credential': return 'Invalid credentials.';
       case 'auth/email-already-in-use': return 'This email is already in use.';
       case 'auth/weak-password': return 'Password is too weak.';
-      default: return 'An error occurred (' + code + '). Please try again.';
+      default: return 'An error occurred. Please try again.';
     }
   }
 }
@@ -699,19 +661,25 @@ function setAuthMode(mode) {
 
 function openAuthModal() {
   const s = strings[currentLang];
-  document.getElementById('authMsg').style.display = 'none';
+  const authMsg = document.getElementById('authMsg');
+  authMsg.style.display = 'none';
+  authMsg.style.color = 'var(--orange)'; // Reset color to default orange
   setAuthMode('login'); 
   document.getElementById('authModal').classList.add('active');
 }
+
 function closeAuthModal() { document.getElementById('authModal').classList.remove('active'); }
 
 async function handleLogin(e) {
   e.preventDefault();
   const authMsg = document.getElementById('authMsg');
   authMsg.style.display = 'none';
+  authMsg.style.color = 'var(--orange)'; // Default error color
+
   const email = document.getElementById('authEmail').value.trim();
   const password = document.getElementById('authPass').value;
   const name = document.getElementById('authName').value.trim();
+  const s = strings[currentLang];
   
   if (useFirebase) {
     try {
@@ -726,10 +694,35 @@ async function handleLogin(e) {
           name: name, email: email, isPaid: false, hasPlayedTicTacToe: false, discountActive: false, orderId: null, createdAt: new Date().toISOString()
         });
         
-        currentUser = name; currentUserEmail = email; isPaid = false; hasPlayedTicTacToe = false; discountActive = false; orderId = null;
+        // --- EMAIL VERIFICATION ADDED HERE ---
+        await sendEmailVerification(user);
+        await signOut(auth); // Sign them out immediately so they have to verify
+
+        authMsg.style.display = 'block';
+        authMsg.style.color = 'var(--cyan)'; // Blue color for success message
+        authMsg.innerText = s.auth.verifySent;
+
+        document.getElementById('authName').value = '';
+        document.getElementById('authEmail').value = '';
+        document.getElementById('authPass').value = '';
+        
+        // Visually switch them to login mode to wait for their return
+        setAuthMode('login');
+        return; // Stop the flow here
+
       } else {
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
+
+        // --- CHECK VERIFICATION BEFORE ALLOWING LOGIN ---
+        if (!user.emailVerified) {
+            await signOut(auth);
+            authMsg.style.display = 'block';
+            authMsg.style.color = 'var(--orange)';
+            authMsg.innerText = s.auth.notVerified;
+            return;
+        }
+        
         const userDocRef = doc(db, 'artifacts', appId, 'users', user.uid, 'profile', 'userData');
         const docSnap = await getDoc(userDocRef);
         
@@ -756,6 +749,7 @@ async function handleLogin(e) {
     } catch (error) {
       console.error("Auth Error:", error);
       authMsg.style.display = 'block';
+      authMsg.style.color = 'var(--orange)';
       authMsg.innerText = getFirebaseErrorMessage(error.code);
     }
   }
@@ -792,7 +786,8 @@ async function initiatePurchase() {
 
 if (useFirebase) {
   onAuthStateChanged(auth, async (user) => {
-    if (user) {
+    // Only accept verified users automatically
+    if (user && user.emailVerified) {
       try {
         const userDocRef = doc(db, 'artifacts', appId, 'users', user.uid, 'profile', 'userData');
         const docSnap = await getDoc(userDocRef);
@@ -816,6 +811,7 @@ if (useFirebase) {
       updateAuthUI();
       if (isPaid) toggleDashboard(true);
     } else {
+      if (user) await signOut(auth); // Kick out silently if unverified
       currentUser = null; currentUserEmail = null; isPaid = false; hasPlayedTicTacToe = false; discountActive = false; orderId = null;
       updateAuthUI();
     }
@@ -1069,20 +1065,6 @@ function toggleDashboard(show) {
     document.getElementById('view-home').style.display = 'block'; document.getElementById('home-nav').style.display = 'flex';
   }
 }
-
-window.addEventListener('scroll', () => {
-  const y = window.scrollY;
-  const dec1 = document.getElementById('dec1'), dec2 = document.getElementById('dec2'), dec3 = document.getElementById('dec3'), dec4 = document.getElementById('dec4');
-  const dec5 = document.getElementById('dec5'), dec6 = document.getElementById('dec6'), dec7 = document.getElementById('dec7'), dec8 = document.getElementById('dec8');
-  if(dec1) dec1.style.transform = `translateY(${y * 0.15}px) rotate(${y * 0.05}deg)`;
-  if(dec2) dec2.style.transform = `translateY(${y * 0.05}px)`;
-  if(dec3) dec3.style.transform = `translateY(${-y * 0.1}px)`;
-  if(dec4) dec4.style.transform = `translateY(${-y * 0.2}px)`;
-  if(dec5) dec5.style.transform = `translateY(${-y * 0.08}px) rotate(${-y * 0.03}deg)`;
-  if(dec6) dec6.style.transform = `translateY(${y * 0.12}px)`;
-  if(dec7) dec7.style.transform = `translateY(${y * 0.2}px) rotate(${y * 0.08}deg)`;
-  if(dec8) dec8.style.transform = `translateY(${y * 0.15}px)`;
-});
 
 const canvas = document.getElementById('particles');
 const ctx = canvas.getContext('2d');
