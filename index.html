@@ -674,7 +674,7 @@ function getFirebaseErrorMessage(code) {
       case 'auth/invalid-credential': return 'פרטי ההתחברות אינם נכונים.';
       case 'auth/email-already-in-use': return 'כתובת האימייל הזו כבר רשומה במערכת.';
       case 'auth/weak-password': return 'הסיסמה חלשה מדי (חובה לפחות 6 תווים).';
-      default: return 'ארעה שגיאה בתהליך. אנא נסה שנית.';
+      default: return `ארעה שגיאה בתהליך. קוד שגיאה: ${code}`;
     }
   } else {
     switch(code) {
@@ -685,7 +685,7 @@ function getFirebaseErrorMessage(code) {
       case 'auth/invalid-credential': return 'Invalid credentials.';
       case 'auth/email-already-in-use': return 'This email is already in use.';
       case 'auth/weak-password': return 'Password is too weak (must be at least 6 characters).';
-      default: return 'An error occurred. Please try again.';
+      default: return `An error occurred. Error code: ${code}`;
     }
   }
 }
