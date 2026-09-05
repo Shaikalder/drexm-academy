@@ -52,6 +52,7 @@ body.light-mode canvas#particles { opacity: 0.85; }
 
 .wrap { position: relative; z-index: 2; max-width: 960px; margin: 0 auto; padding: 0 24px; flex: 1; width: 100%; }
 
+/* NAV */
 nav { position: sticky; top: 0; z-index: 100; background: rgba(8,8,15,0.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 14px 0; transition: background-color 0.3s, border-color 0.3s; }
 body.light-mode nav { background: rgba(244,245,247,0.85); }
 .nav-inner { display: flex; align-items: center; justify-content: space-between; max-width: 960px; margin: 0 auto; padding: 0 24px; }
@@ -61,6 +62,7 @@ body.light-mode nav { background: rgba(244,245,247,0.85); }
 .nav-links button { background: none; border: none; color: var(--muted); text-decoration: none; font-size: 14px; font-weight: 500; transition: color 0.2s; cursor: pointer; font-family: 'Heebo', sans-serif; }
 .nav-links button:hover { color: var(--white); }
 
+/* SOCIAL LINKS & LANG */
 .nav-actions { display: flex; align-items: center; gap: 20px; }
 .social-links { display: flex; align-items: center; gap: 16px; }
 .social-links a { color: var(--muted); display: flex; transition: all 0.2s; }
@@ -71,9 +73,11 @@ body.light-mode nav { background: rgba(244,245,247,0.85); }
 .lang-btn.active { background: var(--cyan); color: #000; font-weight: 700; }
 body.light-mode .lang-btn.active { color: #fff; }
 
+/* SETTINGS ICON */
 .settings-icon-btn { background: none; border: none; color: var(--muted); cursor: pointer; transition: color 0.2s; display: flex; align-items: center; justify-content: center; padding: 4px; }
 .settings-icon-btn:hover { color: var(--white); }
 
+/* USER AREA */
 .user-area { display: flex; align-items: center; gap: 12px; }
 .user-name { font-size: 14px; font-weight: 500; color: var(--cyan); }
 .btn-login { background: transparent; border: 1px solid var(--cyan); color: var(--cyan); padding: 6px 16px; border-radius: 6px; cursor: pointer; font-family: 'Heebo', sans-serif; font-size: 13px; font-weight: 600; transition: all 0.2s; }
@@ -81,6 +85,7 @@ body.light-mode .lang-btn.active { color: #fff; }
 .btn-logout { background: none; border: none; color: var(--muted); cursor: pointer; font-size: 12px; text-decoration: underline; font-family: 'Heebo', sans-serif; transition: color 0.2s; }
 .btn-logout:hover { color: var(--orange); }
 
+/* MODAL */
 .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 1000; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(5px); opacity: 0; pointer-events: none; transition: opacity 0.3s, background 0.3s; }
 body.light-mode .modal { background: rgba(130, 135, 145, 0.6); backdrop-filter: blur(6px); }
 
@@ -88,7 +93,7 @@ body.light-mode .modal { background: rgba(130, 135, 145, 0.6); backdrop-filter: 
 .modal-content { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 40px; width: 90%; max-width: 400px; position: relative; box-shadow: 0 10px 40px rgba(0,0,0,0.5); transform: translateY(20px); transition: transform 0.3s, background-color 0.3s; }
 body.light-mode .modal-content { background: #F4F5F7; box-shadow: 0 10px 40px rgba(0,0,0,0.15); }
 
-.close-btn { position: absolute; top: 16px; right: 24px; font-size: 28px; cursor: pointer; color: var(--muted); transition: color 0.2s; }
+.close-btn { position: absolute; top: 16px; right: 24px; font-size: 28px; cursor: pointer; color: var(--muted); transition: color 0.2s; z-index: 10; }
 [dir="ltr"] .close-btn { right: auto; left: 24px; }
 .close-btn:hover { color: var(--white); }
 .modal-title { font-family: 'Rajdhani', sans-serif; font-size: 28px; font-weight: 700; color: var(--white); margin-bottom: 24px; text-align: center; }
@@ -103,6 +108,17 @@ body.light-mode .modal-content { background: #F4F5F7; box-shadow: 0 10px 40px rg
 .modal-form input:focus { outline: none; border-color: var(--cyan); }
 .auth-msg { color: var(--orange); font-size: 13px; text-align: center; display: none; margin-bottom: 8px; line-height: 1.5; }
 
+/* TIC-TAC-TOE BANNER */
+.ttt-banner { background: linear-gradient(135deg, rgba(0,198,255,0.05), rgba(199,125,255,0.05)); border: 1px solid var(--border); border-radius: 12px; padding: 32px 24px; text-align: center; margin-bottom: 40px; position: relative; overflow: hidden; transition: all 0.3s; }
+.ttt-banner::before { content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%; background: linear-gradient(to right, transparent, rgba(0,198,255,0.1), transparent); transform: skewX(-20deg); animation: sweep 3s infinite; }
+@keyframes sweep { 0% { left: -100%; } 20% { left: 200%; } 100% { left: 200%; } }
+
+.highlight-discount { background: var(--cyan); color: #000; padding: 8px 18px; border-radius: 8px; font-weight: 800; display: inline-block; margin: 0 6px; box-shadow: 0 0 15px rgba(0,198,255,0.6); animation: pulseDiscount 1.5s infinite; font-size: 16px; border: none; cursor: pointer; transition: all 0.2s; }
+body.light-mode .highlight-discount { color: #fff; }
+.highlight-discount:hover { transform: scale(1.05); background: #33D1FF; }
+@keyframes pulseDiscount { 0% { transform: scale(1); box-shadow: 0 0 10px rgba(0,198,255,0.4); } 50% { transform: scale(1.06); box-shadow: 0 0 25px rgba(0,198,255,0.9); } 100% { transform: scale(1); box-shadow: 0 0 10px rgba(0,198,255,0.4); } }
+
+/* HERO */
 .hero { min-height: 88vh; display: flex; align-items: center; padding: 80px 0 60px; }
 .hero-badge { display: inline-block; background: rgba(0,198,255,0.1); border: 1px solid rgba(0,198,255,0.3); color: var(--cyan); font-size: 11px; letter-spacing: 2px; text-transform: uppercase; padding: 6px 16px; border-radius: 4px; margin-bottom: 28px; font-weight: 500; }
 .hero h1 { font-family: 'Rajdhani', sans-serif; font-size: clamp(48px,7vw,84px); font-weight: 700; line-height: 1.0; letter-spacing: -1px; margin-bottom: 20px; color: var(--white); }
@@ -113,7 +129,6 @@ body.light-mode .modal-content { background: #F4F5F7; box-shadow: 0 10px 40px rg
 .btn-primary { background: var(--cyan); color: #000; border: none; padding: 14px 32px; font-family: 'Rajdhani', sans-serif; font-size: 16px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; border-radius: 6px; cursor: pointer; transition: all 0.2s; }
 .btn-primary:hover { background: #33D1FF; transform: translateY(-1px); }
 body.light-mode .btn-primary { color: #fff; }
-.btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
 
 .btn-outline { background: none; color: var(--white); border: 1px solid var(--border); padding: 14px 28px; font-family: 'Rajdhani', sans-serif; font-size: 16px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; border-radius: 6px; cursor: pointer; transition: all 0.2s; }
 .btn-outline:hover { border-color: var(--cyan); color: var(--cyan); }
@@ -129,6 +144,7 @@ body.light-mode .btn-primary { color: #fff; }
 .stat-val { font-family: 'Rajdhani', sans-serif; font-size: 36px; font-weight: 700; color: var(--cyan); line-height: 1; margin-bottom: 6px; display: block; }
 .stat-lbl { font-size: 13px; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; margin-top: 0; display: block; }
 
+/* ABOUT */
 .section { padding: 80px 0; }
 .section-tag { font-size: 11px; color: var(--orange); letter-spacing: 3px; text-transform: uppercase; font-weight: 600; margin-bottom: 16px; }
 .section-title { font-family: 'Rajdhani', sans-serif; font-size: clamp(28px,4vw,44px); font-weight: 700; margin-bottom: 16px; line-height: 1.15; color: var(--white); }
@@ -161,38 +177,25 @@ body.light-mode .btn-primary { color: #fff; }
 .rlfx-tag.special { border-color: var(--orange); color: var(--orange); background: rgba(199,125,255,0.05); }
 .rlfx-tag.special:hover { background: rgba(199,125,255,0.15); box-shadow: 0 4px 12px rgba(199,125,255,0.15); }
 
+/* CONTENT PREVIEW (Now Steps) */
+.content-list { display: grid; grid-template-columns: 1fr; gap: 12px; margin-top: 40px; }
 .step-box { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 20px 24px; display: flex; align-items: center; gap: 16px; position: relative; margin-bottom: 12px; }
 .step-num { width: 32px; height: 32px; border-radius: 50%; background: rgba(0,198,255,0.1); color: var(--cyan); display: flex; align-items: center; justify-content: center; font-weight: bold; font-family: 'Rajdhani'; flex-shrink: 0; }
 .step-title { font-size: 15px; font-weight: 500; color: var(--white); }
 
-/* Tic-Tac-Toe Banner */
-.ttt-banner { background: linear-gradient(135deg, rgba(0,198,255,0.05), rgba(199,125,255,0.05)); border: 1px solid var(--border); border-radius: 12px; padding: 32px 24px; text-align: center; margin-bottom: 40px; display: none; position: relative; overflow: hidden; }
-.ttt-banner::before { content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%; background: linear-gradient(to right, transparent, rgba(0,198,255,0.1), transparent); transform: skewX(-20deg); animation: sweep 3s infinite; }
-@keyframes sweep { 0% { left: -100%; } 20% { left: 200%; } 100% { left: 200%; } }
-
-.highlight-discount { background: var(--cyan); color: #000; padding: 4px 12px; border-radius: 8px; font-weight: 800; display: inline-block; margin: 0 6px; box-shadow: 0 0 15px rgba(0,198,255,0.6); animation: pulseDiscount 1.5s infinite; font-size: 18px; text-shadow: none; }
-body.light-mode .highlight-discount { color: #fff; }
-@keyframes pulseDiscount { 0% { transform: scale(1); box-shadow: 0 0 10px rgba(0,198,255,0.4); } 50% { transform: scale(1.05); box-shadow: 0 0 25px rgba(0,198,255,0.8); } 100% { transform: scale(1); box-shadow: 0 0 10px rgba(0,198,255,0.4); } }
-
-/* Tic-Tac-Toe Game Grid */
-.ttt-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 20px auto; max-width: 200px; }
-.ttt-cell { background: var(--bg); border: 2px solid var(--border); height: 60px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 32px; font-weight: bold; cursor: pointer; color: var(--white); transition: border-color 0.2s; }
-.ttt-cell:hover { border-color: var(--cyan); }
-.ttt-cell.x { color: var(--cyan); }
-.ttt-cell.o { color: var(--orange); }
-
-.pricing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; max-width: 860px; margin: 20px auto 0; }
-.pricing-box { background: var(--card); border-radius: 14px; padding: 40px; position: relative; overflow: hidden; transition: transform 0.2s, border-color 0.2s; border: 1px solid var(--border); }
+/* PRICING */
+.pricing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; max-width: 860px; margin: 48px auto 0; }
+.pricing-box { background: var(--card); border-radius: 14px; padding: 40px; position: relative; overflow: hidden; transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s; border: 1px solid var(--border); }
 .pricing-box:hover { transform: translateY(-4px); }
 .pricing-box.plan-content { border-color: rgba(0,198,255,0.4); }
-.pricing-box.plan-support { border-color: rgba(199,125,255,0.4); }
+.pricing-box.plan-support { border-color: rgba(157,78,221,0.4); }
 .plan-badge { position: absolute; top: 20px; font-size: 10px; letter-spacing: 2px; font-weight: 700; text-transform: uppercase; }
 [dir="rtl"] .plan-badge { right: 24px; }
 [dir="ltr"] .plan-badge { left: 24px; }
 .plan-content .plan-badge { color: var(--cyan); }
 .plan-support .plan-badge { color: var(--orange); }
 .pricing-label { font-size: 16px; color: var(--white); font-weight: 600; margin-bottom: 8px; font-family: 'Rajdhani', sans-serif; }
-.pricing-price { font-family: 'Rajdhani', sans-serif; font-size: 56px; font-weight: 700; color: var(--white); line-height: 1; margin-bottom: 4px; transition: color 0.3s, text-shadow 0.3s; }
+.pricing-price { font-family: 'Rajdhani', sans-serif; font-size: 56px; font-weight: 700; color: var(--white); line-height: 1; margin-bottom: 4px; transition: color 0.3s; }
 .pricing-price sup { font-size: 24px; color: var(--muted); }
 .pricing-once { font-size: 13px; color: var(--muted); font-weight: 500; margin-bottom: 32px; }
 .pricing-features { list-style: none; margin-bottom: 36px; display: flex; flex-direction: column; gap: 12px; }
@@ -203,13 +206,29 @@ body.light-mode .highlight-discount { color: #fff; }
 .btn-buy:hover { background: #33D1FF; }
 body.light-mode .btn-buy { color: #fff; }
 .plan-support .btn-buy { background: var(--orange); color: #fff; }
-.plan-support .btn-buy:hover { background: #B171E8; }
+.plan-support .btn-buy:hover { background: #D896FF; }
 .pricing-note { text-align: center; font-size: 12px; color: var(--muted); }
 
+/* DASHBOARD & ORDER VIEWS */
 .dashboard-header { margin-bottom: 40px; padding-top: 40px; border-bottom: 1px solid var(--border); padding-bottom: 24px; }
+.dashboard-tabs { display: flex; gap: 16px; margin-bottom: 32px; border-bottom: 1px solid var(--border); padding-bottom: 16px; overflow-x: auto; }
+.dash-tab { background: none; border: none; color: var(--muted); font-size: 16px; font-family: 'Rajdhani', sans-serif; font-weight: 600; text-transform: uppercase; cursor: pointer; padding: 8px 16px; transition: all 0.2s; white-space: nowrap; }
+.dash-tab.active { color: var(--cyan); border-bottom: 2px solid var(--cyan); }
+.dash-tab:hover:not(.active) { color: var(--white); }
+
+.coaching-card { background: linear-gradient(135deg, var(--bg2) 0%, #1a1a2e 100%); border: 1px solid var(--cyan); border-radius: 12px; padding: 40px; text-align: center; margin-bottom: 24px; }
+body.light-mode .coaching-card { background: linear-gradient(135deg, var(--bg2) 0%, #D0E4F5 100%); }
+.coaching-card.support-card { border-color: var(--orange); background: linear-gradient(135deg, var(--bg2) 0%, #241033 100%); }
+body.light-mode .coaching-card.support-card { background: linear-gradient(135deg, var(--bg2) 0%, #F3E8FF 100%); }
+
+.coaching-card h3 { font-family: 'Rajdhani', sans-serif; font-size: 28px; color: var(--cyan); margin-bottom: 16px; }
+.coaching-card.support-card h3 { color: var(--orange); }
+.coaching-card p { color: var(--white); font-size: 16px; max-width: 600px; margin: 0 auto 32px; line-height: 1.6; }
+
 .btn-discord { background: #5865F2; color: #fff; border: none; padding: 14px 32px; font-family: 'Rajdhani', sans-serif; font-size: 16px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; border-radius: 6px; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; justify-content: center; gap: 12px; margin: 0 auto; }
 .btn-discord:hover { background: #4752C4; transform: translateY(-2px); }
 
+/* FOOTER */
 footer { position: relative; z-index: 2; border-top: 1px solid var(--border); padding: 32px 0; text-align: center; margin-top: auto; }
 .footer-logo { font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 20px; color: var(--cyan); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; }
 .footer-sub { font-size: 13px; color: var(--muted); }
@@ -278,6 +297,7 @@ footer { position: relative; z-index: 2; border-top: 1px solid var(--border); pa
     </div>
   </nav>
 
+  <!-- HOME VIEW -->
   <div id="view-home">
     <main class="wrap">
       <section class="hero" id="home">
@@ -320,6 +340,7 @@ footer { position: relative; z-index: 2; border-top: 1px solid var(--border); pa
 
       <div class="divider"></div>
 
+      <!-- JOURNEY SECTION -->
       <section class="section" id="journey">
         <div class="section-tag" id="journey-tag">הסיפור שלי</div>
         <h2 class="section-title" id="journey-title">מהבטא ועד לטופ</h2>
@@ -330,6 +351,7 @@ footer { position: relative; z-index: 2; border-top: 1px solid var(--border); pa
 
       <div class="divider"></div>
 
+      <!-- RLFX SECTION -->
       <section class="section" id="rlfx">
         <div class="section-tag" id="rlfx-tag">הופעות וקליפים</div>
         <h2 class="section-title" style="text-align: center" id="rlfx-title">Featured On <span style="color: var(--cyan)">RLFX</span></h2>
@@ -342,26 +364,28 @@ footer { position: relative; z-index: 2; border-top: 1px solid var(--border); pa
       <div class="divider"></div>
 
       <section class="section" id="content">
-        <div class="section-tag" id="content-tag">איך זה עובד</div>
-        <h2 class="section-title"><span id="content-title">התהליך ב-</span><span style="color: var(--cyan)">drexm academy</span></h2>
-        <p class="section-sub" id="content-sub">בחר את החבילה המתאימה לך, פתח טיקט בדיסקורד ויאללה מתחילים לעבוד.</p>
-        <div class="content-list" id="home-content-list" style="max-width: 600px;">
-          <!-- Rendered via JS -->
+        <div class="section-tag" id="content-tag">התהליך</div>
+        <h2 class="section-title"><span id="content-title">איך זה עובד ב-</span><span style="color: var(--cyan)">drexm academy</span></h2>
+        <p class="section-sub" id="content-sub">התהליך פשוט, מהיר, ומותאם אישית אליך כדי שתקבל את הליווי הטוב ביותר.</p>
+        <div class="content-list" id="home-content-list">
+          <div class="step-box"><div class="step-num">1</div><div class="step-title" id="step-1">בוחרים חבילה - ניתוח משחקים או שיחת ייעוץ.</div></div>
+          <div class="step-box"><div class="step-num">2</div><div class="step-title" id="step-2">מקבלים מספר סידורי אישי לאחר התשלום.</div></div>
+          <div class="step-box"><div class="step-num">3</div><div class="step-title" id="step-3">פותחים טיקט בדיסקורד לקבלת השירות!</div></div>
         </div>
       </section>
 
       <div class="divider"></div>
 
       <section class="section" id="pricing">
-        <!-- Tic-Tac-Toe Banner -->
-        <div class="ttt-banner" id="tttBannerWrapper">
-           <h3 id="tttBannerTitle" style="color: var(--white); margin-bottom: 12px; font-family: 'Rajdhani', sans-serif; font-size: 32px;">🎮 אתגר האיקס-עיגול!</h3>
-           <p id="tttBannerDesc" style="color: var(--white); font-size: 16px; margin-bottom: 24px;">נצח אותי במשחק וקבל <span class="highlight-discount">10 שקלים הנחה</span> על כל החבילות.</p>
-           <button class="btn-primary" style="padding: 12px 32px; font-size: 16px; box-shadow: 0 0 15px rgba(0,198,255,0.4);" id="tttBannerBtn">שחק עכשיו</button>
+        <div class="section-tag" id="pricing-tag">מחיר</div>
+        <h2 class="section-title" style="text-align: center; margin-bottom: 30px;" id="pricing-title">בחר את המסלול שלך</h2>
+        
+        <!-- TTT BANNER -->
+        <div class="ttt-banner" id="tttBanner">
+          <h3 style="margin-bottom: 8px;">אתגר איקס עיגול נגד המחשב 🤖</h3>
+          <p style="color: var(--muted); margin-bottom: 16px;">נצח אותי וקבל <button class="highlight-discount" onclick="handleTTTClickPlay()">10 שקלים הנחה</button> לחבילות!</p>
         </div>
 
-        <div class="section-tag" id="pricing-tag">מחיר</div>
-        <h2 class="section-title" style="text-align: center" id="pricing-title">בחר את המסלול שלך</h2>
         <div class="pricing-grid" id="pricing-plans-container">
           <!-- Rendered via JS -->
         </div>
@@ -369,23 +393,50 @@ footer { position: relative; z-index: 2; border-top: 1px solid var(--border); pa
     </main>
   </div>
 
+  <!-- DASHBOARD VIEW -->
   <div id="view-dashboard" style="display: none;">
     <main class="wrap">
       <div class="dashboard-header">
         <h1 style="font-family: 'Rajdhani', sans-serif; font-size: 36px; margin-bottom: 8px" id="dash-title">אזור אישי</h1>
-        <p style="color: var(--muted); font-size: 16px" id="dash-sub">ברוך הבא! כאן מופיע המספר הסידורי שלך כדי לתאם מולי בדיסקורד.</p>
+        <p style="color: var(--muted); font-size: 16px" id="dash-sub">ברוך הבא לאקדמיה! בחר קטגוריה כדי להתחיל ללמוד.</p>
       </div>
 
-      <div style="background: var(--card); border: 1px solid var(--cyan); padding: 32px; border-radius: 12px; text-align: center; margin-bottom: 32px;">
-         <h3 style="color: var(--white); font-family: 'Rajdhani', sans-serif; font-size: 24px; margin-bottom: 12px;" id="orderIdTitle">המספר הסידורי שלך (Order ID):</h3>
-         <div style="font-size: 42px; color: var(--cyan); font-family: monospace; font-weight: bold; letter-spacing: 3px; margin-bottom: 16px;" id="orderIdDisplay">----</div>
-         <p style="color: var(--muted); font-size: 15px; max-width: 500px; margin: 0 auto 24px;" id="orderIdDesc">
-            העתק את המספר הסידורי, פתח טיקט בשרת הדיסקורד שלנו ושלח אותו שם כדי שנוכל לאמת את התשלום ולהתחיל בעבודה!
-         </p>
-         <button class="btn-discord" onclick="window.open('https://discord.gg/kvVmkFrZnC', '_blank')">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/></svg>
-            <span id="coach-btn">התחבר לשרת הדיסקורד</span>
-         </button>
+      <div class="dashboard-tabs">
+        <button class="dash-tab active" id="tab-videos" onclick="switchTab('videos')">ניתוח משחקים</button>
+        <button class="dash-tab" id="tab-coaching" onclick="switchTab('coaching')">שיחת ייעוץ</button>
+      </div>
+
+      <div id="pane-videos" class="coaching-card" style="display: block;">
+        <h3 id="pane1-title">ניתוח 3 משחקים מקיף</h3>
+        <p id="pane1-desc">רכשת את חבילת הניתוח? פתח טיקט בדיסקורד ושלח את קובץ ההקלטות או הקישור לוידאו יחד עם המספר הסידורי שקיבלת לאחר הרכישה.</p>
+        <button class="btn-discord" onclick="window.open('https://discord.gg/kvVmkFrZnC', '_blank')">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/></svg>
+          <span id="pane1-btn">התחבר לדיסקורד</span>
+        </button>
+      </div>
+
+      <div id="pane-coaching" class="coaching-card support-card" style="display: none;">
+        <h3 id="coach-title">מענה ותמיכה (Q&A)</h3>
+        <p id="coach-desc">רכשת את שיחת הייעוץ? שלח הודעה בדיסקורד עם המספר הסידורי לתיאום זמן השיחה לטיפים, שאלות ועזרה במכניקות.</p>
+        <button class="btn-discord" onclick="window.open('https://discord.gg/kvVmkFrZnC', '_blank')">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/></svg>
+          <span id="coach-btn">התחבר לשרת הדיסקורד</span>
+        </button>
+      </div>
+    </main>
+  </div>
+
+  <!-- ORDER SUCCESS VIEW -->
+  <div id="view-order" style="display: none;">
+    <main class="wrap" style="text-align: center; padding: 100px 0; min-height: 70vh;">
+      <div class="coaching-card" style="max-width: 600px; margin: 0 auto; box-shadow: 0 0 30px rgba(0, 198, 255, 0.2);">
+        <h2 style="font-family: 'Rajdhani', sans-serif; font-size: 36px; color: var(--cyan); margin-bottom: 20px;" id="orderTitle">ההזמנה שלך התקבלה!</h2>
+        <p style="font-size: 18px; margin-bottom: 10px;" id="orderSub">זהו המספר הסידורי שלך:</p>
+        <div id="order-id-display" style="font-family: monospace; font-size: 42px; font-weight: bold; background: rgba(0,0,0,0.3); padding: 10px 20px; border-radius: 8px; border: 1px dashed var(--cyan); display: inline-block; margin-bottom: 30px;">DRX-123456</div>
+        <p style="font-size: 16px; color: var(--muted); margin-bottom: 30px;" id="orderInst">העתק את המספר הסידורי, פתח טיקט בשרת הדיסקורד שלנו ושלח אותו שם לאימות וקבלת השירות.</p>
+        <button class="btn-discord" onclick="window.open('https://discord.gg/kvVmkFrZnC', '_blank')">
+          פתח טיקט בדיסקורד
+        </button>
       </div>
     </main>
   </div>
@@ -396,6 +447,7 @@ footer { position: relative; z-index: 2; border-top: 1px solid var(--border); pa
   </footer>
 </div>
 
+<!-- AUTH MODAL -->
 <div class="modal" id="authModal">
   <div class="modal-content">
     <span class="close-btn" onclick="closeAuthModal()">&times;</span>
@@ -404,7 +456,7 @@ footer { position: relative; z-index: 2; border-top: 1px solid var(--border); pa
       <button class="auth-tab" id="tab-register" onclick="setAuthMode('register')">הרשמה</button>
     </div>
     <h2 class="modal-title" id="authModalTitle">התחבר לחשבון</h2>
-    <p class="auth-msg" id="authMsg">יש להתחבר לחשבון לפני ביצוע הפעולה</p>
+    <p class="auth-msg" id="authMsg">יש להתחבר לחשבון לפני רכישת מנוי</p>
     <form class="modal-form" id="authForm" onsubmit="handleLogin(event)">
       <div id="nameInputWrapper" style="display: none;">
         <input type="text" id="authName" placeholder="שם מלא">
@@ -416,6 +468,7 @@ footer { position: relative; z-index: 2; border-top: 1px solid var(--border); pa
   </div>
 </div>
 
+<!-- SETTINGS MODAL -->
 <div class="modal" id="settingsModal">
   <div class="modal-content" style="max-width: 340px;">
     <span class="close-btn" onclick="closeSettingsModal()">&times;</span>
@@ -428,32 +481,22 @@ footer { position: relative; z-index: 2; border-top: 1px solid var(--border); pa
   </div>
 </div>
 
+<!-- TTT MODAL -->
 <div class="modal" id="tttModal">
-  <div class="modal-content" style="max-width: 340px; text-align: center;">
+  <div class="modal-content" style="max-width: 350px; text-align: center; position: relative;">
     <span class="close-btn" onclick="closeTTTModal()">&times;</span>
-    <h2 class="modal-title" style="margin-bottom: 8px;">איקס-עיגול</h2>
-    <p style="color: var(--muted); font-size: 14px; margin-bottom: 20px;">נצח אותי וקבל 10₪ הנחה!</p>
-    
-    <div class="ttt-grid" id="tttGrid">
-       <div class="ttt-cell" onclick="playTTT(0)"></div>
-       <div class="ttt-cell" onclick="playTTT(1)"></div>
-       <div class="ttt-cell" onclick="playTTT(2)"></div>
-       <div class="ttt-cell" onclick="playTTT(3)"></div>
-       <div class="ttt-cell" onclick="playTTT(4)"></div>
-       <div class="ttt-cell" onclick="playTTT(5)"></div>
-       <div class="ttt-cell" onclick="playTTT(6)"></div>
-       <div class="ttt-cell" onclick="playTTT(7)"></div>
-       <div class="ttt-cell" onclick="playTTT(8)"></div>
+    <h2 class="modal-title" style="margin-bottom: 10px;">אתגר איקס עיגול</h2>
+    <div id="ttt-container">
+      <!-- Grid injected here -->
     </div>
-
-    <div id="tttResultMsg" style="display: none; padding: 16px; border-radius: 8px; background: rgba(0,198,255,0.1); color: var(--cyan); margin-top: 20px; font-weight: bold;"></div>
   </div>
 </div>
 
+<!-- Firebase Scripts -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile, sendEmailVerification } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-import { getFirestore, doc, setDoc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDMX0kcsqD5azgP6NAAt21TY75jwee1RxM",
@@ -474,28 +517,23 @@ let currentLang = 'he';
 let currentTheme = 'dark';
 let currentUser = null; 
 let currentUserEmail = null;
-let isPaid = false; 
+let hasDiscount = false;
+let tttCooldown = 0;
 let authMode = 'login'; 
-
-let discountActive = false;
-let lastPlayedTTT = null;
-let orderId = null;
 
 try {
   const app = initializeApp(firebaseConfig);
   auth = getAuth(app);
   db = getFirestore(app);
   useFirebase = true;
-  console.log("Firebase initialized successfully!");
 } catch (e) {
-  console.error("Firebase initialization failed.", e);
+  console.error("Firebase err:", e);
 }
 
 const strings = {
   he: {
     navLinks: ['עליי', 'הסיפור שלי', 'איך זה עובד', 'מחיר'],
-    backHome: 'חזור לעמוד הראשי',
-    auth: { loginTop: 'כניסה', logout: 'התנתק', hello: 'שלום', tabLogin: 'התחברות', tabRegister: 'הרשמה', titleLogin: 'התחבר לחשבון', titleRegister: 'צור חשבון חדש', name: 'שם מלא', email: 'אימייל', pass: 'סיסמה', submitLogin: 'התחבר', submitRegister: 'הירשם', requireMsg: 'יש להתחבר לחשבון לפני ביצוע הפעולה.', verifySent: 'נשלח אליך קישור אימות למייל! (בדוק גם בספאם). אנא אמת את החשבון והתחבר.', notVerified: 'טרם אימתת את כתובת האימייל שלך. בדוק את תיבת הדואר.' },
+    auth: { loginTop: 'כניסה', logout: 'התנתק', hello: 'שלום', tabLogin: 'התחברות', tabRegister: 'הרשמה', titleLogin: 'התחבר לחשבון', titleRegister: 'צור חשבון חדש', name: 'שם מלא', email: 'אימייל', pass: 'סיסמה', submitLogin: 'התחבר', submitRegister: 'הירשם', requireMsg: 'יש להתחבר לחשבון כדי להמשיך.' },
     settings: { title: 'הגדרות חשבון', name: 'שם משתמש', email: 'כתובת אימייל', notLoggedIn: 'עדיין לא מחובר למערכת.', lightMode: '☀️ מצב בהיר', darkMode: '🌙 מצב כהה' },
     heroBadge: '🚀 Rocket League Academy',
     h1: ['שדרג את', 'הרוקט ליג שלך', 'לרמה הבאה'],
@@ -506,32 +544,35 @@ const strings = {
     aboutSub: 'שחקן ישראלי מהטופ. משחק מהיום שרוקט ליג יצא - עם המון ניסיון, הבנה וכישורים כדי להסביר כל מכניקה ולענות על כל שאלה בצורה הכי ברורה שיש.',
     cards: [
       ['11 שנות ניסיון', 'שחקן ותיק מיום ההשקה. עברתי את כל המטא, המכניקות, והשינויים — וידעתי להתאים ולהשתפר בכל אחד מהם.'],
-      ['שחקן בין הטובים בארץ', 'בין השחקנים התחרותיים המכניים בישראל ופריסטיילר טופ ארצי. עם הבנה מעמיקה של המשחק ויכולת לפרק כל מצב בשניות.'],
-      ['ניתוח משחקים מדויק', 'מעבר על הריפלייז שלכם כדי לזהות טעויות מיקום, קבלת החלטות ושימוש נכון בבוסט.'],
-      ['ייעוץ מותאם אישית', 'שיחות שאלות ותשובות שיעזרו לכם להתגבר על מחסומים מנטליים וטכניים ולבנות תוכנית אימונים.']
+      ['שחקן בין הטובים בארץ', 'בין השחקנים התחרותיים הכי מכניים בארץ ופריסטיילר מהטופ בארץ. עם הבנה מעמיקה של המשחק ויכולת לפרק כל מצב בשניות.'],
+      ['ניתוח משחקים מדויק', 'מעבר קפדני על הטעויות שלכם, עבודה על מיקומים, רוטציות וקבלת החלטות נכונה בזמן אמת.'],
+      ['ייעוץ מותאם אישית', 'שאלות ותשובות, טיפים למכניקות מסובכות, ועזרה בהבנה המנטלית של המשחק בשיחות פתוחות.']
     ],
-    contentTag: 'איך זה עובד', contentTitle: 'התהליך ב-',
-    contentSub: 'בחר את החבילה המתאימה לך, פתח טיקט בדיסקורד ויאללה מתחילים לעבוד.',
-    items: ['1. בוחרים חבילה ונרשמים באתר', '2. משלמים ומקבלים מספר סידורי אישי', '3. פותחים טיקט בדיסקורד עם המספר', '4. מתאמים מועד לשיחה או לניתוח!'],
+    contentTag: 'התהליך', contentTitle: 'איך זה עובד ב-',
+    contentSub: 'התהליך פשוט, מהיר, ומותאם אישית אליך כדי שתקבל את הליווי הטוב ביותר.',
+    items: ['בוחרים חבילה - ניתוח משחקים או שיחת ייעוץ.', 'מקבלים מספר סידורי אישי לאחר התשלום.', 'פותחים טיקט בדיסקורד לקבלת השירות!'],
     pricingTag: 'מחיר', pricingTitle: 'בחר את המסלול שלך',
     plans: [
       {
-        id: 'content', badge: 'ניתוח', title: 'ניתוח 3 משחקי ראנק', price: 149, period: 'תשלום חד פעמי',
-        features: ['מעבר מדוקדק על 3 ריפלייז', 'זיהוי טעויות ונקודות לשיפור', 'דגשים למכניקות ול-Game Sense'],
+        id: 'content', badge: 'ניתוח', title: 'ניתוח 3 משחקים', price: '149', period: 'תשלום חד פעמי',
+        features: ['ניתוח מעמיק של 3 משחקי ראנק', 'דגש על טעויות רוטציה ומיקום', 'טיפים אישיים לשיפור מכני', 'מעבר על ההקלטות ביחד'],
         btn: '🚀 רכוש ניתוח משחקים', note: 'תשלום מאובטח · תיאום מראש בדיסקורד'
       },
       {
-        id: 'support', badge: 'ייעוץ', title: '20 דקות שיחת ייעוץ (Q&A)', price: 59, period: 'תשלום חד פעמי',
-        features: ['מענה על כל שאלה בלייב', 'טיפים להתקדמות מהירה', 'הכוונה אישית ובניית תוכנית אימונים'],
+        id: 'support', badge: 'ייעוץ', title: '20 דקות שאלות (Q&A)', price: '49', period: 'שיחה חד פעמית',
+        features: ['שיחת ייעוץ 1 על 1 ב-Discord', 'שאלות פתוחות על כל נושא', 'עזרה בהבנת מכניקות ספציפיות', 'הכוונה מנטלית למשחק'],
         btn: '💬 רכוש שיחת ייעוץ', note: 'תשלום מאובטח · תיאום מראש בדיסקורד'
       }
     ],
     footerSub: 'DREXM ROCKET LEAGUE ACADEMY 2026 כל הזכויות שמורות',
-    dashTitle: 'אזור אישי', dashSub: 'ברוך הבא! כאן מופיע המספר הסידורי שלך כדי לתאם מולי בדיסקורד.',
+    dashTitle: 'אזור אישי', dashSub: 'ברוך הבא לאקדמיה! בחר קטגוריה כדי להתחיל ללמוד.',
+    tabs: ['ניתוח משחקים', 'שיחת ייעוץ', 'עזרה וטיפים'],
+    coachTitle: 'מענה ותמיכה (Q&A)', coachDesc: 'רכשת את שיחת הייעוץ? שלח הודעה בדיסקורד עם המספר הסידורי לתיאום זמן השיחה לטיפים, שאלות ועזרה במכניקות.', coachBtn: 'התחבר לשרת הדיסקורד',
+    backHome: 'חזור לעמוד הראשי',
     journeyTag: 'הסיפור שלי',
     journeyTitle: 'מהבטא ועד לטופ',
     journey: [
-      { year: '2015-2017', title: 'התחלה', text: 'התחלתי לשחק עוד ב-Closed Beta ב-2015. תמיד אהבתי לעלות לאוויר ולנסות דברים מגניבים. קיבלתי השראה מפריסטיילרים כמו JZR, Pulse MK, ו-Pulse Muirie. הראנק הראשון שלי היה Gold 3 Div 2, ובזכות ההשקעה במכניקות הגעתי ל-Champion בקלות.' },
+      { year: '2015-2017', title: 'ההתחלה', text: 'התחלתי לשחק עוד ב-Closed Beta ב-2015. תמיד אהבתי לעלות לאוויר ולנסות דברים מגניבים. קיבלתי השראה מפריסטיילרים כמו JZR, Pulse MK, ו-Pulse Muirie. הראנק הראשון שלי היה Gold 3 Div 2, ובזכות ההשקעה במכניקות הגעתי ל-Champion בקלות.' },
       { year: '2019-2020', title: 'Grand Champion ושליטה במכניקות', text: 'כבר ב-2019 הייתי GC. המכניקות שלי היו כל כך טובות שבכל פעם שהכדור היה באוויר, זה היה גול - כמעט ללא צורך ב-Game Sense. ב-2020 התחלתי לשפר גם את ה-Game Sense והגעתי ל-1600-1700 MMR. בנוסף <span class="mech-highlight">זכיתי במקום ה-1 באליפות הארץ</span> של Hype League (2v2).' },
       { year: '2020-2023', title: 'שירות קרבי וטורניר Pulse Clan', text: 'התגייסתי ללוחמה, מה שהשאיר לי מעט מאוד זמן למשחק. למרות הקושי לשמור על הרמה, ב-2021 אני ופריסטיילר נוסף (הראל) נבחנו, <span class="mech-highlight">התקבלנו והשתתפנו בטורניר הפריסטייל 2v2 של Pulse Clan</span> ששודר לאלפי צופים ביוטיוב.' },
       { year: 'כיום', title: 'סטודנט, יוצר תוכן, וממציא מכניקות', text: 'כיום אני סטודנט להנדסת חשמל ומדעי המחשב. בחופשת הסמסטר חזרתי חזק והגעתי ל-SSL. אני מפעיל עמוד טיקטוק מצליח, מעביר לייבים לימודיים, ואפילו המצאתי 2 מכניקות חדשות: <span class="mech-highlight">Reverse Musty, Shay pop</span>.' }
@@ -542,44 +583,46 @@ const strings = {
     rlfxItems: [
       { text: 'ROCKET LEAGUE INSANITY 40' }, { text: 'ROCKET LEAGUE INSANITY 41' }, { text: 'ROCKET LEAGUE INSANITY 44' }, { text: 'ROCKET LEAGUE INSANITY 53' }, { text: 'ROCKET LEAGUE INSANITY 55' }, { text: 'ROCKET LEAGUE INSANITY 56' }, { text: 'ROCKET LEAGUE INSANITY 58' }, { text: 'ROCKET LEAGUE INSANITY 59' }, { text: 'ROCKET LEAGUE INSANITY 60' }, { text: 'ROCKET LEAGUE INSANITY 62' }, { text: 'TEAM PUZL - JIGSAW' }, { text: 'TOP 100 FREESTYLES' }, { text: 'TOP 100 REDIRECTS' }, { text: 'TOP 100 PINCHES' }, { text: 'BEST OF 2021' }, { text: 'TOP 100 PREFLIPS' }, { text: 'ROCKET LEAGUE AROUND THE WORLD 🇮🇱', special: true }
     ],
-    ttt: { title: '🎮 אתגר האיקס-עיגול!', desc: 'נצח אותי במשחק וקבל <span class="highlight-discount">10 שקלים הנחה</span> על כל החבילות.', btn: 'שחק עכשיו', win: 'ניצחת! זכית ב-10 שקלים הנחה.', lose: 'הפסדת! המתן שעתיים לניסיון נוסף.', draw: 'תיקו! המתן שעתיים לניסיון נוסף.', winTitle: 'זכית ב-10 שקלים הנחה!', winDesc: 'ההנחה הופעלה אוטומטית על כל החבילות למטה.', cooldownTitle: '⏳ בהמתנה לניסיון הבא' }
+    order: { title: 'ההזמנה שלך התקבלה!', sub: 'זהו המספר הסידורי שלך:', inst: 'העתק את המספר הסידורי, פתח טיקט בשרת הדיסקורד שלנו ושלח אותו שם לאימות וקבלת השירות.' }
   },
   en: {
-    navLinks: ['About', 'My Journey', 'How it works', 'Pricing'],
-    backHome: 'Back to Homepage',
-    auth: { loginTop: 'Sign In', logout: 'Logout', hello: 'Hello', tabLogin: 'Login', tabRegister: 'Register', titleLogin: 'Login to Account', titleRegister: 'Create New Account', name: 'Full Name', email: 'Email', pass: 'Password', submitLogin: 'Login', submitRegister: 'Register', requireMsg: 'You must log in to perform this action.', verifySent: 'Verification link sent to your email! (Check spam). Please verify and log in.', notVerified: 'You have not verified your email address yet. Please check your inbox.' },
+    navLinks: ['About', 'My Journey', 'How It Works', 'Pricing'],
+    auth: { loginTop: 'Sign In', logout: 'Logout', hello: 'Hello', tabLogin: 'Login', tabRegister: 'Register', titleLogin: 'Login to Account', titleRegister: 'Create New Account', name: 'Full Name', email: 'Email', pass: 'Password', submitLogin: 'Login', submitRegister: 'Register', requireMsg: 'Please log in to continue.' },
     settings: { title: 'Account Settings', name: 'Username', email: 'Email Address', notLoggedIn: 'You are not logged in yet.', lightMode: '☀️ Light Mode', darkMode: '🌙 Dark Mode' },
     heroBadge: '🚀 Rocket League Academy',
     h1: ['Elevate Your', 'Rocket League', 'To The Next Level'],
-    heroSub: 'I am here to take your game personally and help you rank up and improve mechanics with replay analysis and coaching sessions.',
-    heroCTA1: 'Join Now', heroCTA2: 'How it works',
+    heroSub: 'Now I am here to take your game personally and help you rank up and improve mechanically through replay analysis and coaching sessions.',
+    heroCTA1: 'Join Now', heroCTA2: 'How It Works',
     stats: ['Years Playing', 'Peak Rank', 'Mechanics', 'Plans'],
     aboutTag: 'About drexm', aboutTitle: 'Who I Am & Why You Should<br/>Learn From Me',
     aboutSub: "Top-tier Israeli player. Playing since day one — with the vast experience, understanding, and skills to explain any mechanic and answer any question clearly.",
     cards: [
       ['11 Years Experience', "A veteran since launch day. I've lived through every meta, mechanic, and update — and adapted to each one."],
       ['Among Israel\'s Best', "Among the most mechanical competitive players in the country and a top freestyler in Israel, with the ability to read any situation in seconds."],
-      ['Replay Analysis', 'Going through your replays to spot positioning mistakes, decision making and boost usage.'],
-      ['Personal Coaching', 'Q&A sessions to help you overcome mental and technical barriers and build a training plan.']
+      ['Accurate Replay Analysis', 'Meticulous review of your mistakes, focusing on positioning, rotations, and decision making in real time.'],
+      ['Personalized Coaching', 'Q&A, tips for complex mechanics, and helping with the mental aspect of the game through open voice sessions.']
     ],
-    contentTag: 'How it works', contentTitle: 'The Process at ',
-    contentSub: 'Choose your plan, open a discord ticket, and let\'s start working.',
-    items: ['1. Choose a plan and register', '2. Pay and get your personal Order ID', '3. Open a Discord ticket with your ID', '4. Schedule the session!'],
+    contentTag: 'The Process', contentTitle: 'How it works at ',
+    contentSub: 'The process is simple, fast, and personalized to give you the best guidance possible.',
+    items: ['Choose a plan - Replay Analysis or Q&A Session.', 'Receive a unique Order ID after checkout.', 'Open a Discord ticket to claim your service!'],
     pricingTag: 'Pricing', pricingTitle: 'Choose Your Plan',
     plans: [
       {
-        id: 'content', badge: 'ANALYSIS', title: '3 Replays Analysis', price: 149, period: 'One-time payment',
-        features: ['Thorough review of 3 replays', 'Spotting mistakes and areas to improve', 'Mechanics and Game Sense tips'],
-        btn: '🚀 Buy Analysis', note: 'Secure payment · Schedule via Discord'
+        id: 'content', badge: 'ANALYSIS', title: '3 Replay Analysis', price: '149', period: 'One-time payment',
+        features: ['In-depth analysis of 3 ranked games', 'Focus on rotation and positioning errors', 'Personal tips for mechanical improvement', 'Reviewing recordings together'],
+        btn: '🚀 Buy Analysis Plan', note: 'Secure payment · Discord coordination required'
       },
       {
-        id: 'support', badge: 'COACHING', title: '20 Min Q&A Session', price: 59, period: 'One-time payment',
-        features: ['Live answers to your questions', 'Tips for fast improvement', 'Personal guidance and training plan'],
-        btn: '💬 Buy Q&A Session', note: 'Secure payment · Schedule via Discord'
+        id: 'support', badge: 'COACHING', title: '20 Min Q&A', price: '49', period: 'One-time call',
+        features: ['1-on-1 Discord coaching call', 'Open Q&A on any game topic', 'Help understanding specific mechanics', 'Mental game guidance'],
+        btn: '💬 Buy Q&A Call', note: 'Secure payment · Discord coordination required'
       }
     ],
     footerSub: 'DREXM ROCKET LEAGUE ACADEMY 2026 All rights reserved',
-    dashTitle: 'Dashboard', dashSub: 'Welcome! Here is your Order ID to coordinate with me on Discord.',
+    dashTitle: 'Dashboard', dashSub: 'Welcome to the Academy! Choose a category.',
+    tabs: ['Replay Analysis', 'Q&A Session', 'Help & Tips'],
+    coachTitle: 'Support & Q&A', coachDesc: 'Purchased the Q&A plan? Send me a message on Discord with your Order ID to schedule our call.', coachBtn: 'Join Discord Server',
+    backHome: 'Back to Homepage',
     journeyTag: 'My Journey',
     journeyTitle: 'From Beta to the Top',
     journey: [
@@ -594,7 +637,7 @@ const strings = {
     rlfxItems: [
       { text: 'ROCKET LEAGUE INSANITY 40' }, { text: 'ROCKET LEAGUE INSANITY 41' }, { text: 'ROCKET LEAGUE INSANITY 44' }, { text: 'ROCKET LEAGUE INSANITY 53' }, { text: 'ROCKET LEAGUE INSANITY 55' }, { text: 'ROCKET LEAGUE INSANITY 56' }, { text: 'ROCKET LEAGUE INSANITY 58' }, { text: 'ROCKET LEAGUE INSANITY 59' }, { text: 'ROCKET LEAGUE INSANITY 60' }, { text: 'ROCKET LEAGUE INSANITY 62' }, { text: 'TEAM PUZL - JIGSAW' }, { text: 'TOP 100 FREESTYLES' }, { text: 'TOP 100 REDIRECTS' }, { text: 'TOP 100 PINCHES' }, { text: 'BEST OF 2021' }, { text: 'TOP 100 PREFLIPS' }, { text: 'ROCKET LEAGUE AROUND THE WORLD 🇮🇱', special: true }
     ],
-    ttt: { title: '🎮 Tic-Tac-Toe Challenge!', desc: 'Beat me in a game to get a <span class="highlight-discount">10₪ discount</span> on all plans.', btn: 'Play Now', win: 'You won! 10₪ discount applied.', lose: 'You lost! Wait 2 hours to try again.', draw: 'Draw! Wait 2 hours to try again.', winTitle: 'You won a 10₪ discount!', winDesc: 'The discount has been automatically applied to all plans below.', cooldownTitle: '⏳ Waiting for next attempt' }
+    order: { title: 'Order Received!', sub: 'This is your Order ID:', inst: 'Copy this Order ID, open a ticket in our Discord server and send it there to verify and claim your service.' }
   }
 };
 
@@ -602,47 +645,49 @@ function getFirebaseErrorMessage(code) {
   if (currentLang === 'he') {
     switch(code) {
       case 'auth/invalid-email': return 'כתובת אימייל לא תקינה.';
-      case 'auth/user-disabled': return 'משתמש זה חסום על ידי מנהל המערכת.';
-      case 'auth/user-not-found': return 'לא נמצא משתמש עם אימייל זה. לחץ על "הרשמה" כדי ליצור חשבון.';
-      case 'auth/wrong-password': return 'הסיסמה שהזנת אינה נכונה.';
-      case 'auth/invalid-credential': return 'פרטי ההתחברות אינם נכונים.';
-      case 'auth/email-already-in-use': return 'כתובת האימייל הזו כבר רשומה במערכת.';
-      case 'auth/weak-password': return 'הסיסמה חלשה מדי (חובה לפחות 6 תווים).';
-      default: return 'ארעה שגיאה בתהליך. אנא נסה שנית.';
+      case 'auth/user-disabled': return 'משתמש זה חסום.';
+      case 'auth/user-not-found': return 'לא נמצא משתמש. עברו ל"הרשמה".';
+      case 'auth/wrong-password': return 'סיסמה שגויה.';
+      case 'auth/invalid-credential': return 'פרטי ההתחברות שגויים.';
+      case 'auth/email-already-in-use': return 'האימייל כבר רשום במערכת.';
+      case 'auth/weak-password': return 'הסיסמה חייבת להכיל לפחות 6 תווים.';
+      default: return 'אירעה שגיאה. נסה שוב.';
     }
   } else {
     switch(code) {
       case 'auth/invalid-email': return 'Invalid email address.';
-      case 'auth/user-disabled': return 'This account has been disabled.';
-      case 'auth/user-not-found': return 'No account found with this email.';
-      case 'auth/wrong-password': return 'Incorrect password.';
       case 'auth/invalid-credential': return 'Invalid credentials.';
-      case 'auth/email-already-in-use': return 'This email is already in use.';
-      case 'auth/weak-password': return 'Password is too weak.';
+      case 'auth/email-already-in-use': return 'Email already in use.';
+      case 'auth/weak-password': return 'Password must be at least 6 characters.';
       default: return 'An error occurred. Please try again.';
     }
   }
 }
 
+// --- AUTH LOGIC ---
 function updateAuthUI() {
   const s = strings[currentLang];
   const userArea = document.getElementById('userArea');
   
   if (currentUser) {
-    userArea.innerHTML = `<span class="user-name">${s.auth.hello}, ${currentUser}</span> <button class="btn-logout" id="btnLogoutBtn">${s.auth.logout}</button>`;
+    userArea.innerHTML = `
+      <span class="user-name">${s.auth.hello}, ${currentUser}</span>
+      <button class="btn-logout" id="btnLogoutBtn">${s.auth.logout}</button>
+    `;
     document.getElementById('btnLogoutBtn').addEventListener('click', handleLogout);
   } else {
-    userArea.innerHTML = `<button class="btn-login" id="btnLoginBtn">${s.auth.loginTop}</button>`;
+    userArea.innerHTML = `
+      <button class="btn-login" id="btnLoginBtn">${s.auth.loginTop}</button>
+    `;
     document.getElementById('btnLoginBtn').addEventListener('click', () => openAuthModal());
   }
-  
   updateTTTBanner();
-  updatePricingUI();
 }
 
 function setAuthMode(mode) {
   authMode = mode;
   const s = strings[currentLang];
+  
   const tabLogin = document.getElementById('tab-login');
   const tabRegister = document.getElementById('tab-register');
   const nameWrapper = document.getElementById('nameInputWrapper');
@@ -651,347 +696,43 @@ function setAuthMode(mode) {
   const submitBtn = document.getElementById('authSubmitBtn');
   
   if (mode === 'login') {
-    tabLogin.classList.add('active'); tabRegister.classList.remove('active');
-    nameWrapper.style.display = 'none'; nameInput.required = false;
-    title.innerText = s.auth.titleLogin; submitBtn.innerText = s.auth.submitLogin;
+    tabLogin.classList.add('active');
+    tabRegister.classList.remove('active');
+    nameWrapper.style.display = 'none';
+    nameInput.required = false;
+    title.innerText = s.auth.titleLogin;
+    submitBtn.innerText = s.auth.submitLogin;
   } else {
-    tabRegister.classList.add('active'); tabLogin.classList.remove('active');
-    nameWrapper.style.display = 'block'; nameInput.required = true;
-    title.innerText = s.auth.titleRegister; submitBtn.innerText = s.auth.submitRegister;
+    tabRegister.classList.add('active');
+    tabLogin.classList.remove('active');
+    nameWrapper.style.display = 'block';
+    nameInput.required = true;
+    title.innerText = s.auth.titleRegister;
+    submitBtn.innerText = s.auth.submitRegister;
   }
 }
 
 function openAuthModal() {
-  const s = strings[currentLang];
-  const authMsg = document.getElementById('authMsg');
-  const submitBtn = document.getElementById('authSubmitBtn');
-  authMsg.style.display = 'none';
-  authMsg.style.color = 'var(--orange)'; 
-  submitBtn.disabled = false;
-  submitBtn.style.opacity = '1';
+  document.getElementById('authMsg').style.display = 'none';
   setAuthMode('login'); 
   document.getElementById('authModal').classList.add('active');
 }
 
-function closeAuthModal() { document.getElementById('authModal').classList.remove('active'); }
-
-async function handleLogin(e) {
-  e.preventDefault();
-  const authMsg = document.getElementById('authMsg');
-  const submitBtn = document.getElementById('authSubmitBtn');
-  const s = strings[currentLang];
-
-  authMsg.style.display = 'none';
-  authMsg.style.color = 'var(--orange)';
-  submitBtn.disabled = true;
-  submitBtn.style.opacity = '0.5';
-  const originalBtnText = submitBtn.innerText;
-  submitBtn.innerText = currentLang === 'he' ? 'טוען...' : 'Loading...';
-
-  const email = document.getElementById('authEmail').value.trim();
-  const password = document.getElementById('authPass').value;
-  const name = document.getElementById('authName').value.trim();
-  
-  if (useFirebase) {
-    try {
-      if (authMode === 'register') {
-        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-        const user = userCredential.user;
-        
-        await updateProfile(user, { displayName: name });
-        await sendEmailVerification(user);
-        
-        try {
-            const userDocRef = doc(db, 'artifacts', appId, 'users', user.uid, 'profile', 'userData');
-            await setDoc(userDocRef, {
-              name: name, email: email, isPaid: false, discountActive: false, lastPlayedTTT: null, orderId: null, createdAt: new Date().toISOString()
-            });
-        } catch (dbError) { console.warn("Database rules blocked saving.", dbError); }
-        
-        await signOut(auth);
-
-        authMsg.style.display = 'block';
-        authMsg.style.color = 'var(--cyan)'; 
-        authMsg.innerText = s.auth.verifySent;
-        document.getElementById('authName').value = ''; document.getElementById('authEmail').value = ''; document.getElementById('authPass').value = '';
-        setAuthMode('login');
-        
-        submitBtn.disabled = false;
-        submitBtn.style.opacity = '1';
-        submitBtn.innerText = s.auth.submitLogin;
-        return; 
-
-      } else {
-        const userCredential = await signInWithEmailAndPassword(auth, email, password);
-        const user = userCredential.user;
-
-        if (!user.emailVerified) {
-            await signOut(auth);
-            authMsg.style.display = 'block'; authMsg.style.color = 'var(--orange)'; authMsg.innerText = s.auth.notVerified;
-            submitBtn.disabled = false; submitBtn.style.opacity = '1'; submitBtn.innerText = originalBtnText;
-            return;
-        }
-        
-        try {
-            const userDocRef = doc(db, 'artifacts', appId, 'users', user.uid, 'profile', 'userData');
-            const docSnap = await getDoc(userDocRef);
-            if (docSnap.exists()) {
-              const data = docSnap.data();
-              currentUser = data.name || user.displayName || email.split('@')[0];
-              currentUserEmail = user.email;
-              isPaid = data.isPaid || false;
-              discountActive = data.discountActive || false;
-              lastPlayedTTT = data.lastPlayedTTT || null;
-              orderId = data.orderId || null;
-            } else {
-              await setDoc(userDocRef, {
-                  name: user.displayName || email.split('@')[0], email: email, isPaid: false, discountActive: false, lastPlayedTTT: null, orderId: null, createdAt: new Date().toISOString()
-              });
-              currentUser = user.displayName || email.split('@')[0];
-              currentUserEmail = user.email; isPaid = false; discountActive = false; lastPlayedTTT = null; orderId = null;
-            }
-        } catch(dbError) {
-            console.error("Database read error:", dbError);
-            currentUser = user.displayName || email.split('@')[0]; currentUserEmail = user.email; isPaid = false; discountActive = false; lastPlayedTTT = null; orderId = null;
-        }
-      }
-      
-      updateAuthUI();
-      closeAuthModal();
-      document.getElementById('authName').value = ''; document.getElementById('authEmail').value = ''; document.getElementById('authPass').value = '';
-      if (isPaid) toggleDashboard(true);
-      
-    } catch (error) {
-      console.error("Auth Error:", error);
-      authMsg.style.display = 'block'; authMsg.style.color = 'var(--orange)'; authMsg.innerText = getFirebaseErrorMessage(error.code);
-      submitBtn.disabled = false; submitBtn.style.opacity = '1'; submitBtn.innerText = originalBtnText;
-    }
-  }
-}
-
-async function handleLogout() {
-  if (useFirebase) await signOut(auth);
-  currentUser = null; currentUserEmail = null; isPaid = false; discountActive = false; lastPlayedTTT = null; orderId = null;
-  updateAuthUI();
-  toggleDashboard(false);
-}
-
-async function initiatePurchase() {
-  if (!currentUser) {
-    const s = strings[currentLang];
-    const authMsg = document.getElementById('authMsg');
-    authMsg.style.display = 'block';
-    authMsg.innerText = s.auth.requireMsg;
-    openAuthModal(); 
-  } else {
-    if (!orderId) orderId = 'DRX-' + Math.floor(100000 + Math.random() * 900000);
-    if (useFirebase && auth.currentUser) {
-      try {
-        const userDocRef = doc(db, 'artifacts', appId, 'users', auth.currentUser.uid, 'profile', 'userData');
-        await updateDoc(userDocRef, { isPaid: true, orderId: orderId });
-        isPaid = true;
-        setLang(currentLang); 
-        toggleDashboard(true);
-      } catch (e) { console.error("Error updating purchase status:", e); }
-    }
-  }
-}
-
-if (useFirebase) {
-  onAuthStateChanged(auth, async (user) => {
-    if (user && user.emailVerified) {
-      try {
-        const userDocRef = doc(db, 'artifacts', appId, 'users', user.uid, 'profile', 'userData');
-        const docSnap = await getDoc(userDocRef);
-        currentUserEmail = user.email;
-        if (docSnap.exists()) {
-          const data = docSnap.data();
-          currentUser = data.name || user.displayName || user.email.split('@')[0];
-          isPaid = data.isPaid || false;
-          discountActive = data.discountActive || false;
-          lastPlayedTTT = data.lastPlayedTTT || null;
-          orderId = data.orderId || null;
-        } else {
-          currentUser = user.displayName || user.email.split('@')[0];
-          isPaid = false;
-        }
-      } catch (e) {
-        console.error("Error loading profile:", e);
-        currentUser = user.displayName || (user.email ? user.email.split('@')[0] : "User");
-        currentUserEmail = user.email;
-      }
-      updateAuthUI();
-      if (isPaid) toggleDashboard(true);
-    } else {
-      if (user) await signOut(auth); 
-      currentUser = null; currentUserEmail = null; isPaid = false; discountActive = false; lastPlayedTTT = null; orderId = null;
-      updateAuthUI();
-    }
-  });
-}
-
-// TIC TAC TOE MEDIUM AI
-let tttBoard = ['', '', '', '', '', '', '', '', ''];
-let tttActive = true;
-
-window.openTTTModal = function() {
-  document.getElementById('tttModal').classList.add('active');
-  document.getElementById('tttResultMsg').style.display = 'none';
-  tttBoard = ['', '', '', '', '', '', '', '', ''];
-  tttActive = true;
-  renderTTT();
-}
-
-function closeTTTModal() { document.getElementById('tttModal').classList.remove('active'); }
-
-function renderTTT() {
-  const cells = document.querySelectorAll('.ttt-cell');
-  cells.forEach((cell, i) => {
-    cell.innerText = tttBoard[i];
-    cell.className = 'ttt-cell ' + (tttBoard[i] ? tttBoard[i].toLowerCase() : '');
-  });
-}
-
-function checkWin(player) {
-  const winCombos = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
-  return winCombos.some(combo => combo.every(idx => tttBoard[idx] === player));
-}
-
-function getBestMove() {
-  let emptyIndices = tttBoard.map((val, i) => val === '' ? i : null).filter(val => val !== null);
-  
-  // 1. Can AI Win?
-  for (let i of emptyIndices) {
-    tttBoard[i] = 'O';
-    if (checkWin('O')) { tttBoard[i] = ''; return i; }
-    tttBoard[i] = '';
-  }
-  // 2. Can Player Win? Block them.
-  for (let i of emptyIndices) {
-    tttBoard[i] = 'X';
-    if (checkWin('X')) { tttBoard[i] = ''; return i; }
-    tttBoard[i] = '';
-  }
-  // 3. Take center if free
-  if (tttBoard[4] === '') return 4;
-  // 4. Random move
-  return emptyIndices[Math.floor(Math.random() * emptyIndices.length)];
-}
-
-window.playTTT = async function(index) {
-  if(!tttActive || tttBoard[index] !== '') return;
-  tttBoard[index] = 'X';
-  renderTTT();
-  if(checkWin('X')) { await endTTT('win'); return; }
-  if(!tttBoard.includes('')) { await endTTT('draw'); return; }
-
-  let compMove = getBestMove();
-  tttBoard[compMove] = 'O';
-  setTimeout(async () => {
-      renderTTT();
-      if(checkWin('O')) { await endTTT('lose'); return; }
-      if(!tttBoard.includes('')) { await endTTT('draw'); return; }
-  }, 200); 
-};
-
-async function endTTT(result) {
-  tttActive = false;
-  const s = strings[currentLang].ttt;
-  const resultMsg = document.getElementById('tttResultMsg');
-  
-  if(result === 'win') { 
-      resultMsg.innerText = s.win; 
-      discountActive = true; 
-  } else { 
-      resultMsg.innerText = result === 'lose' ? s.lose : s.draw; 
-      lastPlayedTTT = new Date().toISOString(); 
-  }
-  resultMsg.style.display = 'block';
-
-  if(useFirebase && auth.currentUser) {
-     try {
-        const userDocRef = doc(db, 'artifacts', appId, 'users', auth.currentUser.uid, 'profile', 'userData');
-        await updateDoc(userDocRef, { discountActive: discountActive, lastPlayedTTT: lastPlayedTTT });
-     } catch(e) { console.error("Error saving game result:", e); }
-  }
-  updateTTTBanner();
-  updatePricingUI();
-}
-
-function updateTTTBanner() {
-  const banner = document.getElementById('tttBannerWrapper');
-  const titleEl = document.getElementById('tttBannerTitle');
-  const descEl = document.getElementById('tttBannerDesc');
-  const btnEl = document.getElementById('tttBannerBtn');
-  const s = strings[currentLang].ttt;
-  
-  banner.style.display = 'block';
-  
-  if (!currentUser) {
-     titleEl.innerText = s.title;
-     descEl.innerHTML = s.desc;
-     btnEl.style.display = 'inline-block';
-     btnEl.innerText = s.btn;
-     btnEl.onclick = () => openAuthModal();
-  } else if (discountActive) {
-     titleEl.innerText = "🎉 " + s.winTitle;
-     descEl.innerHTML = s.winDesc;
-     btnEl.style.display = 'none';
-  } else {
-     let canPlay = true;
-     let timeStr = "";
-     if (lastPlayedTTT) {
-         const diffMs = new Date() - new Date(lastPlayedTTT);
-         const diffHours = diffMs / (1000 * 60 * 60);
-         if (diffHours < 2) {
-             canPlay = false;
-             const remMin = Math.ceil((2 * 60 * 60 * 1000 - diffMs) / (1000 * 60));
-             const h = Math.floor(remMin / 60);
-             const m = remMin % 60;
-             timeStr = currentLang === 'he' ? (h > 0 ? `${h} שעות ו-${m} דקות` : `${m} דקות`) : (h > 0 ? `${h}h ${m}m` : `${m} minutes`);
-         }
-     }
-     
-     if (canPlay) {
-         titleEl.innerText = s.title;
-         descEl.innerHTML = s.desc;
-         btnEl.style.display = 'inline-block';
-         btnEl.innerText = s.btn;
-         btnEl.onclick = () => openTTTModal();
-     } else {
-         titleEl.innerText = s.cooldownTitle;
-         descEl.innerHTML = currentLang === 'he' ? `הפסדת במשחק האחרון. תוכל לנסות שוב בעוד <strong>${timeStr}</strong>.` : `You lost. Try again in <strong>${timeStr}</strong>.`;
-         btnEl.style.display = 'none';
-     }
-  }
-}
-
-function updatePricingUI() {
-   const s = strings[currentLang];
-   s.plans.forEach(plan => {
-      const priceEl = document.getElementById(`price-${plan.id}`);
-      if(priceEl) {
-         let currentPrice = discountActive ? (plan.price - 10) : plan.price;
-         priceEl.innerHTML = `<sup>₪</sup>${currentPrice}`;
-         if(discountActive) {
-            priceEl.innerHTML += ` <span style="text-decoration: line-through; color: var(--muted); font-size: 24px; margin-right: 8px;">${plan.price}</span>`;
-            priceEl.style.color = 'var(--cyan)';
-            priceEl.style.textShadow = '0 0 10px rgba(0,198,255,0.4)';
-         } else {
-            priceEl.style.color = 'var(--white)';
-            priceEl.style.textShadow = 'none';
-         }
-      }
-   });
+function closeAuthModal() {
+  document.getElementById('authModal').classList.remove('active');
 }
 
 function openSettingsModal() {
   const s = strings[currentLang];
   document.getElementById('settingsTitle').innerText = s.settings.title;
   document.getElementById('themeToggleBtn').innerText = currentTheme === 'dark' ? s.settings.lightMode : s.settings.darkMode;
+  
   const accDetails = document.getElementById('accountDetails');
-  if (currentUser) accDetails.innerHTML = `<strong>${s.settings.name}:</strong> ${currentUser}<br><strong style="margin-top:8px; display:inline-block;">${s.settings.email}:</strong> ${currentUserEmail}`;
-  else accDetails.innerHTML = s.settings.notLoggedIn;
+  if (currentUser) {
+    accDetails.innerHTML = `<strong>${s.settings.name}:</strong> ${currentUser}<br><strong style="margin-top:8px; display:inline-block;">${s.settings.email}:</strong> ${currentUserEmail}`;
+  } else {
+    accDetails.innerHTML = s.settings.notLoggedIn;
+  }
   document.getElementById('settingsModal').classList.add('active');
 }
 function closeSettingsModal() { document.getElementById('settingsModal').classList.remove('active'); }
@@ -1004,11 +745,336 @@ function toggleTheme() {
   document.getElementById('themeToggleBtn').innerText = currentTheme === 'dark' ? s.settings.lightMode : s.settings.darkMode;
 }
 
+// התחברות והרשמה עם אימות במייל והשארת נתונים בשדות
+async function handleLogin(e) {
+  e.preventDefault();
+  const authMsg = document.getElementById('authMsg');
+  authMsg.style.display = 'none';
+
+  const emailInput = document.getElementById('authEmail');
+  const passInput = document.getElementById('authPass');
+  const email = emailInput.value.trim();
+  const password = passInput.value;
+  const name = document.getElementById('authName').value.trim();
+  const submitBtn = document.getElementById('authSubmitBtn');
+  
+  if (useFirebase) {
+    try {
+      submitBtn.innerText = "טוען...";
+      submitBtn.disabled = true;
+
+      if (authMode === 'register') {
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+        
+        await updateProfile(user, { displayName: name });
+        
+        try {
+            const userDocRef = doc(db, 'artifacts', appId, 'users', user.uid, 'profile', 'userData');
+            await setDoc(userDocRef, {
+              name: name,
+              email: email,
+              hasDiscount: false,
+              tttCooldown: 0,
+              createdAt: new Date().toISOString()
+            });
+        } catch(dbErr) { console.log("DB save issue:", dbErr); }
+        
+        await sendEmailVerification(user);
+        await signOut(auth);
+
+        // שינוי מצב למסך התחברות, השארת הערכים בשדות!
+        setAuthMode('login');
+        emailInput.value = email; 
+        passInput.value = password; 
+
+        authMsg.style.display = 'block';
+        authMsg.style.color = '#00C6FF';
+        authMsg.innerText = currentLang === 'he' ? 'נשלח אליך קישור אימות למייל! (בדוק בספאם). אמת ואז התחבר.' : 'Verification link sent! Verify your email and login.';
+        
+      } else {
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+
+        if (!user.emailVerified) {
+            await signOut(auth);
+            authMsg.style.display = 'block';
+            authMsg.style.color = 'var(--orange)';
+            authMsg.innerText = currentLang === 'he' ? 'טרם אימתת את המייל. בדוק את תיבת הדואר.' : 'Email not verified yet. Check your inbox.';
+        } else {
+            try {
+                const userDocRef = doc(db, 'artifacts', appId, 'users', user.uid, 'profile', 'userData');
+                const docSnap = await getDoc(userDocRef);
+                if (docSnap.exists()) {
+                  const data = docSnap.data();
+                  currentUser = user.displayName || data.name || email.split('@')[0];
+                  hasDiscount = data.hasDiscount || false;
+                  tttCooldown = data.tttCooldown || 0;
+                } else {
+                  currentUser = user.displayName || email.split('@')[0];
+                }
+            } catch(dbErr) {
+                currentUser = user.displayName || email.split('@')[0];
+            }
+            
+            currentUserEmail = user.email;
+            updateAuthUI();
+            renderPricing(); // רינדור מחדש למחירים
+            closeAuthModal();
+            emailInput.value = '';
+            passInput.value = '';
+            
+            toggleDashboard(true);
+        }
+      }
+    } catch (error) {
+      console.error("Auth Error:", error);
+      authMsg.style.display = 'block';
+      authMsg.style.color = 'var(--orange)';
+      if (error.code === 'auth/not-verified') {
+          authMsg.innerText = currentLang === 'he' ? 'טרם אימתת את המייל. בדוק את תיבת הדואר.' : 'Email not verified.';
+      } else {
+          authMsg.innerText = getFirebaseErrorMessage(error.code);
+      }
+    } finally {
+      submitBtn.innerText = authMode === 'register' ? strings[currentLang].auth.submitRegister : strings[currentLang].auth.submitLogin;
+      submitBtn.disabled = false;
+    }
+  }
+}
+
+async function handleLogout() {
+  if (useFirebase) await signOut(auth);
+  currentUser = null;
+  currentUserEmail = null;
+  hasDiscount = false;
+  tttCooldown = 0;
+  updateAuthUI();
+  renderPricing();
+  toggleDashboard(false);
+}
+
+// TTT (איקס עיגול) LOGIC
+let tttBoard = ['', '', '', '', '', '', '', '', ''];
+let tttGameActive = false;
+
+function handleTTTClickPlay() {
+  if (!currentUser) {
+      openAuthModal();
+      const authMsg = document.getElementById('authMsg');
+      authMsg.style.display = 'block';
+      authMsg.style.color = 'var(--orange)';
+      authMsg.innerText = currentLang === 'he' ? 'יש להתחבר כדי לשחק באיקס עיגול.' : 'Log in to play Tic-Tac-Toe.';
+      return;
+  }
+  openTTTModal();
+}
+
+function openTTTModal() {
+   if (hasDiscount) return; // לא אמור לקרות כי הכפתור מוסתר, אבל הגנה
+   if (Date.now() < tttCooldown) {
+        const remaining = tttCooldown - Date.now();
+        const hours = Math.floor(remaining / (1000 * 60 * 60));
+        const mins = Math.floor((remaining % (1000 * 60 * 60)) / (1000 * 60));
+        alert(currentLang === 'he' ? `⏳ בהמתנה לניסיון הבא. תוכל לנסות שוב בעוד ${hours} שעות ו-${mins} דקות.` : `⏳ Cooldown active. Try again in ${hours}h ${mins}m.`);
+        return;
+   }
+   tttBoard = ['', '', '', '', '', '', '', '', ''];
+   tttGameActive = true;
+   renderTTTBoard();
+   document.getElementById('tttModal').classList.add('active');
+}
+
+function closeTTTModal() {
+   document.getElementById('tttModal').classList.remove('active');
+}
+
+function renderTTTBoard() {
+    let html = '<div class="ttt-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 20px;">';
+    for (let i = 0; i < 9; i++) {
+        let cellClass = tttBoard[i] === 'X' ? 'x' : (tttBoard[i] === 'O' ? 'o' : '');
+        let color = cellClass === 'x' ? 'var(--cyan)' : 'var(--orange)';
+        html += `<div class="ttt-cell ${cellClass}" onclick="handleTTTClick(${i})" style="background: var(--bg); border: 2px solid var(--border); height: 80px; display: flex; align-items: center; justify-content: center; font-size: 36px; font-weight: bold; cursor: pointer; border-radius: 8px; color: ${color}; transition: 0.2s;">${tttBoard[i]}</div>`;
+    }
+    html += '</div>';
+    document.getElementById('ttt-container').innerHTML = html;
+}
+
+async function handleTTTClick(index) {
+    if (!tttGameActive || tttBoard[index] !== '') return;
+    tttBoard[index] = 'X';
+    renderTTTBoard();
+    if (checkTTTWin('X')) { endTTTGame('ניצחת! 🎉', true); return; }
+    if (!tttBoard.includes('')) { endTTTGame('תיקו!', false); return; }
+    
+    tttGameActive = false; // חוסם לחיצות בזמן שהבוט חושב
+    setTimeout(() => {
+        let botMove = getTTTBotMove();
+        tttBoard[botMove] = 'O';
+        renderTTTBoard();
+        if (checkTTTWin('O')) {
+            endTTTGame('הפסדת 😢', false);
+        } else if (!tttBoard.includes('')) {
+            endTTTGame('תיקו!', false);
+        } else {
+            tttGameActive = true;
+        }
+    }, 500);
+}
+
+function getTTTBotMove() {
+    // 15% סיכוי לטעות (בחירה אקראית)
+    if (Math.random() < 0.15) {
+        return getRandomTTTMove();
+    }
+    // 1. האם יכול לנצח?
+    let move = findTTTWinningMove('O');
+    if (move !== -1) return move;
+    // 2. האם חייב לחסום?
+    move = findTTTWinningMove('X');
+    if (move !== -1) return move;
+    // 3. תפוס אמצע אם פנוי
+    if (tttBoard[4] === '') return 4;
+    // 4. אקראי
+    return getRandomTTTMove();
+}
+
+function getRandomTTTMove() {
+    let avail = [];
+    for (let i = 0; i < 9; i++) if (tttBoard[i] === '') avail.push(i);
+    return avail[Math.floor(Math.random() * avail.length)];
+}
+
+function findTTTWinningMove(player) {
+    const combos = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+    for (let c of combos) {
+        let pCount = 0; let emptyIdx = -1;
+        for (let i of c) {
+            if (tttBoard[i] === player) pCount++;
+            else if (tttBoard[i] === '') emptyIdx = i;
+        }
+        if (pCount === 2 && emptyIdx !== -1) return emptyIdx;
+    }
+    return -1;
+}
+
+function checkTTTWin(player) {
+    const combos = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+    return combos.some(c => c.every(i => tttBoard[i] === player));
+}
+
+async function endTTTGame(msg, isWin) {
+    tttGameActive = false;
+    let html = `<h3 style="margin-top: 20px; font-size: 28px; color: ${isWin ? 'var(--cyan)' : 'var(--orange)'}">${msg}</h3>`;
+    
+    if (isWin) {
+        html += `<p style="margin: 10px 0; font-size: 16px; color: var(--white);">הרווחת 10 שקלים הנחה לכל החבילות!</p>`;
+        hasDiscount = true;
+        updateTTTBanner();
+        renderPricing(); // מעדכן את המחירים למטה
+        if (useFirebase && auth.currentUser) {
+            const userDocRef = doc(db, 'artifacts', appId, 'users', auth.currentUser.uid, 'profile', 'userData');
+            await setDoc(userDocRef, { hasDiscount: true }, { merge: true });
+        }
+    } else {
+        tttCooldown = Date.now() + (2 * 60 * 60 * 1000); // המתנה של שעתיים
+        html += `<p style="margin: 10px 0; color: var(--muted);">לא נורא. תוכל לנסות שוב בעוד שעתיים.</p>`;
+        if (useFirebase && auth.currentUser) {
+            const userDocRef = doc(db, 'artifacts', appId, 'users', auth.currentUser.uid, 'profile', 'userData');
+            await setDoc(userDocRef, { tttCooldown: tttCooldown }, { merge: true });
+        }
+    }
+    
+    html += `<button class="btn-outline" style="margin-top: 24px; border-color: var(--cyan); color: var(--cyan);" onclick="closeTTTModal()">סגור</button>`;
+    document.getElementById('ttt-container').innerHTML = html;
+}
+
+function updateTTTBanner() {
+    const banner = document.getElementById('tttBanner');
+    if (hasDiscount) {
+        banner.innerHTML = `<h3 style="color: var(--cyan); margin: 0; font-size: 24px;">הנחת איקס עיגול הופעלה בהצלחה! 💸</h3>`;
+        banner.style.boxShadow = "0 0 20px rgba(0, 198, 255, 0.2)";
+        banner.style.borderColor = "var(--cyan)";
+    }
+}
+
+// INITIAL STATE LISTENER
+if (useFirebase) {
+  onAuthStateChanged(auth, async (user) => {
+    if (user) {
+      currentUserEmail = user.email;
+      if (user.emailVerified) {
+          try {
+            const userDocRef = doc(db, 'artifacts', appId, 'users', user.uid, 'profile', 'userData');
+            const docSnap = await getDoc(userDocRef);
+            if (docSnap.exists()) {
+              const data = docSnap.data();
+              currentUser = user.displayName || data.name || user.email.split('@')[0];
+              hasDiscount = data.hasDiscount || false;
+              tttCooldown = data.tttCooldown || 0;
+            } else {
+              currentUser = user.displayName || user.email.split('@')[0];
+            }
+          } catch (e) {
+            console.error("Profile load err:", e);
+            currentUser = user.displayName || user.email.split('@')[0];
+          }
+      }
+    } else {
+      currentUser = null;
+      currentUserEmail = null;
+      hasDiscount = false;
+      tttCooldown = 0;
+    }
+    updateAuthUI();
+    renderPricing();
+    
+    // אם נרשם ואישר דרך המייל והאתר פתוח לו על מסך ההתחברות - שיכנס!
+    if (currentUser && document.getElementById('authModal').classList.contains('active')) {
+        closeAuthModal();
+        toggleDashboard(true);
+    }
+  });
+}
+
+// --- RENDER LOGIC ---
+function renderPricing() {
+  const s = strings[currentLang];
+  const plansHtml = s.plans.map(plan => {
+    let priceHtml = `<sup>₪</sup>${plan.price}`;
+    if (hasDiscount) {
+        const newPrice = parseInt(plan.price) - 10;
+        priceHtml = `<span style="text-decoration: line-through; opacity: 0.5; font-size: 32px;">₪${plan.price}</span> <span style="color: var(--cyan); text-shadow: 0 0 15px rgba(0,198,255,0.7);"><sup>₪</sup>${newPrice}</span>`;
+    }
+    
+    return `
+    <div class="pricing-box plan-${plan.id}" ${hasDiscount ? 'style="border-color: var(--cyan); box-shadow: 0 0 20px rgba(0,198,255,0.1);"' : ''}>
+      <div class="plan-badge">${plan.badge}</div>
+      <div class="pricing-label">${plan.title}</div>
+      <div class="pricing-price">${priceHtml}</div>
+      <div class="pricing-once">${plan.period}</div>
+      <ul class="pricing-features">
+        ${plan.features.map(f => `<li>${f}</li>`).join('')}
+      </ul>
+      <button class="btn-buy" id="btnBuy-${plan.id}">${plan.btn}</button>
+      <p class="pricing-note">${plan.note}</p>
+    </div>
+  `}).join('');
+  document.getElementById('pricing-plans-container').innerHTML = plansHtml;
+
+  s.plans.forEach(plan => {
+    const btn = document.getElementById(`btnBuy-${plan.id}`);
+    if (btn) btn.addEventListener('click', () => initiatePurchase(plan.id));
+  });
+}
+
 function setLang(lang) {
   currentLang = lang;
   const s = strings[lang];
+  
   document.documentElement.dir = lang === 'he' ? 'rtl' : 'ltr';
   document.documentElement.lang = lang;
+  
   document.getElementById('btn-he').className = lang === 'he' ? 'lang-btn active' : 'lang-btn';
   document.getElementById('btn-en').className = lang === 'en' ? 'lang-btn active' : 'lang-btn';
 
@@ -1035,13 +1101,15 @@ function setLang(lang) {
   document.getElementById('hero-btn1').innerText = s.heroCTA1;
   document.getElementById('hero-btn2').innerText = s.heroCTA2;
   
-  for(let i=0; i<4; i++) document.getElementById(`stat-${i}`).innerText = s.stats[i];
+  for(let i=0; i<4; i++) {
+    document.getElementById(`stat-${i}`).innerText = s.stats[i];
+  }
 
   document.getElementById('about-tag').innerText = s.aboutTag;
   document.getElementById('about-title').innerHTML = s.aboutTitle;
   document.getElementById('about-sub').innerText = s.aboutSub;
   
-  const aboutCards = ['🎮','🏆','🎬','💬'].map((icon, i) => `
+  const aboutCards = ['🎮','🏆','📚','💬'].map((icon, i) => `
     <div class="about-card">
       <div class="about-card-icon">${icon}</div>
       <h3>${s.cards[i][0]}</h3>
@@ -1067,96 +1135,131 @@ function setLang(lang) {
   document.getElementById('rlfx-tag').innerText = s.rlfxTag;
   document.getElementById('rlfx-title').innerHTML = s.rlfxTitle;
   document.getElementById('rlfx-sub').innerText = s.rlfxSub;
-  const rlfxHtml = s.rlfxItems.map(r => `<div class="rlfx-tag ${r.special ? 'special' : ''}">${r.text}</div>`).join('');
+  const rlfxHtml = s.rlfxItems.map(r => `
+    <div class="rlfx-tag ${r.special ? 'special' : ''}">${r.text}</div>
+  `).join('');
   document.getElementById('rlfx-container').innerHTML = rlfxHtml;
 
   document.getElementById('content-tag').innerText = s.contentTag;
   document.getElementById('content-title').innerText = s.contentTitle;
   document.getElementById('content-sub').innerText = s.contentSub;
   
-  const contentHtml = s.items.map((item, i) => `
-    <div class="step-box">
-      <div class="step-num">${i+1}</div>
-      <div class="step-title">${item}</div>
-    </div>
-  `).join('');
-  document.getElementById('home-content-list').innerHTML = contentHtml;
+  for (let i=1; i<=3; i++) {
+      document.getElementById(`step-${i}`).innerText = s.items[i-1];
+  }
 
   document.getElementById('pricing-tag').innerText = s.pricingTag;
   document.getElementById('pricing-title').innerText = s.pricingTitle;
   
-  const plansHtml = s.plans.map(plan => `
-    <div class="pricing-box plan-${plan.id}">
-      <div class="plan-badge">${plan.badge}</div>
-      <div class="pricing-label">${plan.title}</div>
-      <div class="pricing-price" id="price-${plan.id}"><sup>₪</sup>${plan.price}</div>
-      <div class="pricing-once">${plan.period}</div>
-      <ul class="pricing-features">
-        ${plan.features.map(f => `<li>${f}</li>`).join('')}
-      </ul>
-      <button class="btn-buy" id="btnBuy-${plan.id}">${plan.btn}</button>
-      <p class="pricing-note">${plan.note}</p>
-    </div>
-  `).join('');
-  document.getElementById('pricing-plans-container').innerHTML = plansHtml;
-
-  s.plans.forEach(plan => {
-    const btn = document.getElementById(`btnBuy-${plan.id}`);
-    if (btn) btn.addEventListener('click', initiatePurchase);
-  });
+  renderPricing(); // מרנדר מחירים לפי הנחה
 
   document.getElementById('dash-title').innerText = s.dashTitle;
   document.getElementById('dash-sub').innerText = s.dashSub;
-  if (orderId) document.getElementById('orderIdDisplay').innerText = orderId;
-  document.getElementById('footer-sub').innerText = s.footerSub;
+  document.getElementById('tab-videos').innerText = s.tabs[0];
+  document.getElementById('tab-coaching').innerText = s.tabs[1];
   
-  updateTTTBanner();
-  updatePricingUI();
+  document.getElementById('coach-title').innerText = s.coachTitle;
+  document.getElementById('coach-desc').innerText = s.coachDesc;
+  document.getElementById('coach-btn').innerText = s.coachBtn;
+  document.getElementById('pane1-btn').innerText = s.coachBtn;
+
+  document.getElementById('orderTitle').innerText = s.order.title;
+  document.getElementById('orderSub').innerText = s.order.sub;
+  document.getElementById('orderInst').innerText = s.order.inst;
+
+  document.getElementById('footer-sub').innerText = s.footerSub;
 }
 
-function scrollToId(id) { const el = document.getElementById(id); if (el) el.scrollIntoView({ behavior: 'smooth' }); }
+function scrollToId(id) {
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior: 'smooth' });
+}
 
-function toggleDashboard(show) {
-  window.scrollTo(0, 0);
-  if (show) {
-    document.getElementById('view-home').style.display = 'none'; document.getElementById('home-nav').style.display = 'none';
-    document.getElementById('view-dashboard').style.display = 'block'; document.getElementById('dash-nav').style.display = 'flex';
-  } else {
-    document.getElementById('view-dashboard').style.display = 'none'; document.getElementById('dash-nav').style.display = 'none';
-    document.getElementById('view-home').style.display = 'block'; document.getElementById('home-nav').style.display = 'flex';
+// BROWSER BACK BUTTON LOGIC
+function switchMainView(view) {
+  document.getElementById('view-home').style.display = 'none';
+  document.getElementById('view-dashboard').style.display = 'none';
+  document.getElementById('view-order').style.display = 'none';
+  document.getElementById('home-nav').style.display = 'none';
+  document.getElementById('dash-nav').style.display = 'none';
+  
+  if (view === 'home') {
+    document.getElementById('view-home').style.display = 'block';
+    document.getElementById('home-nav').style.display = 'flex';
+  } else if (view === 'dashboard') {
+    document.getElementById('view-dashboard').style.display = 'block';
+    document.getElementById('dash-nav').style.display = 'flex';
+  } else if (view === 'order') {
+    document.getElementById('view-order').style.display = 'block';
+    document.getElementById('dash-nav').style.display = 'flex'; // Uses same dash-nav for 'back home'
   }
 }
 
-const canvas = document.getElementById('particles');
-const ctx = canvas.getContext('2d');
-let W, H, particles = [];
+// האזנה לכפתורי "אחורה/קדימה" של הדפדפן
+window.addEventListener('popstate', (e) => {
+  if (e.state && e.state.view) {
+    switchMainView(e.state.view);
+  } else {
+    switchMainView(currentUser ? 'dashboard' : 'home');
+  }
+});
 
-function resizeCanvas() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
-window.addEventListener('resize', resizeCanvas);
-resizeCanvas();
-
-for (let i = 0; i < 150; i++) {
-  particles.push({
-    x: Math.random() * 2000, y: Math.random() * 1200,
-    vx: (Math.random() - 0.5) * 0.4 + 0.15, vy: (Math.random() - 0.5) * 0.15,
-    r: Math.random() * 1.5 + 0.3, a: Math.random() * 0.6 + 0.2, c: Math.random() > 0.6 ? '#00C6FF' : '#C77DFF'
-  });
+function toggleDashboard(show) {
+  window.scrollTo(0, 0);
+  const view = show ? 'dashboard' : 'home';
+  if (!history.state || history.state.view !== view) {
+    history.pushState({ view: view }, '', show ? '#dashboard' : '');
+  }
+  switchMainView(view);
 }
 
-function drawParticles() {
-  ctx.clearRect(0, 0, W, H);
-  particles.forEach(p => {
-    ctx.beginPath(); ctx.arc(p.x % W, p.y % H, p.r, 0, Math.PI * 2); ctx.fillStyle = p.c; ctx.globalAlpha = p.a; ctx.fill();
-    p.x += p.vx; p.y += p.vy;
-    if (p.x > W + 10) p.x = -10; if (p.y < -10) p.y = H + 10; if (p.y > H + 10) p.y = -10;
-  });
-  ctx.globalAlpha = 1;
-  requestAnimationFrame(drawParticles);
+function switchTab(tab) {
+  document.getElementById('tab-videos').className = 'dash-tab';
+  document.getElementById('tab-coaching').className = 'dash-tab';
+  document.getElementById('tab-' + tab).className = 'dash-tab active';
+
+  document.getElementById('pane-videos').style.display = 'none';
+  document.getElementById('pane-coaching').style.display = 'none';
+  
+  if (tab === 'videos') document.getElementById('pane-videos').style.display = 'block';
+  if (tab === 'coaching') document.getElementById('pane-coaching').style.display = 'block';
 }
-drawParticles();
 
-setLang('he');
+async function initiatePurchase(planId) {
+  if (!currentUser) {
+    const s = strings[currentLang];
+    const authMsg = document.getElementById('authMsg');
+    authMsg.style.display = 'block';
+    authMsg.style.color = 'var(--orange)';
+    authMsg.innerText = s.auth.requireMsg;
+    openAuthModal(); 
+    return;
+  }
+  
+  // ייצור Order ID ייחודי
+  const orderId = 'DRX-' + Math.floor(100000 + Math.random() * 900000);
+  
+  // שמירה במסד נתונים
+  if (useFirebase && auth.currentUser) {
+    try {
+      const orderRef = doc(db, 'artifacts', appId, 'users', auth.currentUser.uid, 'orders', orderId);
+      await setDoc(orderRef, {
+        plan: planId,
+        date: new Date().toISOString(),
+        status: 'pending'
+      });
+    } catch (e) { console.log('Error saving order', e); }
+  }
+  
+  // הצגה על המסך ומעבר נתיב היסטוריה
+  document.getElementById('order-id-display').innerText = orderId;
+  window.scrollTo(0, 0);
+  
+  history.pushState({ view: 'order' }, '', '#order');
+  switchMainView('order');
+}
 
+// חשיפת פונקציות גלובליות
 window.setLang = setLang;
 window.scrollToId = scrollToId;
 window.toggleDashboard = toggleDashboard;
@@ -1166,9 +1269,85 @@ window.setAuthMode = setAuthMode;
 window.handleLogin = handleLogin;
 window.handleLogout = handleLogout;
 window.initiatePurchase = initiatePurchase;
+window.switchTab = switchTab;
 window.openSettingsModal = openSettingsModal;
 window.closeSettingsModal = closeSettingsModal;
 window.toggleTheme = toggleTheme;
+window.handleTTTClickPlay = handleTTTClickPlay;
+window.openTTTModal = openTTTModal;
+window.closeTTTModal = closeTTTModal;
+window.handleTTTClick = handleTTTClick;
+
+// אנימציות גלילה בצדדים
+window.addEventListener('scroll', () => {
+  const y = window.scrollY;
+  const dec1 = document.getElementById('dec1');
+  const dec2 = document.getElementById('dec2');
+  const dec3 = document.getElementById('dec3');
+  const dec4 = document.getElementById('dec4');
+  const dec5 = document.getElementById('dec5');
+  const dec6 = document.getElementById('dec6');
+  const dec7 = document.getElementById('dec7');
+  const dec8 = document.getElementById('dec8');
+  
+  if(dec1) dec1.style.transform = `translateY(${y * 0.15}px) rotate(${y * 0.05}deg)`;
+  if(dec2) dec2.style.transform = `translateY(${y * 0.05}px)`;
+  if(dec3) dec3.style.transform = `translateY(${-y * 0.1}px)`;
+  if(dec4) dec4.style.transform = `translateY(${-y * 0.2}px)`;
+  if(dec5) dec5.style.transform = `translateY(${-y * 0.08}px) rotate(${-y * 0.03}deg)`;
+  if(dec6) dec6.style.transform = `translateY(${y * 0.12}px)`;
+  if(dec7) dec7.style.transform = `translateY(${y * 0.2}px) rotate(${y * 0.08}deg)`;
+  if(dec8) dec8.style.transform = `translateY(${y * 0.15}px)`;
+});
+
+// Particles ברקע
+const canvas = document.getElementById('particles');
+const ctx = canvas.getContext('2d');
+let W, H, particles = [];
+
+function resizeCanvas() {
+  W = canvas.width = window.innerWidth;
+  H = canvas.height = window.innerHeight;
+}
+
+window.addEventListener('resize', resizeCanvas);
+resizeCanvas();
+
+for (let i = 0; i < 150; i++) {
+  particles.push({
+    x: Math.random() * 2000,
+    y: Math.random() * 1200,
+    vx: (Math.random() - 0.5) * 0.4 + 0.15,
+    vy: (Math.random() - 0.5) * 0.15,
+    r: Math.random() * 1.5 + 0.3,
+    a: Math.random() * 0.6 + 0.2,
+    c: Math.random() > 0.6 ? '#00C6FF' : '#C77DFF'
+  });
+}
+
+function drawParticles() {
+  ctx.clearRect(0, 0, W, H);
+  particles.forEach(p => {
+    ctx.beginPath();
+    ctx.arc(p.x % W, p.y % H, p.r, 0, Math.PI * 2);
+    ctx.fillStyle = p.c;
+    ctx.globalAlpha = p.a;
+    ctx.fill();
+    p.x += p.vx;
+    p.y += p.vy;
+    if (p.x > W + 10) p.x = -10;
+    if (p.y < -10) p.y = H + 10;
+    if (p.y > H + 10) p.y = -10;
+  });
+  ctx.globalAlpha = 1;
+  requestAnimationFrame(drawParticles);
+}
+drawParticles();
+
+// איתחול ראשוני
+history.replaceState({ view: 'home' }, '', '');
+setLang('he');
+
 </script>
 </body>
 </html>
