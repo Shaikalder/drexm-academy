@@ -108,15 +108,11 @@ body.light-mode .modal-content { background: #F4F5F7; box-shadow: 0 10px 40px rg
 .modal-form input:focus { outline: none; border-color: var(--cyan); }
 .auth-msg { font-size: 14px; text-align: center; display: none; margin-bottom: 8px; line-height: 1.5; font-weight: 500; }
 
-/* TIC-TAC-TOE BANNER (The Classic Good Design) */
-.ttt-banner { background: linear-gradient(135deg, rgba(0,198,255,0.05), rgba(199,125,255,0.05)); border: 1px solid var(--border); border-radius: 12px; padding: 32px 24px; text-align: center; margin-bottom: 40px; position: relative; overflow: hidden; transition: all 0.3s; }
-.ttt-banner::before { content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%; background: linear-gradient(to right, transparent, rgba(0,198,255,0.1), transparent); transform: skewX(-20deg); animation: sweep 3s infinite; }
-@keyframes sweep { 0% { left: -100%; } 20% { left: 200%; } 100% { left: 200%; } }
-
-.highlight-discount { background: var(--cyan); color: #000; padding: 8px 18px; border-radius: 8px; font-weight: 800; display: inline-block; margin: 0 6px; box-shadow: 0 0 15px rgba(0,198,255,0.6); animation: pulseDiscount 1.5s infinite; font-size: 16px; border: none; cursor: pointer; transition: all 0.2s; }
+/* TIC-TAC-TOE BANNER */
+.ttt-banner { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 32px 24px; text-align: center; margin-bottom: 40px; position: relative; transition: all 0.3s; }
+.highlight-discount { background: var(--cyan); color: #000; padding: 8px 18px; border-radius: 6px; font-weight: 700; display: inline-block; box-shadow: 0 0 15px rgba(0,198,255,0.4); font-size: 16px; border: none; cursor: pointer; transition: all 0.2s; font-family: 'Heebo', sans-serif; }
 body.light-mode .highlight-discount { color: #fff; }
-.highlight-discount:hover { transform: scale(1.05); background: #33D1FF; }
-@keyframes pulseDiscount { 0% { transform: scale(1); box-shadow: 0 0 10px rgba(0,198,255,0.4); } 50% { transform: scale(1.06); box-shadow: 0 0 25px rgba(0,198,255,0.9); } 100% { transform: scale(1); box-shadow: 0 0 10px rgba(0,198,255,0.4); } }
+.highlight-discount:hover { transform: scale(1.05); box-shadow: 0 0 25px rgba(0,198,255,0.7); }
 
 /* HERO */
 .hero { min-height: 88vh; display: flex; align-items: center; padding: 80px 0 60px; }
@@ -380,8 +376,12 @@ footer { position: relative; z-index: 2; border-top: 1px solid var(--border); pa
         
         <!-- TTT BANNER -->
         <div class="ttt-banner" id="tttBanner">
-          <h3 style="margin-bottom: 8px;">אתגר איקס עיגול נגד המחשב 🤖</h3>
-          <p style="color: var(--muted); margin-bottom: 16px;">נצח אותי וקבל <button class="highlight-discount" onclick="handleTTTClickPlay()">10 שקלים הנחה</button> לחבילות!</p>
+          <h3 style="margin-bottom: 12px; font-size: 22px;">אתגר איקס עיגול</h3>
+          <div style="display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap; color: var(--muted); font-size: 16px;">
+            <span>נצח אותי וקבל</span>
+            <button class="highlight-discount" onclick="handleTTTClickPlay()">10 שקלים הנחה</button>
+            <span>לחבילות!</span>
+          </div>
         </div>
 
         <div class="pricing-grid" id="pricing-plans-container">
@@ -781,7 +781,6 @@ async function handleLogin(e) {
         await sendEmailVerification(user);
         await signOut(auth);
 
-        // שינוי מצב למסך התחברות, השארת הערכים בשדות כפי שביקשת
         setAuthMode('login');
         emailInput.value = email; 
         passInput.value = password; 
@@ -855,6 +854,38 @@ async function handleLogout() {
 // TTT (איקס עיגול) LOGIC
 let tttBoard = ['', '', '', '', '', '', '', '', ''];
 let tttGameActive = false;
+let tttInterval = null;
+
+function startTTTTimer() {
+    if (tttInterval) clearInterval(tttInterval);
+    updateTimerDisplays();
+    tttInterval = setInterval(updateTimerDisplays, 1000);
+}
+
+function updateTimerDisplays() {
+    if (!tttCooldown) return;
+    const now = Date.now();
+    const diff = tttCooldown - now;
+
+    if (diff <= 0) {
+        clearInterval(tttInterval);
+        tttCooldown = 0;
+        updateTTTBanner();
+        const modalTimer = document.getElementById('tttTimerDisplay');
+        if(modalTimer) modalTimer.innerText = "00:00";
+        return;
+    }
+
+    const minutes = Math.floor(diff / (1000 * 60));
+    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+    const timeString = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+
+    const modalTimer = document.getElementById('tttTimerDisplay');
+    if (modalTimer) modalTimer.innerText = timeString;
+
+    const bannerTimer = document.getElementById('bannerTimerDisplay');
+    if (bannerTimer) bannerTimer.innerText = timeString;
+}
 
 function handleTTTClickPlay() {
   if (!currentUser) {
@@ -920,7 +951,6 @@ async function handleTTTClick(index) {
 }
 
 function getTTTBotMove() {
-    // הבוט טיפש יותר - 60% סיכוי למהלך אקראי לחלוטין כמו שביקשת
     if (Math.random() < 0.60) {
         return getRandomTTTMove();
     }
@@ -956,7 +986,7 @@ function checkTTTWin(player) {
     return combos.some(c => c.every(i => tttBoard[i] === player));
 }
 
-// כעת המסך לא נתקע כי הוספנו כפתור "סגור חלונית" בסיום
+// סיום משחק וטיימר חי
 async function endTTTGame(msg, isWin) {
     tttGameActive = false;
     let resultDiv = document.createElement('div');
@@ -972,25 +1002,50 @@ async function endTTTGame(msg, isWin) {
             await setDoc(userDocRef, { hasDiscount: true }, { merge: true });
         }
     } else {
-        tttCooldown = Date.now() + (10 * 60 * 1000); // 10 דקות כבקשתך
-        resultDiv.innerHTML += `<p style="margin: 10px 0; color: var(--muted);">לא נורא. תוכל לנסות שוב בעוד 10 דקות.</p>`;
+        tttCooldown = Date.now() + (10 * 60 * 1000); 
+        resultDiv.innerHTML += `
+            <p style="margin: 10px 0 4px; color: var(--muted);">לא נורא. תוכל לנסות שוב בעוד:</p>
+            <div id="tttTimerDisplay" style="font-size: 28px; font-weight: bold; color: var(--white); font-family: monospace; margin-bottom: 16px;">--:--</div>
+        `;
         if (useFirebase && auth.currentUser) {
             const userDocRef = doc(db, 'artifacts', appId, 'users', auth.currentUser.uid, 'profile', 'userData');
             await setDoc(userDocRef, { tttCooldown: tttCooldown }, { merge: true });
         }
+        startTTTTimer();
     }
     
-    // הוספת כפתור סגירה כדי לא להיתקע
-    resultDiv.innerHTML += `<button class="btn-outline" style="margin-top: 16px; width: 100%; border-color: var(--cyan); color: var(--cyan);" onclick="closeTTTModal()">סגור חלונית</button>`;
+    resultDiv.innerHTML += `<button class="btn-outline" style="margin-top: 16px; width: 100%; border-color: ${isWin ? 'var(--cyan)' : 'var(--border)'}; color: ${isWin ? 'var(--cyan)' : 'var(--white)'};" onclick="closeTTTModal()">סגור חלונית</button>`;
     document.getElementById('ttt-container').appendChild(resultDiv);
+    updateTTTBanner();
 }
 
 function updateTTTBanner() {
     const banner = document.getElementById('tttBanner');
+    if (!banner) return;
+    
     if (hasDiscount) {
         banner.innerHTML = `<h3 style="color: var(--cyan); margin: 0; font-size: 24px;">הנחת איקס עיגול הופעלה בהצלחה! 💸</h3>`;
         banner.style.boxShadow = "0 0 20px rgba(0, 198, 255, 0.2)";
         banner.style.borderColor = "var(--cyan)";
+    } else if (tttCooldown > Date.now()) {
+        banner.innerHTML = `
+          <h3 style="margin-bottom: 12px; font-size: 20px; color: var(--muted);">בהמתנה למשחק הבא ⏳</h3>
+          <div id="bannerTimerDisplay" style="font-size: 28px; font-weight: bold; color: var(--white); font-family: monospace;">--:--</div>
+        `;
+        banner.style.boxShadow = "none";
+        banner.style.borderColor = "var(--border)";
+        startTTTTimer();
+    } else {
+        banner.innerHTML = `
+          <h3 style="margin-bottom: 12px; font-size: 22px;">אתגר איקס עיגול</h3>
+          <div style="display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap; color: var(--muted); font-size: 16px;">
+            <span>נצח אותי וקבל</span>
+            <button class="highlight-discount" onclick="handleTTTClickPlay()">10 שקלים הנחה</button>
+            <span>לחבילות!</span>
+          </div>
+        `;
+        banner.style.boxShadow = "none";
+        banner.style.borderColor = "var(--border)";
     }
 }
 
@@ -1025,7 +1080,6 @@ if (useFirebase) {
     updateAuthUI();
     renderPricing();
     
-    // אם נרשם ואישר דרך המייל והאתר פתוח לו על מסך ההתחברות
     if (currentUser && document.getElementById('authModal').classList.contains('active')) {
         closeAuthModal();
         toggleDashboard(true);
@@ -1176,7 +1230,6 @@ function scrollToId(id) {
   if (el) el.scrollIntoView({ behavior: 'smooth' });
 }
 
-// BROWSER BACK BUTTON LOGIC
 function switchMainView(view) {
   document.getElementById('view-home').style.display = 'none';
   document.getElementById('view-dashboard').style.display = 'none';
@@ -1252,7 +1305,6 @@ async function initiatePurchase(planId) {
   document.getElementById('order-id-display').innerText = orderId;
   window.scrollTo(0, 0);
   
-  // דחיפה להיסטוריה כדי שכפתור חזור יעבוד
   history.pushState({ view: 'order' }, '', '#order');
   switchMainView('order');
 }
