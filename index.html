@@ -90,7 +90,7 @@ body.light-mode .lang-btn.active { color: #fff; }
 body.light-mode .modal { background: rgba(130, 135, 145, 0.6); backdrop-filter: blur(6px); }
 
 .modal.active { opacity: 1; pointer-events: auto; }
-.modal-content { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 40px; width: 90%; max-width: 400px; position: relative; box-shadow: 0 10px 40px rgba(0,0,0,0.5); transform: translateY(20px); transition: transform 0.3s, background-color 0.3s; }
+.modal-content { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 40px; width: 90%; max-width: 400px; position: relative; box-shadow: 0 10px 40px rgba(0,0,0,0.5); transform: translateY(20px); transition: transform 0.3s, background-color 0.3s; max-height: 90vh; overflow-y: auto; }
 body.light-mode .modal-content { background: #F4F5F7; box-shadow: 0 10px 40px rgba(0,0,0,0.15); }
 
 .close-btn { position: absolute; top: 16px; right: 24px; font-size: 28px; cursor: pointer; color: var(--muted); transition: color 0.2s; z-index: 10; }
@@ -106,9 +106,9 @@ body.light-mode .modal-content { background: #F4F5F7; box-shadow: 0 10px 40px rg
 .modal-form { display: flex; flex-direction: column; gap: 16px; }
 .modal-form input { width: 100%; padding: 14px 16px; background: var(--bg); border: 1px solid var(--border); color: var(--white); border-radius: 6px; font-family: 'Heebo', sans-serif; font-size: 15px; transition: border-color 0.2s; }
 .modal-form input:focus { outline: none; border-color: var(--cyan); }
-.auth-msg { color: var(--orange); font-size: 13px; text-align: center; display: none; margin-bottom: 8px; line-height: 1.5; }
+.auth-msg { font-size: 14px; text-align: center; display: none; margin-bottom: 8px; line-height: 1.5; font-weight: 500; }
 
-/* TIC-TAC-TOE BANNER */
+/* TIC-TAC-TOE BANNER (The Classic Good Design) */
 .ttt-banner { background: linear-gradient(135deg, rgba(0,198,255,0.05), rgba(199,125,255,0.05)); border: 1px solid var(--border); border-radius: 12px; padding: 32px 24px; text-align: center; margin-bottom: 40px; position: relative; overflow: hidden; transition: all 0.3s; }
 .ttt-banner::before { content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%; background: linear-gradient(to right, transparent, rgba(0,198,255,0.1), transparent); transform: skewX(-20deg); animation: sweep 3s infinite; }
 @keyframes sweep { 0% { left: -100%; } 20% { left: 200%; } 100% { left: 200%; } }
@@ -557,7 +557,7 @@ const strings = {
         btn: '🚀 בחר חבילת ניתוח', note: ''
       },
       {
-        id: 'support', badge: 'ייעוץ', title: '20 דקות שאלות (Q&A)', price: '49', period: 'תשלום מאובטח · תיאום מראש בדיסקורד',
+        id: 'support', badge: 'ייעוץ', title: 'שיחת ייעוץ', price: '49', period: 'תשלום מאובטח · תיאום מראש בדיסקורד',
         features: ['שיחת ייעוץ 1 על 1 ב-Discord', 'שאלות פתוחות על כל נושא', 'עזרה בהבנת מכניקות ספציפיות', 'הכוונה מנטלית למשחק'],
         btn: '💬 בחר שיחת ייעוץ', note: ''
       }
@@ -602,7 +602,7 @@ const strings = {
     ],
     contentTag: 'The Process', contentTitle: 'How it works at ',
     contentSub: 'The process is simple, fast, and personalized to give you the best guidance possible.',
-    items: ['Choose a plan - Replay Analysis or Q&A Session.', 'Receive a unique Order ID with one click.', 'Open a Discord ticket with your ID to complete payment and get the service!'],
+    items: ['Choose a plan - Replay Analysis or Coaching Session.', 'Receive a unique Order ID with one click.', 'Open a Discord ticket with your ID to complete payment and get the service!'],
     pricingTag: 'Pricing', pricingTitle: 'Choose Your Plan',
     plans: [
       {
@@ -611,15 +611,15 @@ const strings = {
         btn: '🚀 Choose Analysis Plan', note: ''
       },
       {
-        id: 'support', badge: 'COACHING', title: '20 Min Q&A', price: '49', period: 'Secure payment · Discord coordination',
+        id: 'support', badge: 'COACHING', title: 'Coaching Session', price: '49', period: 'Secure payment · Discord coordination',
         features: ['1-on-1 Discord coaching call', 'Open Q&A on any game topic', 'Help understanding specific mechanics', 'Mental game guidance'],
-        btn: '💬 Choose Q&A Call', note: ''
+        btn: '💬 Choose Coaching Call', note: ''
       }
     ],
     footerSub: 'DREXM ROCKET LEAGUE ACADEMY 2026 All rights reserved',
     dashTitle: 'Dashboard', dashSub: 'Welcome to the Academy! Choose a category.',
-    tabs: ['Replay Analysis', 'Q&A Session', 'Help & Tips'],
-    coachTitle: 'Support & Q&A', coachDesc: 'Purchased the Q&A plan? Send me a message on Discord with your Order ID to schedule our call.', coachBtn: 'Join Discord Server',
+    tabs: ['Replay Analysis', 'Coaching Session', 'Help & Tips'],
+    coachTitle: 'Support & Q&A', coachDesc: 'Purchased the coaching plan? Send me a message on Discord with your Order ID to schedule our call.', coachBtn: 'Join Discord Server',
     backHome: 'Back to Homepage',
     journeyTag: 'My Journey',
     journeyTitle: 'From Beta to the Top',
@@ -781,7 +781,7 @@ async function handleLogin(e) {
         await sendEmailVerification(user);
         await signOut(auth);
 
-        // שינוי מצב למסך התחברות, השארת הערכים בשדות
+        // שינוי מצב למסך התחברות, השארת הערכים בשדות כפי שביקשת
         setAuthMode('login');
         emailInput.value = email; 
         passInput.value = password; 
@@ -920,7 +920,7 @@ async function handleTTTClick(index) {
 }
 
 function getTTTBotMove() {
-    // 60% chance to make a completely random (and potentially dumb) move
+    // הבוט טיפש יותר - 60% סיכוי למהלך אקראי לחלוטין כמו שביקשת
     if (Math.random() < 0.60) {
         return getRandomTTTMove();
     }
@@ -956,12 +956,14 @@ function checkTTTWin(player) {
     return combos.some(c => c.every(i => tttBoard[i] === player));
 }
 
+// כעת המסך לא נתקע כי הוספנו כפתור "סגור חלונית" בסיום
 async function endTTTGame(msg, isWin) {
     tttGameActive = false;
-    let html = `<h3 style="margin-top: 20px; font-size: 28px; color: ${isWin ? 'var(--cyan)' : 'var(--orange)'}">${msg}</h3>`;
+    let resultDiv = document.createElement('div');
+    resultDiv.innerHTML = `<h3 style="margin-top: 24px; font-size: 24px; color: ${isWin ? 'var(--cyan)' : 'var(--orange)'}">${msg}</h3>`;
     
     if (isWin) {
-        html += `<p style="margin: 10px 0; font-size: 16px; color: var(--white);">הרווחת 10 שקלים הנחה לכל החבילות!</p>`;
+        resultDiv.innerHTML += `<p style="margin: 10px 0; font-size: 15px; color: var(--white);">הרווחת 10 שקלים הנחה לחבילות!</p>`;
         hasDiscount = true;
         updateTTTBanner();
         renderPricing(); 
@@ -970,16 +972,17 @@ async function endTTTGame(msg, isWin) {
             await setDoc(userDocRef, { hasDiscount: true }, { merge: true });
         }
     } else {
-        tttCooldown = Date.now() + (10 * 60 * 1000); // 10 דקות
-        html += `<p style="margin: 10px 0; color: var(--muted);">לא נורא. תוכל לנסות שוב בעוד 10 דקות.</p>`;
+        tttCooldown = Date.now() + (10 * 60 * 1000); // 10 דקות כבקשתך
+        resultDiv.innerHTML += `<p style="margin: 10px 0; color: var(--muted);">לא נורא. תוכל לנסות שוב בעוד 10 דקות.</p>`;
         if (useFirebase && auth.currentUser) {
             const userDocRef = doc(db, 'artifacts', appId, 'users', auth.currentUser.uid, 'profile', 'userData');
             await setDoc(userDocRef, { tttCooldown: tttCooldown }, { merge: true });
         }
     }
     
-    html += `<button class="btn-outline" style="margin-top: 24px; border-color: var(--cyan); color: var(--cyan);" onclick="closeTTTModal()">סגור</button>`;
-    document.getElementById('ttt-container').innerHTML = html;
+    // הוספת כפתור סגירה כדי לא להיתקע
+    resultDiv.innerHTML += `<button class="btn-outline" style="margin-top: 16px; width: 100%; border-color: var(--cyan); color: var(--cyan);" onclick="closeTTTModal()">סגור חלונית</button>`;
+    document.getElementById('ttt-container').appendChild(resultDiv);
 }
 
 function updateTTTBanner() {
@@ -1249,6 +1252,7 @@ async function initiatePurchase(planId) {
   document.getElementById('order-id-display').innerText = orderId;
   window.scrollTo(0, 0);
   
+  // דחיפה להיסטוריה כדי שכפתור חזור יעבוד
   history.pushState({ view: 'order' }, '', '#order');
   switchMainView('order');
 }
