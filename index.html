@@ -110,9 +110,9 @@ body.light-mode .modal-content { background: #F4F5F7; box-shadow: 0 10px 40px rg
 
 /* TIC-TAC-TOE BANNER */
 .ttt-banner { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 32px 24px; text-align: center; margin-bottom: 40px; position: relative; transition: all 0.3s; }
-.highlight-discount { background: var(--cyan); color: #000; padding: 8px 18px; border-radius: 6px; font-weight: 700; display: inline-block; box-shadow: 0 0 15px rgba(0,198,255,0.4); font-size: 16px; border: none; cursor: pointer; transition: all 0.2s; font-family: 'Heebo', sans-serif; }
+.highlight-discount { background: #FF9F43; color: #000; padding: 8px 18px; border-radius: 6px; font-weight: 700; display: inline-block; box-shadow: 0 0 15px rgba(255,159,67,0.4); font-size: 16px; border: none; cursor: pointer; transition: all 0.2s; font-family: 'Heebo', sans-serif; }
 body.light-mode .highlight-discount { color: #fff; }
-.highlight-discount:hover { transform: scale(1.05); box-shadow: 0 0 25px rgba(0,198,255,0.7); }
+.highlight-discount:hover:not([disabled]) { transform: scale(1.05); box-shadow: 0 0 25px rgba(255,159,67,0.7); }
 
 /* HERO */
 .hero { min-height: 88vh; display: flex; align-items: center; padding: 80px 0 60px; }
@@ -193,8 +193,7 @@ body.light-mode .btn-primary { color: #fff; }
 .pricing-label { font-size: 16px; color: var(--white); font-weight: 600; margin-bottom: 8px; font-family: 'Rajdhani', sans-serif; }
 .pricing-price { font-family: 'Rajdhani', sans-serif; font-size: 56px; font-weight: 700; color: var(--white); line-height: 1; margin-bottom: 4px; transition: color 0.3s; }
 .pricing-price sup { font-size: 24px; color: var(--muted); }
-.pricing-once { font-size: 13px; color: var(--muted); font-weight: 500; margin-bottom: 32px; }
-.pricing-features { list-style: none; margin-bottom: 36px; display: flex; flex-direction: column; gap: 12px; }
+.pricing-features { list-style: none; margin-bottom: 36px; display: flex; flex-direction: column; gap: 12px; margin-top: 16px; }
 .pricing-features li { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; color: var(--muted); line-height: 1.4; }
 .pricing-features li::before { content: '✓'; color: var(--cyan); font-weight: 700; font-size: 16px; margin-top: -2px; }
 .plan-support .pricing-features li::before { color: var(--orange); }
@@ -203,7 +202,7 @@ body.light-mode .btn-primary { color: #fff; }
 body.light-mode .btn-buy { color: #fff; }
 .plan-support .btn-buy { background: var(--orange); color: #fff; }
 .plan-support .btn-buy:hover { background: #D896FF; }
-.pricing-note { text-align: center; font-size: 12px; color: var(--muted); }
+.pricing-note { text-align: center; font-size: 13px; color: var(--muted); margin-top: 8px; }
 
 /* DASHBOARD & ORDER VIEWS */
 .dashboard-header { margin-bottom: 40px; padding-top: 40px; border-bottom: 1px solid var(--border); padding-bottom: 24px; }
@@ -548,18 +547,18 @@ const strings = {
     ],
     contentTag: 'התהליך', contentTitle: 'איך זה עובד ב-',
     contentSub: 'התהליך פשוט, מהיר, ומותאם אישית אליך כדי שתקבל את הליווי הטוב ביותר.',
-    items: ['בוחרים חבילה - ניתוח משחקים או שיחת ייעוץ.', 'מקבלים מספר סידורי אישי בלחיצת כפתור.', 'פותחים טיקט בדיסקורד עם המספר הסידורי להשלמת התשלום והשירות!'],
+    items: ['בחירת חבילה - ניתוח משחקים או שיחת ייעוץ.', 'קבלת מספר סידורי אישי בלחיצת כפתור.', 'פתיחת טיקט בדיסקורד להשלמת התשלום והשירות!'],
     pricingTag: 'מחיר', pricingTitle: 'בחר את המסלול שלך',
     plans: [
       {
-        id: 'content', badge: 'ניתוח', title: 'ניתוח 3 משחקים', price: '149', period: 'תשלום מאובטח · תיאום מראש בדיסקורד',
+        id: 'content', badge: 'ניתוח', title: 'ניתוח 3 משחקים', price: '149',
         features: ['ניתוח מעמיק של 3 משחקי ראנק', 'דגש על טעויות רוטציה ומיקום', 'טיפים אישיים לשיפור מכני', 'מעבר על ההקלטות ביחד'],
-        btn: '🚀 בחר חבילת ניתוח', note: ''
+        btn: '🚀 בחר חבילת ניתוח', note: 'תשלום מאובטח · תיאום מראש בדיסקורד'
       },
       {
-        id: 'support', badge: 'ייעוץ', title: 'שיחת ייעוץ', price: '49', period: 'תשלום מאובטח · תיאום מראש בדיסקורד',
+        id: 'support', badge: 'ייעוץ', title: 'שיחת ייעוץ', price: '49',
         features: ['שיחת ייעוץ 1 על 1 ב-Discord', 'שאלות פתוחות על כל נושא', 'עזרה בהבנת מכניקות ספציפיות', 'הכוונה מנטלית למשחק'],
-        btn: '💬 בחר שיחת ייעוץ', note: ''
+        btn: '💬 בחר שיחת ייעוץ', note: 'תשלום מאובטח · תיאום מראש בדיסקורד'
       }
     ],
     footerSub: 'DREXM ROCKET LEAGUE ACADEMY 2026 כל הזכויות שמורות',
@@ -602,18 +601,18 @@ const strings = {
     ],
     contentTag: 'The Process', contentTitle: 'How it works at ',
     contentSub: 'The process is simple, fast, and personalized to give you the best guidance possible.',
-    items: ['Choose a plan - Replay Analysis or Coaching Session.', 'Receive a unique Order ID with one click.', 'Open a Discord ticket with your ID to complete payment and get the service!'],
+    items: ['Choose a plan - Replay Analysis or Coaching Session.', 'Receive a unique Order ID with one click.', 'Open a Discord ticket to complete payment and start!'],
     pricingTag: 'Pricing', pricingTitle: 'Choose Your Plan',
     plans: [
       {
-        id: 'content', badge: 'ANALYSIS', title: '3 Replay Analysis', price: '149', period: 'Secure payment · Discord coordination',
+        id: 'content', badge: 'ANALYSIS', title: '3 Replay Analysis', price: '149',
         features: ['In-depth analysis of 3 ranked games', 'Focus on rotation and positioning errors', 'Personal tips for mechanical improvement', 'Reviewing recordings together'],
-        btn: '🚀 Choose Analysis Plan', note: ''
+        btn: '🚀 Choose Analysis Plan', note: 'Secure payment · Discord coordination'
       },
       {
-        id: 'support', badge: 'COACHING', title: 'Coaching Session', price: '49', period: 'Secure payment · Discord coordination',
+        id: 'support', badge: 'COACHING', title: 'Coaching Session', price: '49',
         features: ['1-on-1 Discord coaching call', 'Open Q&A on any game topic', 'Help understanding specific mechanics', 'Mental game guidance'],
-        btn: '💬 Choose Coaching Call', note: ''
+        btn: '💬 Choose Coaching Call', note: 'Secure payment · Discord coordination'
       }
     ],
     footerSub: 'DREXM ROCKET LEAGUE ACADEMY 2026 All rights reserved',
@@ -901,12 +900,8 @@ function handleTTTClickPlay() {
 
 function openTTTModal() {
    if (hasDiscount) return; 
-   if (Date.now() < tttCooldown) {
-        const remaining = tttCooldown - Date.now();
-        const mins = Math.ceil(remaining / (1000 * 60));
-        alert(currentLang === 'he' ? `⏳ בהמתנה לניסיון הבא. תוכל לנסות שוב בעוד ${mins} דקות.` : `⏳ Cooldown active. Try again in ${mins}m.`);
-        return;
-   }
+   if (Date.now() < tttCooldown) return; // לא אמור לקרות כי הכפתור מוסתר, אבל למקרה שכן.
+
    tttBoard = ['', '', '', '', '', '', '', '', ''];
    tttGameActive = true;
    renderTTTBoard();
@@ -925,13 +920,16 @@ function renderTTTBoard() {
         html += `<div class="ttt-cell ${cellClass}" onclick="handleTTTClick(${i})" style="background: var(--bg); border: 2px solid var(--border); height: 80px; display: flex; align-items: center; justify-content: center; font-size: 36px; font-weight: bold; cursor: pointer; border-radius: 8px; color: ${color}; transition: 0.2s;">${tttBoard[i]}</div>`;
     }
     html += '</div>';
-    document.getElementById('ttt-container').innerHTML = html;
+    
+    let container = document.getElementById('ttt-container');
+    container.innerHTML = html;
 }
 
 async function handleTTTClick(index) {
     if (!tttGameActive || tttBoard[index] !== '') return;
     tttBoard[index] = 'X';
     renderTTTBoard();
+    
     if (checkTTTWin('X')) { endTTTGame('ניצחת! 🎉', true); return; }
     if (!tttBoard.includes('')) { endTTTGame('תיקו!', false); return; }
     
@@ -940,6 +938,7 @@ async function handleTTTClick(index) {
         let botMove = getTTTBotMove();
         tttBoard[botMove] = 'O';
         renderTTTBoard();
+        
         if (checkTTTWin('O')) {
             endTTTGame('הפסדת 😢', false);
         } else if (!tttBoard.includes('')) {
@@ -951,14 +950,22 @@ async function handleTTTClick(index) {
 }
 
 function getTTTBotMove() {
+    // 60% chance to make a completely random move (Easier Bot)
     if (Math.random() < 0.60) {
         return getRandomTTTMove();
     }
+    
+    // Win if possible
     let move = findTTTWinningMove('O');
     if (move !== -1) return move;
+    
+    // Block X if X is about to win
     move = findTTTWinningMove('X');
     if (move !== -1) return move;
+    
+    // Take middle if available
     if (tttBoard[4] === '') return 4;
+    
     return getRandomTTTMove();
 }
 
@@ -998,23 +1005,29 @@ async function endTTTGame(msg, isWin) {
         updateTTTBanner();
         renderPricing(); 
         if (useFirebase && auth.currentUser) {
-            const userDocRef = doc(db, 'artifacts', appId, 'users', auth.currentUser.uid, 'profile', 'userData');
-            await setDoc(userDocRef, { hasDiscount: true }, { merge: true });
+            try {
+                const userDocRef = doc(db, 'artifacts', appId, 'users', auth.currentUser.uid, 'profile', 'userData');
+                await setDoc(userDocRef, { hasDiscount: true }, { merge: true });
+            } catch(e){}
         }
     } else {
+        // 10 minutes cooldown
         tttCooldown = Date.now() + (10 * 60 * 1000); 
         resultDiv.innerHTML += `
-            <p style="margin: 10px 0 4px; color: var(--muted);">לא נורא. תוכל לנסות שוב בעוד:</p>
+            <p style="margin: 10px 0 4px; color: var(--muted);">תוכל לנסות שוב בעוד:</p>
             <div id="tttTimerDisplay" style="font-size: 28px; font-weight: bold; color: var(--white); font-family: monospace; margin-bottom: 16px;">--:--</div>
         `;
         if (useFirebase && auth.currentUser) {
-            const userDocRef = doc(db, 'artifacts', appId, 'users', auth.currentUser.uid, 'profile', 'userData');
-            await setDoc(userDocRef, { tttCooldown: tttCooldown }, { merge: true });
+            try {
+                const userDocRef = doc(db, 'artifacts', appId, 'users', auth.currentUser.uid, 'profile', 'userData');
+                await setDoc(userDocRef, { tttCooldown: tttCooldown }, { merge: true });
+            } catch(e){}
         }
         startTTTTimer();
     }
     
-    resultDiv.innerHTML += `<button class="btn-outline" style="margin-top: 16px; width: 100%; border-color: ${isWin ? 'var(--cyan)' : 'var(--border)'}; color: ${isWin ? 'var(--cyan)' : 'var(--white)'};" onclick="closeTTTModal()">סגור חלונית</button>`;
+    // כפתור סגירה ברור
+    resultDiv.innerHTML += `<button class="btn-outline" style="margin-top: 16px; width: 100%; border-color: var(--border); color: var(--white);" onclick="closeTTTModal()">סגור חלונית</button>`;
     document.getElementById('ttt-container').appendChild(resultDiv);
     updateTTTBanner();
 }
@@ -1025,15 +1038,18 @@ function updateTTTBanner() {
     
     if (hasDiscount) {
         banner.innerHTML = `<h3 style="color: var(--cyan); margin: 0; font-size: 24px;">הנחת איקס עיגול הופעלה בהצלחה! 💸</h3>`;
-        banner.style.boxShadow = "0 0 20px rgba(0, 198, 255, 0.2)";
-        banner.style.borderColor = "var(--cyan)";
     } else if (tttCooldown > Date.now()) {
         banner.innerHTML = `
-          <h3 style="margin-bottom: 12px; font-size: 20px; color: var(--muted);">בהמתנה למשחק הבא ⏳</h3>
-          <div id="bannerTimerDisplay" style="font-size: 28px; font-weight: bold; color: var(--white); font-family: monospace;">--:--</div>
+          <h3 style="margin-bottom: 12px; font-size: 22px;">אתגר איקס עיגול</h3>
+          <div style="display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap; color: var(--muted); font-size: 16px;">
+            <span>נצח אותי וקבל</span>
+            <button class="highlight-discount" style="background: var(--border); color: var(--muted); box-shadow: none; cursor: not-allowed;" disabled>10 שקלים הנחה</button>
+            <span>לחבילות!</span>
+          </div>
+          <div style="margin-top: 12px; font-size: 14px; color: var(--muted);">
+            בהמתנה למשחק הבא ⏳ <span id="bannerTimerDisplay" style="font-weight: bold; color: var(--white); font-family: monospace; margin-right: 4px;">--:--</span>
+          </div>
         `;
-        banner.style.boxShadow = "none";
-        banner.style.borderColor = "var(--border)";
         startTTTTimer();
     } else {
         banner.innerHTML = `
@@ -1044,8 +1060,6 @@ function updateTTTBanner() {
             <span>לחבילות!</span>
           </div>
         `;
-        banner.style.boxShadow = "none";
-        banner.style.borderColor = "var(--border)";
     }
 }
 
@@ -1102,20 +1116,14 @@ function renderPricing() {
       <div class="plan-badge">${plan.badge}</div>
       <div class="pricing-label">${plan.title}</div>
       <div class="pricing-price">${priceHtml}</div>
-      <div class="pricing-once">${plan.period}</div>
       <ul class="pricing-features">
         ${plan.features.map(f => `<li>${f}</li>`).join('')}
       </ul>
-      <button class="btn-buy" id="btnBuy-${plan.id}">${plan.btn}</button>
+      <button class="btn-buy" onclick="initiatePurchase('${plan.id}')">${plan.btn}</button>
       <p class="pricing-note">${plan.note}</p>
     </div>
   `}).join('');
   document.getElementById('pricing-plans-container').innerHTML = plansHtml;
-
-  s.plans.forEach(plan => {
-    const btn = document.getElementById(`btnBuy-${plan.id}`);
-    if (btn) btn.addEventListener('click', () => initiatePurchase(plan.id));
-  });
 }
 
 function setLang(lang) {
@@ -1368,10 +1376,13 @@ function drawParticles() {
   ctx.globalAlpha = 1;
   requestAnimationFrame(drawParticles);
 }
-drawParticles();
 
-history.replaceState({ view: 'home' }, '', '');
-setLang('he');
+// Start animation on load
+window.onload = function() {
+    drawParticles();
+    history.replaceState({ view: 'home' }, '', '');
+    setLang('he');
+}
 
 </script>
 </body>
