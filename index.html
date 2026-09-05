@@ -177,7 +177,7 @@ body.light-mode .btn-primary { color: #fff; }
 .rlfx-tag.special { border-color: var(--orange); color: var(--orange); background: rgba(199,125,255,0.05); }
 .rlfx-tag.special:hover { background: rgba(199,125,255,0.15); box-shadow: 0 4px 12px rgba(199,125,255,0.15); }
 
-/* CONTENT PREVIEW (Now Steps) */
+/* CONTENT PREVIEW (Steps) */
 .content-list { display: grid; grid-template-columns: 1fr; gap: 12px; margin-top: 40px; }
 .step-box { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 20px 24px; display: flex; align-items: center; gap: 16px; position: relative; margin-bottom: 12px; }
 .step-num { width: 32px; height: 32px; border-radius: 50%; background: rgba(0,198,255,0.1); color: var(--cyan); display: flex; align-items: center; justify-content: center; font-weight: bold; font-family: 'Rajdhani'; flex-shrink: 0; }
@@ -368,9 +368,7 @@ footer { position: relative; z-index: 2; border-top: 1px solid var(--border); pa
         <h2 class="section-title"><span id="content-title">איך זה עובד ב-</span><span style="color: var(--cyan)">drexm academy</span></h2>
         <p class="section-sub" id="content-sub">התהליך פשוט, מהיר, ומותאם אישית אליך כדי שתקבל את הליווי הטוב ביותר.</p>
         <div class="content-list" id="home-content-list">
-          <div class="step-box"><div class="step-num">1</div><div class="step-title" id="step-1">בוחרים חבילה - ניתוח משחקים או שיחת ייעוץ.</div></div>
-          <div class="step-box"><div class="step-num">2</div><div class="step-title" id="step-2">מקבלים מספר סידורי אישי לאחר התשלום.</div></div>
-          <div class="step-box"><div class="step-num">3</div><div class="step-title" id="step-3">פותחים טיקט בדיסקורד לקבלת השירות!</div></div>
+          <!-- Rendered via JS -->
         </div>
       </section>
 
@@ -408,7 +406,7 @@ footer { position: relative; z-index: 2; border-top: 1px solid var(--border); pa
 
       <div id="pane-videos" class="coaching-card" style="display: block;">
         <h3 id="pane1-title">ניתוח 3 משחקים מקיף</h3>
-        <p id="pane1-desc">רכשת את חבילת הניתוח? פתח טיקט בדיסקורד ושלח את קובץ ההקלטות או הקישור לוידאו יחד עם המספר הסידורי שקיבלת לאחר הרכישה.</p>
+        <p id="pane1-desc">רכשת את חבילת הניתוח? פתח טיקט בדיסקורד ושלח את קובץ ההקלטות או הקישור לוידאו יחד עם המספר הסידורי שקיבלת לאחר בחירת החבילה.</p>
         <button class="btn-discord" onclick="window.open('https://discord.gg/kvVmkFrZnC', '_blank')">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/></svg>
           <span id="pane1-btn">התחבר לדיסקורד</span>
@@ -430,10 +428,10 @@ footer { position: relative; z-index: 2; border-top: 1px solid var(--border); pa
   <div id="view-order" style="display: none;">
     <main class="wrap" style="text-align: center; padding: 100px 0; min-height: 70vh;">
       <div class="coaching-card" style="max-width: 600px; margin: 0 auto; box-shadow: 0 0 30px rgba(0, 198, 255, 0.2);">
-        <h2 style="font-family: 'Rajdhani', sans-serif; font-size: 36px; color: var(--cyan); margin-bottom: 20px;" id="orderTitle">ההזמנה שלך התקבלה!</h2>
+        <h2 style="font-family: 'Rajdhani', sans-serif; font-size: 36px; color: var(--cyan); margin-bottom: 20px;" id="orderTitle">המספר הסידורי שלך מוכן!</h2>
         <p style="font-size: 18px; margin-bottom: 10px;" id="orderSub">זהו המספר הסידורי שלך:</p>
         <div id="order-id-display" style="font-family: monospace; font-size: 42px; font-weight: bold; background: rgba(0,0,0,0.3); padding: 10px 20px; border-radius: 8px; border: 1px dashed var(--cyan); display: inline-block; margin-bottom: 30px;">DRX-123456</div>
-        <p style="font-size: 16px; color: var(--muted); margin-bottom: 30px;" id="orderInst">העתק את המספר הסידורי, פתח טיקט בשרת הדיסקורד שלנו ושלח אותו שם לאימות וקבלת השירות.</p>
+        <p style="font-size: 16px; color: var(--muted); margin-bottom: 30px;" id="orderInst">העתק את המספר הסידורי, פתח טיקט בשרת הדיסקורד שלנו ושלח אותו לשם כדי להשלים את התשלום ולהתחיל.</p>
         <button class="btn-discord" onclick="window.open('https://discord.gg/kvVmkFrZnC', '_blank')">
           פתח טיקט בדיסקורד
         </button>
@@ -550,18 +548,18 @@ const strings = {
     ],
     contentTag: 'התהליך', contentTitle: 'איך זה עובד ב-',
     contentSub: 'התהליך פשוט, מהיר, ומותאם אישית אליך כדי שתקבל את הליווי הטוב ביותר.',
-    items: ['בוחרים חבילה - ניתוח משחקים או שיחת ייעוץ.', 'מקבלים מספר סידורי אישי לאחר התשלום.', 'פותחים טיקט בדיסקורד לקבלת השירות!'],
+    items: ['בוחרים חבילה - ניתוח משחקים או שיחת ייעוץ.', 'מקבלים מספר סידורי אישי בלחיצת כפתור.', 'פותחים טיקט בדיסקורד עם המספר הסידורי להשלמת התשלום והשירות!'],
     pricingTag: 'מחיר', pricingTitle: 'בחר את המסלול שלך',
     plans: [
       {
-        id: 'content', badge: 'ניתוח', title: 'ניתוח 3 משחקים', price: '149', period: 'תשלום חד פעמי',
+        id: 'content', badge: 'ניתוח', title: 'ניתוח 3 משחקים', price: '149', period: 'תשלום מאובטח · תיאום מראש בדיסקורד',
         features: ['ניתוח מעמיק של 3 משחקי ראנק', 'דגש על טעויות רוטציה ומיקום', 'טיפים אישיים לשיפור מכני', 'מעבר על ההקלטות ביחד'],
-        btn: '🚀 רכוש ניתוח משחקים', note: 'תשלום מאובטח · תיאום מראש בדיסקורד'
+        btn: '🚀 בחר חבילת ניתוח', note: ''
       },
       {
-        id: 'support', badge: 'ייעוץ', title: '20 דקות שאלות (Q&A)', price: '49', period: 'שיחה חד פעמית',
+        id: 'support', badge: 'ייעוץ', title: '20 דקות שאלות (Q&A)', price: '49', period: 'תשלום מאובטח · תיאום מראש בדיסקורד',
         features: ['שיחת ייעוץ 1 על 1 ב-Discord', 'שאלות פתוחות על כל נושא', 'עזרה בהבנת מכניקות ספציפיות', 'הכוונה מנטלית למשחק'],
-        btn: '💬 רכוש שיחת ייעוץ', note: 'תשלום מאובטח · תיאום מראש בדיסקורד'
+        btn: '💬 בחר שיחת ייעוץ', note: ''
       }
     ],
     footerSub: 'DREXM ROCKET LEAGUE ACADEMY 2026 כל הזכויות שמורות',
@@ -583,7 +581,7 @@ const strings = {
     rlfxItems: [
       { text: 'ROCKET LEAGUE INSANITY 40' }, { text: 'ROCKET LEAGUE INSANITY 41' }, { text: 'ROCKET LEAGUE INSANITY 44' }, { text: 'ROCKET LEAGUE INSANITY 53' }, { text: 'ROCKET LEAGUE INSANITY 55' }, { text: 'ROCKET LEAGUE INSANITY 56' }, { text: 'ROCKET LEAGUE INSANITY 58' }, { text: 'ROCKET LEAGUE INSANITY 59' }, { text: 'ROCKET LEAGUE INSANITY 60' }, { text: 'ROCKET LEAGUE INSANITY 62' }, { text: 'TEAM PUZL - JIGSAW' }, { text: 'TOP 100 FREESTYLES' }, { text: 'TOP 100 REDIRECTS' }, { text: 'TOP 100 PINCHES' }, { text: 'BEST OF 2021' }, { text: 'TOP 100 PREFLIPS' }, { text: 'ROCKET LEAGUE AROUND THE WORLD 🇮🇱', special: true }
     ],
-    order: { title: 'ההזמנה שלך התקבלה!', sub: 'זהו המספר הסידורי שלך:', inst: 'העתק את המספר הסידורי, פתח טיקט בשרת הדיסקורד שלנו ושלח אותו שם לאימות וקבלת השירות.' }
+    order: { title: 'המספר הסידורי שלך מוכן!', sub: 'זהו המספר הסידורי שלך:', inst: 'העתק את המספר הסידורי, פתח טיקט בשרת הדיסקורד שלנו ושלח אותו לשם כדי להשלים את התשלום ולהתחיל.' }
   },
   en: {
     navLinks: ['About', 'My Journey', 'How It Works', 'Pricing'],
@@ -604,18 +602,18 @@ const strings = {
     ],
     contentTag: 'The Process', contentTitle: 'How it works at ',
     contentSub: 'The process is simple, fast, and personalized to give you the best guidance possible.',
-    items: ['Choose a plan - Replay Analysis or Q&A Session.', 'Receive a unique Order ID after checkout.', 'Open a Discord ticket to claim your service!'],
+    items: ['Choose a plan - Replay Analysis or Q&A Session.', 'Receive a unique Order ID with one click.', 'Open a Discord ticket with your ID to complete payment and get the service!'],
     pricingTag: 'Pricing', pricingTitle: 'Choose Your Plan',
     plans: [
       {
-        id: 'content', badge: 'ANALYSIS', title: '3 Replay Analysis', price: '149', period: 'One-time payment',
+        id: 'content', badge: 'ANALYSIS', title: '3 Replay Analysis', price: '149', period: 'Secure payment · Discord coordination',
         features: ['In-depth analysis of 3 ranked games', 'Focus on rotation and positioning errors', 'Personal tips for mechanical improvement', 'Reviewing recordings together'],
-        btn: '🚀 Buy Analysis Plan', note: 'Secure payment · Discord coordination required'
+        btn: '🚀 Choose Analysis Plan', note: ''
       },
       {
-        id: 'support', badge: 'COACHING', title: '20 Min Q&A', price: '49', period: 'One-time call',
+        id: 'support', badge: 'COACHING', title: '20 Min Q&A', price: '49', period: 'Secure payment · Discord coordination',
         features: ['1-on-1 Discord coaching call', 'Open Q&A on any game topic', 'Help understanding specific mechanics', 'Mental game guidance'],
-        btn: '💬 Buy Q&A Call', note: 'Secure payment · Discord coordination required'
+        btn: '💬 Choose Q&A Call', note: ''
       }
     ],
     footerSub: 'DREXM ROCKET LEAGUE ACADEMY 2026 All rights reserved',
@@ -637,7 +635,7 @@ const strings = {
     rlfxItems: [
       { text: 'ROCKET LEAGUE INSANITY 40' }, { text: 'ROCKET LEAGUE INSANITY 41' }, { text: 'ROCKET LEAGUE INSANITY 44' }, { text: 'ROCKET LEAGUE INSANITY 53' }, { text: 'ROCKET LEAGUE INSANITY 55' }, { text: 'ROCKET LEAGUE INSANITY 56' }, { text: 'ROCKET LEAGUE INSANITY 58' }, { text: 'ROCKET LEAGUE INSANITY 59' }, { text: 'ROCKET LEAGUE INSANITY 60' }, { text: 'ROCKET LEAGUE INSANITY 62' }, { text: 'TEAM PUZL - JIGSAW' }, { text: 'TOP 100 FREESTYLES' }, { text: 'TOP 100 REDIRECTS' }, { text: 'TOP 100 PINCHES' }, { text: 'BEST OF 2021' }, { text: 'TOP 100 PREFLIPS' }, { text: 'ROCKET LEAGUE AROUND THE WORLD 🇮🇱', special: true }
     ],
-    order: { title: 'Order Received!', sub: 'This is your Order ID:', inst: 'Copy this Order ID, open a ticket in our Discord server and send it there to verify and claim your service.' }
+    order: { title: 'Your Order ID is Ready!', sub: 'This is your Order ID:', inst: 'Copy this Order ID, open a ticket in our Discord server and send it there to complete your payment and start.' }
   }
 };
 
@@ -745,7 +743,7 @@ function toggleTheme() {
   document.getElementById('themeToggleBtn').innerText = currentTheme === 'dark' ? s.settings.lightMode : s.settings.darkMode;
 }
 
-// התחברות והרשמה עם אימות במייל והשארת נתונים בשדות
+// התחברות והרשמה 
 async function handleLogin(e) {
   e.preventDefault();
   const authMsg = document.getElementById('authMsg');
@@ -783,7 +781,7 @@ async function handleLogin(e) {
         await sendEmailVerification(user);
         await signOut(auth);
 
-        // שינוי מצב למסך התחברות, השארת הערכים בשדות!
+        // שינוי מצב למסך התחברות, השארת הערכים בשדות
         setAuthMode('login');
         emailInput.value = email; 
         passInput.value = password; 
@@ -819,7 +817,7 @@ async function handleLogin(e) {
             
             currentUserEmail = user.email;
             updateAuthUI();
-            renderPricing(); // רינדור מחדש למחירים
+            renderPricing(); 
             closeAuthModal();
             emailInput.value = '';
             passInput.value = '';
@@ -871,12 +869,11 @@ function handleTTTClickPlay() {
 }
 
 function openTTTModal() {
-   if (hasDiscount) return; // לא אמור לקרות כי הכפתור מוסתר, אבל הגנה
+   if (hasDiscount) return; 
    if (Date.now() < tttCooldown) {
         const remaining = tttCooldown - Date.now();
-        const hours = Math.floor(remaining / (1000 * 60 * 60));
-        const mins = Math.floor((remaining % (1000 * 60 * 60)) / (1000 * 60));
-        alert(currentLang === 'he' ? `⏳ בהמתנה לניסיון הבא. תוכל לנסות שוב בעוד ${hours} שעות ו-${mins} דקות.` : `⏳ Cooldown active. Try again in ${hours}h ${mins}m.`);
+        const mins = Math.ceil(remaining / (1000 * 60));
+        alert(currentLang === 'he' ? `⏳ בהמתנה לניסיון הבא. תוכל לנסות שוב בעוד ${mins} דקות.` : `⏳ Cooldown active. Try again in ${mins}m.`);
         return;
    }
    tttBoard = ['', '', '', '', '', '', '', '', ''];
@@ -907,7 +904,7 @@ async function handleTTTClick(index) {
     if (checkTTTWin('X')) { endTTTGame('ניצחת! 🎉', true); return; }
     if (!tttBoard.includes('')) { endTTTGame('תיקו!', false); return; }
     
-    tttGameActive = false; // חוסם לחיצות בזמן שהבוט חושב
+    tttGameActive = false; 
     setTimeout(() => {
         let botMove = getTTTBotMove();
         tttBoard[botMove] = 'O';
@@ -923,19 +920,15 @@ async function handleTTTClick(index) {
 }
 
 function getTTTBotMove() {
-    // 15% סיכוי לטעות (בחירה אקראית)
-    if (Math.random() < 0.15) {
+    // 60% chance to make a completely random (and potentially dumb) move
+    if (Math.random() < 0.60) {
         return getRandomTTTMove();
     }
-    // 1. האם יכול לנצח?
     let move = findTTTWinningMove('O');
     if (move !== -1) return move;
-    // 2. האם חייב לחסום?
     move = findTTTWinningMove('X');
     if (move !== -1) return move;
-    // 3. תפוס אמצע אם פנוי
     if (tttBoard[4] === '') return 4;
-    // 4. אקראי
     return getRandomTTTMove();
 }
 
@@ -971,14 +964,14 @@ async function endTTTGame(msg, isWin) {
         html += `<p style="margin: 10px 0; font-size: 16px; color: var(--white);">הרווחת 10 שקלים הנחה לכל החבילות!</p>`;
         hasDiscount = true;
         updateTTTBanner();
-        renderPricing(); // מעדכן את המחירים למטה
+        renderPricing(); 
         if (useFirebase && auth.currentUser) {
             const userDocRef = doc(db, 'artifacts', appId, 'users', auth.currentUser.uid, 'profile', 'userData');
             await setDoc(userDocRef, { hasDiscount: true }, { merge: true });
         }
     } else {
-        tttCooldown = Date.now() + (2 * 60 * 60 * 1000); // המתנה של שעתיים
-        html += `<p style="margin: 10px 0; color: var(--muted);">לא נורא. תוכל לנסות שוב בעוד שעתיים.</p>`;
+        tttCooldown = Date.now() + (10 * 60 * 1000); // 10 דקות
+        html += `<p style="margin: 10px 0; color: var(--muted);">לא נורא. תוכל לנסות שוב בעוד 10 דקות.</p>`;
         if (useFirebase && auth.currentUser) {
             const userDocRef = doc(db, 'artifacts', appId, 'users', auth.currentUser.uid, 'profile', 'userData');
             await setDoc(userDocRef, { tttCooldown: tttCooldown }, { merge: true });
@@ -1029,7 +1022,7 @@ if (useFirebase) {
     updateAuthUI();
     renderPricing();
     
-    // אם נרשם ואישר דרך המייל והאתר פתוח לו על מסך ההתחברות - שיכנס!
+    // אם נרשם ואישר דרך המייל והאתר פתוח לו על מסך ההתחברות
     if (currentUser && document.getElementById('authModal').classList.contains('active')) {
         closeAuthModal();
         toggleDashboard(true);
@@ -1145,13 +1138,18 @@ function setLang(lang) {
   document.getElementById('content-sub').innerText = s.contentSub;
   
   for (let i=1; i<=3; i++) {
-      document.getElementById(`step-${i}`).innerText = s.items[i-1];
+      let stepEl = document.getElementById(`step-${i}`);
+      if (!stepEl) {
+         document.getElementById('home-content-list').innerHTML += `<div class="step-box"><div class="step-num">${i}</div><div class="step-title" id="step-${i}">${s.items[i-1]}</div></div>`;
+      } else {
+         stepEl.innerText = s.items[i-1];
+      }
   }
 
   document.getElementById('pricing-tag').innerText = s.pricingTag;
   document.getElementById('pricing-title').innerText = s.pricingTitle;
   
-  renderPricing(); // מרנדר מחירים לפי הנחה
+  renderPricing(); 
 
   document.getElementById('dash-title').innerText = s.dashTitle;
   document.getElementById('dash-sub').innerText = s.dashSub;
@@ -1191,11 +1189,10 @@ function switchMainView(view) {
     document.getElementById('dash-nav').style.display = 'flex';
   } else if (view === 'order') {
     document.getElementById('view-order').style.display = 'block';
-    document.getElementById('dash-nav').style.display = 'flex'; // Uses same dash-nav for 'back home'
+    document.getElementById('dash-nav').style.display = 'flex'; 
   }
 }
 
-// האזנה לכפתורי "אחורה/קדימה" של הדפדפן
 window.addEventListener('popstate', (e) => {
   if (e.state && e.state.view) {
     switchMainView(e.state.view);
@@ -1236,10 +1233,8 @@ async function initiatePurchase(planId) {
     return;
   }
   
-  // ייצור Order ID ייחודי
   const orderId = 'DRX-' + Math.floor(100000 + Math.random() * 900000);
   
-  // שמירה במסד נתונים
   if (useFirebase && auth.currentUser) {
     try {
       const orderRef = doc(db, 'artifacts', appId, 'users', auth.currentUser.uid, 'orders', orderId);
@@ -1251,7 +1246,6 @@ async function initiatePurchase(planId) {
     } catch (e) { console.log('Error saving order', e); }
   }
   
-  // הצגה על המסך ומעבר נתיב היסטוריה
   document.getElementById('order-id-display').innerText = orderId;
   window.scrollTo(0, 0);
   
@@ -1259,7 +1253,6 @@ async function initiatePurchase(planId) {
   switchMainView('order');
 }
 
-// חשיפת פונקציות גלובליות
 window.setLang = setLang;
 window.scrollToId = scrollToId;
 window.toggleDashboard = toggleDashboard;
@@ -1278,29 +1271,6 @@ window.openTTTModal = openTTTModal;
 window.closeTTTModal = closeTTTModal;
 window.handleTTTClick = handleTTTClick;
 
-// אנימציות גלילה בצדדים
-window.addEventListener('scroll', () => {
-  const y = window.scrollY;
-  const dec1 = document.getElementById('dec1');
-  const dec2 = document.getElementById('dec2');
-  const dec3 = document.getElementById('dec3');
-  const dec4 = document.getElementById('dec4');
-  const dec5 = document.getElementById('dec5');
-  const dec6 = document.getElementById('dec6');
-  const dec7 = document.getElementById('dec7');
-  const dec8 = document.getElementById('dec8');
-  
-  if(dec1) dec1.style.transform = `translateY(${y * 0.15}px) rotate(${y * 0.05}deg)`;
-  if(dec2) dec2.style.transform = `translateY(${y * 0.05}px)`;
-  if(dec3) dec3.style.transform = `translateY(${-y * 0.1}px)`;
-  if(dec4) dec4.style.transform = `translateY(${-y * 0.2}px)`;
-  if(dec5) dec5.style.transform = `translateY(${-y * 0.08}px) rotate(${-y * 0.03}deg)`;
-  if(dec6) dec6.style.transform = `translateY(${y * 0.12}px)`;
-  if(dec7) dec7.style.transform = `translateY(${y * 0.2}px) rotate(${y * 0.08}deg)`;
-  if(dec8) dec8.style.transform = `translateY(${y * 0.15}px)`;
-});
-
-// Particles ברקע
 const canvas = document.getElementById('particles');
 const ctx = canvas.getContext('2d');
 let W, H, particles = [];
@@ -1344,7 +1314,6 @@ function drawParticles() {
 }
 drawParticles();
 
-// איתחול ראשוני
 history.replaceState({ view: 'home' }, '', '');
 setLang('he');
 
