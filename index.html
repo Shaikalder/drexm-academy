@@ -113,6 +113,8 @@ body.light-mode .modal-content { background: #F4F5F7; box-shadow: 0 10px 40px rg
 .highlight-discount { background: #FF9F43; color: #000; padding: 8px 18px; border-radius: 6px; font-weight: 700; display: inline-block; box-shadow: 0 0 15px rgba(255,159,67,0.4); font-size: 16px; border: none; cursor: pointer; transition: all 0.2s; font-family: 'Heebo', sans-serif; }
 body.light-mode .highlight-discount { color: #fff; }
 .highlight-discount:hover:not([disabled]) { transform: scale(1.05); box-shadow: 0 0 25px rgba(255,159,67,0.7); }
+@keyframes pulseGlow { 0% { box-shadow: 0 0 15px rgba(255,159,67,0.4); } 50% { box-shadow: 0 0 25px rgba(255,159,67,0.8); } 100% { box-shadow: 0 0 15px rgba(255,159,67,0.4); } }
+.highlight-discount:not([disabled]) { animation: pulseGlow 2s infinite; }
 
 /* HERO */
 .hero { min-height: 88vh; display: flex; align-items: center; padding: 80px 0 60px; }
@@ -154,6 +156,7 @@ body.light-mode .btn-primary { color: #fff; }
 .about-card h3 { font-family: 'Rajdhani', sans-serif; font-size: 20px; font-weight: 600; margin-bottom: 10px; color: var(--white); }
 .about-card p { color: var(--muted); font-size: 14px; line-height: 1.7; font-weight: 300; }
 
+/* TIMELINE */
 .timeline { position: relative; max-width: 800px; margin: 48px auto 0; padding-left: 20px; border-left: 2px solid var(--border); }
 [dir="rtl"] .timeline { padding-left: 0; padding-right: 20px; border-left: none; border-right: 2px solid var(--border); }
 .timeline-item { position: relative; margin-bottom: 32px; padding-left: 24px; }
@@ -167,6 +170,7 @@ body.light-mode .btn-primary { color: #fff; }
 .timeline-content p { font-size: 14px; color: var(--muted); line-height: 1.6; }
 .mech-highlight { color: var(--cyan); font-weight: 500; }
 
+/* RLFX TAGS */
 .rlfx-grid { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 40px; max-width: 860px; margin-left: auto; margin-right: auto; }
 .rlfx-tag { background: rgba(0,198,255,0.05); border: 1px solid rgba(0,198,255,0.2); padding: 10px 18px; border-radius: 6px; font-family: 'Rajdhani', sans-serif; font-size: 15px; font-weight: 600; color: var(--white); letter-spacing: 1px; transition: all 0.2s; cursor: default; }
 .rlfx-tag:hover { background: rgba(0,198,255,0.15); border-color: var(--cyan); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,198,255,0.1); }
@@ -193,6 +197,7 @@ body.light-mode .btn-primary { color: #fff; }
 .pricing-label { font-size: 16px; color: var(--white); font-weight: 600; margin-bottom: 8px; font-family: 'Rajdhani', sans-serif; }
 .pricing-price { font-family: 'Rajdhani', sans-serif; font-size: 56px; font-weight: 700; color: var(--white); line-height: 1; margin-bottom: 4px; transition: color 0.3s; }
 .pricing-price sup { font-size: 24px; color: var(--muted); }
+
 .pricing-features { list-style: none; margin-bottom: 36px; display: flex; flex-direction: column; gap: 12px; margin-top: 16px; }
 .pricing-features li { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; color: var(--muted); line-height: 1.4; }
 .pricing-features li::before { content: '✓'; color: var(--cyan); font-weight: 700; font-size: 16px; margin-top: -2px; }
@@ -204,20 +209,10 @@ body.light-mode .btn-buy { color: #fff; }
 .plan-support .btn-buy:hover { background: #D896FF; }
 .pricing-note { text-align: center; font-size: 13px; color: var(--muted); margin-top: 8px; }
 
-/* DASHBOARD & ORDER VIEWS */
-.dashboard-header { margin-bottom: 40px; padding-top: 40px; border-bottom: 1px solid var(--border); padding-bottom: 24px; }
-.dashboard-tabs { display: flex; gap: 16px; margin-bottom: 32px; border-bottom: 1px solid var(--border); padding-bottom: 16px; overflow-x: auto; }
-.dash-tab { background: none; border: none; color: var(--muted); font-size: 16px; font-family: 'Rajdhani', sans-serif; font-weight: 600; text-transform: uppercase; cursor: pointer; padding: 8px 16px; transition: all 0.2s; white-space: nowrap; }
-.dash-tab.active { color: var(--cyan); border-bottom: 2px solid var(--cyan); }
-.dash-tab:hover:not(.active) { color: var(--white); }
-
+/* ORDER VIEW & DISCORD CARD */
 .coaching-card { background: linear-gradient(135deg, var(--bg2) 0%, #1a1a2e 100%); border: 1px solid var(--cyan); border-radius: 12px; padding: 40px; text-align: center; margin-bottom: 24px; }
 body.light-mode .coaching-card { background: linear-gradient(135deg, var(--bg2) 0%, #D0E4F5 100%); }
-.coaching-card.support-card { border-color: var(--orange); background: linear-gradient(135deg, var(--bg2) 0%, #241033 100%); }
-body.light-mode .coaching-card.support-card { background: linear-gradient(135deg, var(--bg2) 0%, #F3E8FF 100%); }
-
 .coaching-card h3 { font-family: 'Rajdhani', sans-serif; font-size: 28px; color: var(--cyan); margin-bottom: 16px; }
-.coaching-card.support-card h3 { color: var(--orange); }
 .coaching-card p { color: var(--white); font-size: 16px; max-width: 600px; margin: 0 auto 32px; line-height: 1.6; }
 
 .btn-discord { background: #5865F2; color: #fff; border: none; padding: 14px 32px; font-family: 'Rajdhani', sans-serif; font-size: 16px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; border-radius: 6px; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; justify-content: center; gap: 12px; margin: 0 auto; }
@@ -252,7 +247,7 @@ footer { position: relative; z-index: 2; border-top: 1px solid var(--border); pa
   
   <nav>
     <div class="nav-inner">
-      <div class="logo" onclick="toggleDashboard(false)">drexm<span>.</span>academy</div>
+      <div class="logo" onclick="switchMainView('home')">drexm<span>.</span>academy</div>
       
       <ul class="nav-links" id="home-nav">
         <li><button onclick="scrollToId('about')" id="nav-about">עליי</button></li>
@@ -261,8 +256,8 @@ footer { position: relative; z-index: 2; border-top: 1px solid var(--border); pa
         <li><button onclick="scrollToId('pricing')" id="nav-pricing">מחיר</button></li>
       </ul>
 
-      <ul class="nav-links" id="dash-nav" style="display: none;">
-        <li><button onclick="toggleDashboard(false)" id="nav-back">חזור לעמוד הראשי</button></li>
+      <ul class="nav-links" id="order-nav" style="display: none;">
+        <li><button onclick="switchMainView('home')" id="nav-back">חזור לעמוד הראשי</button></li>
       </ul>
 
       <div class="nav-actions">
@@ -387,39 +382,6 @@ footer { position: relative; z-index: 2; border-top: 1px solid var(--border); pa
           <!-- Rendered via JS -->
         </div>
       </section>
-    </main>
-  </div>
-
-  <!-- DASHBOARD VIEW -->
-  <div id="view-dashboard" style="display: none;">
-    <main class="wrap">
-      <div class="dashboard-header">
-        <h1 style="font-family: 'Rajdhani', sans-serif; font-size: 36px; margin-bottom: 8px" id="dash-title">אזור אישי</h1>
-        <p style="color: var(--muted); font-size: 16px" id="dash-sub">ברוך הבא לאקדמיה! בחר קטגוריה כדי להתחיל ללמוד.</p>
-      </div>
-
-      <div class="dashboard-tabs">
-        <button class="dash-tab active" id="tab-videos" onclick="switchTab('videos')">ניתוח משחקים</button>
-        <button class="dash-tab" id="tab-coaching" onclick="switchTab('coaching')">שיחת ייעוץ</button>
-      </div>
-
-      <div id="pane-videos" class="coaching-card" style="display: block;">
-        <h3 id="pane1-title">ניתוח 3 משחקים מקיף</h3>
-        <p id="pane1-desc">רכשת את חבילת הניתוח? פתח טיקט בדיסקורד ושלח את קובץ ההקלטות או הקישור לוידאו יחד עם המספר הסידורי שקיבלת לאחר בחירת החבילה.</p>
-        <button class="btn-discord" onclick="window.open('https://discord.gg/kvVmkFrZnC', '_blank')">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/></svg>
-          <span id="pane1-btn">התחבר לדיסקורד</span>
-        </button>
-      </div>
-
-      <div id="pane-coaching" class="coaching-card support-card" style="display: none;">
-        <h3 id="coach-title">מענה ותמיכה (Q&A)</h3>
-        <p id="coach-desc">רכשת את שיחת הייעוץ? שלח הודעה בדיסקורד עם המספר הסידורי לתיאום זמן השיחה לטיפים, שאלות ועזרה במכניקות.</p>
-        <button class="btn-discord" onclick="window.open('https://discord.gg/kvVmkFrZnC', '_blank')">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/></svg>
-          <span id="coach-btn">התחבר לשרת הדיסקורד</span>
-        </button>
-      </div>
     </main>
   </div>
 
@@ -817,10 +779,8 @@ async function handleLogin(e) {
             updateAuthUI();
             renderPricing(); 
             closeAuthModal();
-            emailInput.value = '';
-            passInput.value = '';
             
-            toggleDashboard(true);
+            switchMainView('home');
         }
       }
     } catch (error) {
@@ -847,7 +807,7 @@ async function handleLogout() {
   tttCooldown = 0;
   updateAuthUI();
   renderPricing();
-  toggleDashboard(false);
+  switchMainView('home');
 }
 
 // TTT (איקס עיגול) LOGIC
@@ -900,7 +860,7 @@ function handleTTTClickPlay() {
 
 function openTTTModal() {
    if (hasDiscount) return; 
-   if (Date.now() < tttCooldown) return; // לא אמור לקרות כי הכפתור מוסתר, אבל למקרה שכן.
+   if (Date.now() < tttCooldown) return;
 
    tttBoard = ['', '', '', '', '', '', '', '', ''];
    tttGameActive = true;
@@ -1084,6 +1044,10 @@ if (useFirebase) {
             console.error("Profile load err:", e);
             currentUser = user.displayName || user.email.split('@')[0];
           }
+      } else {
+          currentUser = null;
+          hasDiscount = false;
+          tttCooldown = 0;
       }
     } else {
       currentUser = null;
@@ -1096,7 +1060,7 @@ if (useFirebase) {
     
     if (currentUser && document.getElementById('authModal').classList.contains('active')) {
         closeAuthModal();
-        toggleDashboard(true);
+        switchMainView('home');
     }
   });
 }
@@ -1216,16 +1180,6 @@ function setLang(lang) {
   
   renderPricing(); 
 
-  document.getElementById('dash-title').innerText = s.dashTitle;
-  document.getElementById('dash-sub').innerText = s.dashSub;
-  document.getElementById('tab-videos').innerText = s.tabs[0];
-  document.getElementById('tab-coaching').innerText = s.tabs[1];
-  
-  document.getElementById('coach-title').innerText = s.coachTitle;
-  document.getElementById('coach-desc').innerText = s.coachDesc;
-  document.getElementById('coach-btn').innerText = s.coachBtn;
-  document.getElementById('pane1-btn').innerText = s.coachBtn;
-
   document.getElementById('orderTitle').innerText = s.order.title;
   document.getElementById('orderSub').innerText = s.order.sub;
   document.getElementById('orderInst').innerText = s.order.inst;
@@ -1240,20 +1194,18 @@ function scrollToId(id) {
 
 function switchMainView(view) {
   document.getElementById('view-home').style.display = 'none';
-  document.getElementById('view-dashboard').style.display = 'none';
   document.getElementById('view-order').style.display = 'none';
   document.getElementById('home-nav').style.display = 'none';
-  document.getElementById('dash-nav').style.display = 'none';
+  
+  const orderNav = document.getElementById('order-nav');
+  if (orderNav) orderNav.style.display = 'none';
   
   if (view === 'home') {
     document.getElementById('view-home').style.display = 'block';
     document.getElementById('home-nav').style.display = 'flex';
-  } else if (view === 'dashboard') {
-    document.getElementById('view-dashboard').style.display = 'block';
-    document.getElementById('dash-nav').style.display = 'flex';
   } else if (view === 'order') {
     document.getElementById('view-order').style.display = 'block';
-    document.getElementById('dash-nav').style.display = 'flex'; 
+    if (orderNav) orderNav.style.display = 'flex'; 
   }
 }
 
@@ -1261,30 +1213,9 @@ window.addEventListener('popstate', (e) => {
   if (e.state && e.state.view) {
     switchMainView(e.state.view);
   } else {
-    switchMainView(currentUser ? 'dashboard' : 'home');
+    switchMainView('home');
   }
 });
-
-function toggleDashboard(show) {
-  window.scrollTo(0, 0);
-  const view = show ? 'dashboard' : 'home';
-  if (!history.state || history.state.view !== view) {
-    history.pushState({ view: view }, '', show ? '#dashboard' : '');
-  }
-  switchMainView(view);
-}
-
-function switchTab(tab) {
-  document.getElementById('tab-videos').className = 'dash-tab';
-  document.getElementById('tab-coaching').className = 'dash-tab';
-  document.getElementById('tab-' + tab).className = 'dash-tab active';
-
-  document.getElementById('pane-videos').style.display = 'none';
-  document.getElementById('pane-coaching').style.display = 'none';
-  
-  if (tab === 'videos') document.getElementById('pane-videos').style.display = 'block';
-  if (tab === 'coaching') document.getElementById('pane-coaching').style.display = 'block';
-}
 
 async function initiatePurchase(planId) {
   if (!currentUser) {
@@ -1319,14 +1250,13 @@ async function initiatePurchase(planId) {
 
 window.setLang = setLang;
 window.scrollToId = scrollToId;
-window.toggleDashboard = toggleDashboard;
+window.switchMainView = switchMainView;
 window.openAuthModal = openAuthModal;
 window.closeAuthModal = closeAuthModal;
 window.setAuthMode = setAuthMode;
 window.handleLogin = handleLogin;
 window.handleLogout = handleLogout;
 window.initiatePurchase = initiatePurchase;
-window.switchTab = switchTab;
 window.openSettingsModal = openSettingsModal;
 window.closeSettingsModal = closeSettingsModal;
 window.toggleTheme = toggleTheme;
@@ -1383,7 +1313,6 @@ window.onload = function() {
     history.replaceState({ view: 'home' }, '', '');
     setLang('he');
 }
-
 </script>
 </body>
 </html>
