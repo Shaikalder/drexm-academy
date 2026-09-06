@@ -803,7 +803,9 @@ async function handleLogin(e) {
 
         authMsg.style.display = 'block';
         authMsg.style.color = '#00C6FF';
-        authMsg.innerText = currentLang === 'he' ? 'נשלח אליך קישור אימות למייל! (בדוק בספאם). אמת ואז התחבר.' : 'Verification link sent! Verify your email and login.';
+        authMsg.innerHTML = currentLang === 'he' 
+          ? 'נשלח אליך קישור אימות למייל! <span style="color: #FF5555; font-weight: 700;">(בדוק בספאם)</span>. אמת ואז התחבר.' 
+          : 'Verification link sent! <span style="color: #FF5555; font-weight: 700;">(Check Spam)</span>. Verify and login.';
         
       } else {
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
